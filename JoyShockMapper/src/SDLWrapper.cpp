@@ -221,7 +221,7 @@ public:
 	bool _has_gyro;
 	bool _has_accel;
 	int _split_type = JS_SPLIT_TYPE_FULL;
-	int _ctrlr_type = 0;
+	int _ctrlr_type = JS_TYPE_UNKNOWN;
 	uint16_t _small_rumble = 0;
 	uint16_t _big_rumble = 0;
 	AdaptiveTriggerSetting _leftTriggerEffect;
