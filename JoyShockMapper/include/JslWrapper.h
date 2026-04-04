@@ -61,6 +61,13 @@ inline bool operator!=(const AdaptiveTriggerSetting &lhs, const AdaptiveTriggerS
 #define JS_SPLIT_TYPE_RIGHT 2
 #define JS_SPLIT_TYPE_FULL 3
 
+// Device bus definitions
+#define JS_HARDWARE_BUS_UNKNOWN 0x00
+#define JS_HARDWARE_BUS_USB 0x03
+#define JS_HARDWARE_BUS_BLUETOOTH 0x05
+#define JS_HARDWARE_BUS_VIRTUAL 0xff
+
+
 #define JSMASK_UP 0x000001
 #define JSMASK_DOWN 0x000002
 #define JSMASK_LEFT 0x000004
