@@ -1038,6 +1038,42 @@ void joyShockPollCallback(int jcHandle, JOY_SHOCK_STATE state, JOY_SHOCK_STATE l
 			jc->handleButtonChange(ButtonID::LSL, buttons & (1ULL << JSOFFSET_SL));
 			jc->handleButtonChange(ButtonID::LSR, buttons & (1ULL << JSOFFSET_SR));
 			break;
+		case JS_TYPE_HORI_STEAM:
+			jc->handleButtonChange(ButtonID::LSL, buttons & (1ULL << JSOFFSET_SL));        // L4 back button
+			jc->handleButtonChange(ButtonID::RSR, buttons & (1ULL << JSOFFSET_SR));        // R4 back button
+			jc->handleButtonChange(ButtonID::LSR, buttons & (1ULL << JSOFFSET_FNL));       // M1 button below left stick
+			jc->handleButtonChange(ButtonID::RSL, buttons & (1ULL << JSOFFSET_FNR));       // M2 button below right stick
+			jc->handleButtonChange(ButtonID::LTOUCH, buttons & (1ULL << JSOFFSET_LTOUCH)); // Left stick capacitive touch
+			jc->handleButtonChange(ButtonID::RTOUCH, buttons & (1ULL << JSOFFSET_RTOUCH)); // Right stick capacitive touch
+			jc->handleButtonChange(ButtonID::MISC1, buttons & (1ULL << JSOFFSET_MISC1));   // QAM button ("..." button)
+			break;
+		case JS_TYPE_G7_PRO_8K:
+			jc->handleButtonChange(ButtonID::LMINI, buttons & (1ULL << JSOFFSET_LMINI));     // L5 mini shoulder button
+			jc->handleButtonChange(ButtonID::RMINI, buttons & (1ULL << JSOFFSET_RMINI));     // R5 mini shoulder button
+			jc->handleButtonChange(ButtonID::LSL, buttons & (1ULL << JSOFFSET_SL));          // L4 back button
+			jc->handleButtonChange(ButtonID::RSR, buttons & (1ULL << JSOFFSET_SR));          // R4 back button
+			jc->handleButtonChange(ButtonID::CAPTURE, buttons & (1ULL << JSOFFSET_CAPTURE)); // Share button
+			break;
+		// 8BitDo controllers with gyro and no additional buttons.
+		case JS_TYPE_8BITDO_SF30_PRO:
+		case JS_TYPE_8BITDO_SF30_PRO_BT:
+		case JS_TYPE_8BITDO_SN30_PRO:
+		case JS_TYPE_8BITDO_SN30_PRO_BT:
+			break;
+		// 8BitDo controllers with gyro and two additional buttons.
+		case JS_TYPE_8BITDO_PRO_2:
+		case JS_TYPE_8BITDO_PRO_2_BT:
+			jc->handleButtonChange(ButtonID::LSL, buttons & (1ULL << JSOFFSET_SL)); // P2 back button (left)
+			jc->handleButtonChange(ButtonID::RSR, buttons & (1ULL << JSOFFSET_SR)); // P1 back button (right)
+			break;
+		// 8BitDo controllers with gyro and four additional buttons.
+		case JS_TYPE_8BITDO_PRO_3:
+		case JS_TYPE_8BITDO_ULTIMATE2_WIRELESS:
+			jc->handleButtonChange(ButtonID::LMINI, buttons & (1ULL << JSOFFSET_LMINI)); // L4 mini shoulder button
+			jc->handleButtonChange(ButtonID::RMINI, buttons & (1ULL << JSOFFSET_RMINI)); // R4 mini shoulder button
+			jc->handleButtonChange(ButtonID::LSL, buttons & (1ULL << JSOFFSET_SL));      // PL back button
+			jc->handleButtonChange(ButtonID::RSR, buttons & (1ULL << JSOFFSET_SR));      // PR back button
+			break;
 		default:
 			jc->handleButtonChange(ButtonID::CAPTURE, buttons & (1ULL << JSOFFSET_CAPTURE));
 			jc->handleButtonChange(ButtonID::LSL, buttons & (1ULL << JSOFFSET_SL));
