@@ -76,6 +76,91 @@ struct ControllerDevice
 
 					_vendorId = SDL_GetGamepadVendor(_sdlController);
 					_productId = SDL_GetGamepadProduct(_sdlController);
+					_guid = SDL_GetJoystickGUID(SDL_GetGamepadJoystick(_sdlController));
+					_ctrlr_type = JS_TYPE_UNKNOWN;
+
+					switch (_vendorId)
+					{
+					case JS_VENDOR_8BITDO:
+						switch (_productId)
+						{
+						case JS_PRODUCT_8BITDO_SF30_PRO:
+							_ctrlr_type = JS_TYPE_8BITDO_SF30_PRO;
+							break;
+						case JS_PRODUCT_8BITDO_SF30_PRO_BT:
+							_ctrlr_type = JS_TYPE_8BITDO_SF30_PRO_BT;
+							break;
+						case JS_PRODUCT_8BITDO_SN30_PRO:
+							_ctrlr_type = JS_TYPE_8BITDO_SN30_PRO;
+							break;
+						case JS_PRODUCT_8BITDO_SN30_PRO_BT:
+							_ctrlr_type = JS_TYPE_8BITDO_SN30_PRO_BT;
+							break;
+						case JS_PRODUCT_8BITDO_PRO_2:
+							_ctrlr_type = JS_TYPE_8BITDO_PRO_2;
+							break;
+						case JS_PRODUCT_8BITDO_PRO_2_BT:
+							_ctrlr_type = JS_TYPE_8BITDO_PRO_2_BT;
+							break;
+						case JS_PRODUCT_8BITDO_PRO_3:
+							_ctrlr_type = JS_TYPE_8BITDO_PRO_3;
+							break;
+						case JS_PRODUCT_8BITDO_ULTIMATE2_WIRELESS:
+							_ctrlr_type = JS_TYPE_8BITDO_ULTIMATE2_WIRELESS;
+							break;
+						}
+						break;
+					case JS_VENDOR_HORI:
+						if (_productId == JS_PRODUCT_HORI_STEAM_CONTROLLER ||
+							_productId == JS_PRODUCT_HORI_STEAM_CONTROLLER_BT)
+						{
+							_ctrlr_type = JS_TYPE_HORI_STEAM;
+						}
+						break;
+					case JS_VENDOR_FLYDIGI_V1:
+					case JS_VENDOR_FLYDIGI_V2:
+						if ((_vendorId == JS_VENDOR_FLYDIGI_V1 &&
+							 _productId == JS_PRODUCT_FLYDIGI_V1_GAMEPAD) ||
+							(_vendorId == JS_VENDOR_FLYDIGI_V2 &&
+							 (_productId == JS_PRODUCT_FLYDIGI_V2_APEX ||
+							  _productId == JS_PRODUCT_FLYDIGI_V2_VADER)))
+						{
+							switch (_guid.data[15])
+							{
+							case JS_FLYDIGI_APEX5:
+								_ctrlr_type = JS_TYPE_FLYDIGI_APEX5;
+								break;
+							case JS_FLYDIGI_VADER3_PRO:
+								_ctrlr_type = JS_TYPE_FLYDIGI_VADER3_PRO;
+								break;
+							case JS_FLYDIGI_VADER4_PRO:
+								_ctrlr_type = JS_TYPE_FLYDIGI_VADER4_PRO;
+								break;
+							case JS_FLYDIGI_VADER5_PRO:
+								_ctrlr_type = JS_TYPE_FLYDIGI_VADER5_PRO;
+								break;
+							}
+						}
+						break;
+					case JS_VENDOR_GAMESIR:
+						if (_productId == JS_PRODUCT_GAMESIR_GAMEPAD_G7_PRO_8K &&
+							_guid.data[0] == JS_HARDWARE_BUS_USB) // No extended features over Bluetooth
+						{
+							_ctrlr_type = JS_TYPE_G7_PRO_8K;
+						}
+						break;
+					case JS_VENDOR_NINTENDO:
+						if (_productId == JS_PRODUCT_NINTENDO_SWITCH2_PRO)
+						{
+							_ctrlr_type = JS_TYPE_SWITCH2_PRO_CONTROLLER;
+						}
+						break;
+					}
+
+					if (_ctrlr_type != JS_TYPE_UNKNOWN)
+					{
+						continue;
+					}
 
 					auto sdl_ctrlr_type = SDL_GetGamepadType(_sdlController);
 					switch (sdl_ctrlr_type)
@@ -458,7 +543,7 @@ public:
 			{ SDL_GAMEPAD_BUTTON_DPAD_RIGHT, JSOFFSET_RIGHT }
 		};
 
-		int buttons = 0;
+		uint64_t buttons = 0;
 		for (auto pair : sdl2jsl)
 		{
 			buttons |= SDL_GetGamepadButton(_controllerMap[deviceId]->_sdlController, SDL_GamepadButton(pair.first)) ? 1ULL << pair.second : 0;
