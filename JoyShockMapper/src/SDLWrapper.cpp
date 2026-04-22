@@ -304,6 +304,7 @@ public:
 	int _ctrlr_type = JS_TYPE_UNKNOWN;
 	int _vendorId = JS_VENDOR_UNKNOWN;
 	int _productId = JS_PRODUCT_UNKNOWN;
+	SDL_GUID _guid;
 	uint16_t _small_rumble = 0;
 	uint16_t _big_rumble = 0;
 	AdaptiveTriggerSetting _leftTriggerEffect;
