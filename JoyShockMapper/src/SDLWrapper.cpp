@@ -496,8 +496,13 @@ public:
 	{
 		TOUCH_STATE state;
 		memset(&state, 0, sizeof(TOUCH_STATE));
-		if (!SDL_GetGamepadTouchpadFinger(_controllerMap[deviceId]->_sdlController, 0, 0, &state.t0Down, &state.t0X, &state.t0Y, nullptr) || 
-			!SDL_GetGamepadTouchpadFinger(_controllerMap[deviceId]->_sdlController, 0, 1, &state.t1Down, &state.t1X, &state.t1Y, nullptr))
+		SDL_Gamepad *sdlController = _controllerMap[deviceId]->_sdlController;
+		if (SDL_GetNumGamepadTouchpads(sdlController) == 0)
+		{
+			return state;
+		}
+		if (!SDL_GetGamepadTouchpadFinger(sdlController, 0, 0, &state.t0Down, &state.t0X, &state.t0Y, nullptr) ||
+			!SDL_GetGamepadTouchpadFinger(sdlController, 0, 1, &state.t1Down, &state.t1X, &state.t1Y, nullptr))
 		{
 			CERR << "Cannot get finger state: " << SDL_GetError() << '\n';
 		}
