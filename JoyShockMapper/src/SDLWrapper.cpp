@@ -148,11 +148,6 @@ struct ControllerDevice
 						{
 							_ctrlr_type = JS_TYPE_G7_PRO_8K;
 						}
-					case JS_VENDOR_NINTENDO:
-						if (_productId == JS_PRODUCT_NINTENDO_SWITCH2_PRO)
-						{
-							_ctrlr_type = JS_TYPE_SWITCH2_PRO_CONTROLLER;
-						}
 						break;
 					case JS_VENDOR_NINTENDO:
 						if (_productId == JS_PRODUCT_NINTENDO_SWITCH2_PRO)
