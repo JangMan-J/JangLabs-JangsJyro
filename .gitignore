@@ -319,3 +319,4 @@ compile_commands.json
 _deps
 install/
 .vscode/settings.json
+launch-arc-raiders.ps1
