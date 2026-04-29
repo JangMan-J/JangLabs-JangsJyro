@@ -59,6 +59,78 @@ The lab is designed for isolated agents that receive small assignments with limi
 
 The adversarial trace generator is a required system component. It must produce concrete trace artifacts that the converter and validator use; it is not just a review persona or commentary style.
 
+## Implementation Readiness Rules
+
+The phase plan is not itself an executable work order. Before an isolated agent starts any phase item, the assignment must include a task brief with:
+
+- Owner role.
+- Input files and prior artifacts the agent may read.
+- Output files the agent must write.
+- Exact commands when known.
+- Required host environment and hardware assumptions.
+- Acceptance criteria.
+- Stop and escalation criteria.
+- Run artifact location.
+
+Agents must not turn broad phase labels such as "generalize lane" or "add comparator" into open-ended implementation work. If a task cannot be reduced to bounded inputs, outputs, and acceptance checks, the agent should write a smaller task brief first.
+
+Default phase ownership:
+
+- Feasibility and runtime harness tasks: Validator agent.
+- Artifact schema tasks: Validator agent.
+- Headless JSM acceleration tasks: Validator agent, with JSM source changes isolated behind test modes.
+- Trace-suite tasks: Adversarial trace generator agent.
+- Knowledge-base tasks: Knowledge curator agent.
+- Converter parser, emitter, and repair-loop tasks: Converter agent.
+
+## First Executable Task Contract
+
+The first executable assignment is the Phase 1a/1b JSM Linux feasibility spike. It exists to answer whether JSM can be built and minimally observed on Linux without changing mapping behavior.
+
+Target host:
+
+- Prefer a real Linux desktop or Linux VM with real input/output device access.
+- WSL may be used only for build-only discovery unless a task brief explicitly accepts its runtime limitations.
+- Report distro, kernel, compiler, CMake version, generator, installed dependency state, `/dev/uinput` access, `/dev/input` access, desktop/session type if runtime is tested, and whether the agent installed any dependencies.
+
+Baseline build commands:
+
+```sh
+cmake -B build-linux -S . -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=clang++
+cmake --build build-linux
+```
+
+Expected binary:
+
+- `build-linux/JoyShockMapper/JoyShockMapper`
+- If the binary path differs, record the actual path and the CMake target that produced it.
+
+Minimal smoke config:
+
+```text
+RESET_MAPPINGS
+S = SPACE
+ZR = LMOUSE
+```
+
+Minimal smoke behavior:
+
+- Press and release `S`; observe one `SPACE` down/up pair.
+- Press and release `ZR`; observe one left mouse down/up pair.
+- For this first smoke test, event count and event order are exact checks. Timing is recorded but not used as a pass/fail tolerance unless the observation method itself depends on a timeout.
+
+Required run artifacts:
+
+- Store all artifacts under `docs/superpowers/runs/<UTC timestamp>-linux-jsm-feasibility/`.
+- Write `environment.txt`.
+- Write `configure.log`.
+- Write `build.log`.
+- Write `smoke.config`.
+- Write `result.md`.
+- If code changes were needed, write `changes.patch` or link the exact commit.
+
+Success requires a completed configure/build, a located JSM binary, an attempted runtime smoke test, and a clear `result.md` stating pass, fail, or blocked. Stop and escalate if semantic mapping changes appear necessary, if the host cannot support runtime observation, or if dependency installation/hardware access is outside the task brief.
+
 ## Generated Artifacts
 
 Each run should produce structured artifacts that agents can consume without prose interpretation:
@@ -73,6 +145,8 @@ Each run should produce structured artifacts that agents can consume without pro
 - `candidate.config`: clean generated target config.
 
 The generated target config is runnable output only. Explanations live in reports.
+
+Before Phase 3 defines stable schemas, Phase 1 and Phase 2 may write provisional text or JSON artifacts in the run directory. Provisional artifacts must be clearly labeled and later normalized or replaced by schema-backed artifacts. Prose notes are evidence, not machine-readable truth.
 
 ## Result Classifications
 
@@ -114,6 +188,8 @@ Stop reasons include:
 
 This lets agents know whether a degraded behavior is improving, regressing, or pragmatically stuck.
 
+Until Phase 3 defines formal schemas, every metric must state its unit, comparison rule, and legal direction of improvement. `trend` values are limited to `new`, `improved`, `regressed`, `unchanged`, and `incomparable`. New `stop_reason` values require an artifact-contract update.
+
 ## Validation Policy
 
 Acceptance is conservative and per-feature:
@@ -128,6 +204,8 @@ Acceptance is conservative and per-feature:
 - Reports must not hide coverage gaps.
 
 No central scoreboard should determine success. Adversarial search is useful, but score-chasing is not part of the acceptance path.
+
+Every accepted change must include a validation statement naming the exact traces, platforms, mapper versions, and feature IDs it covers. Regressions are not accepted because another feature improved. A justified regression must name the affected feature, the user-visible loss, the reason it is unavoidable, and the follow-up task that owns it.
 
 ## Adversarial Trace Generation
 
@@ -144,6 +222,17 @@ Trace types:
 - Holdout traces withheld from converter tuning.
 
 Accepted traces are immutable within a versioned suite. New adversarial traces can reveal failures, but cannot rewrite prior results.
+
+Each trace suite must include:
+
+- `trace-suite.manifest.json`
+- Versioned trace files.
+- Targeted feature IDs.
+- Access level: `tuning`, `regression`, or `holdout`.
+- Parent suite or mutation source when applicable.
+- A short intent field explaining what behavioral difference the trace is meant to expose.
+
+Converter agents may receive tuning and regression traces. Holdout trace contents are withheld from converter task briefs; validators may report holdout failures and aggregate deltas without giving the converter a path to tune directly to the hidden trace.
 
 ## Controller Profile Strategy
 
@@ -166,6 +255,8 @@ Excluded from v1:
 
 Later profiles should check that the converter is not accidentally tied to one device normalization path.
 
+Before analog, trigger, gyro, or accelerometer behavior can be accepted, the canonical profile must declare axis names, neutral values, ranges, units, coordinate frame, sample cadence, and timestamp source. Digital button tests may proceed earlier because their state model is only pressed/released.
+
 ## Platform Strategy
 
 Linux is attractive for automation, but it must prove that its results transfer to Windows. Windows validation happens early.
@@ -176,6 +267,26 @@ Rules:
 - Windows must certify release confidence for generated JSM configs.
 - Platform differences are recorded as platform deltas, not hidden as converter failures.
 - JSM Linux changes are allowed only for build, platform glue, test instrumentation, and output/input recording, not mapping semantics.
+
+## Non-Semantic Change Boundary
+
+Allowed JSM changes for the lab:
+
+- Build files, dependency detection, and platform glue.
+- Test-only headless entry points behind explicit flags or separate targets.
+- Input recording, output recording, logging, and trace emission.
+- Synthetic input providers that feed the existing runtime path.
+- Dependency version and compiler compatibility fixes that do not alter mapper behavior.
+
+Prohibited without a dedicated semantic-change proposal:
+
+- Changing command parsing meaning.
+- Changing default settings.
+- Changing button, stick, trigger, gyro, chord, modeshift, tap, hold, double-press, or timing behavior.
+- Changing `DigitalButton`, `JoyShock`, `Mapping`, `SettingsManager`, or output semantics to make lab tests pass.
+- Relabeling inputs or outputs in a way that hides a behavioral mismatch.
+
+Any task that touches shared mapping code must include a written note explaining why the change is non-semantic and which real-runtime parity check protects it.
 
 ## Headless JSM
 
@@ -224,6 +335,8 @@ Existing JSM source already has useful seams:
 
 Missing pieces include a headless CLI, trace reader, synthetic `JslWrapper`, deterministic time injection, output recorders, and JSONL emission.
 
+The first headless slice is intentionally narrow: load a normal config, feed digital button down/up frames for `S = SPACE` and `ZR = LMOUSE`, and record the resulting keyboard/mouse events. Stick, gyro, trigger thresholds, timing windows, and virtual controller output remain disabled for acceleration until the first slice matches real JSM and each later feature class earns its own parity result.
+
 ## Reference Knowledge Base
 
 The lab should persist learned behavior so agents can answer "what does this control or mapper function do?" without rediscovering it.
@@ -245,6 +358,26 @@ Reference files:
 Each entry must include provenance: run IDs, trace IDs, mapper version, platform, device profile, confidence, and last validation date.
 
 Lab notes may suggest hypotheses. Canonical files guide conversion decisions.
+
+Promotion rules:
+
+- Any agent may append lab notes if they include provenance.
+- Canonical entries require real-runtime evidence, schema validation, conflict checks, and a last-validated date.
+- Headless-only evidence may support a hypothesis but cannot promote a canonical mapper behavior.
+- Conflicting observations remain in lab notes until a validator task resolves or scopes the conflict.
+
+## Phase Gate Criteria
+
+Each phase has a gate that must be satisfied before expensive downstream work depends on it:
+
+- Phase 1 gate: Linux JSM build result, Linux smoke result or block reason, matching Windows smoke result, and `linux-lab-decision.md` choosing `linux-main`, `linux-build-only`, or `linux-rejected`.
+- Phase 2 gate: one controlled trace drives real Steam Input and real JSM equivalent mappings, both outputs are observed as typed events, a delta is written, and Windows is repeated or explicitly blocked.
+- Phase 3 gate: trace, event, delta, loss, cycle-history, run-manifest, and knowledge-base schemas have validating examples.
+- Phase 4 gate: one repeatable orchestration run produces manifest, reference events, candidate events, delta, loss, and report artifacts from the same trace.
+- Phase 5 gate: each headless feature class matches real JSM within Phase 3 tolerances before that class is allowed for acceleration.
+- Phase 6 gate: the adversarial trace generator writes versioned suites and manifests that the validator can consume, with tuning/regression/holdout access rules documented.
+- Phase 7 gate: canonical knowledge promotion requires evidence-backed entries and documented conflict handling.
+- Phase 8 gate: converter cycles produce candidate config, loss report, cycle-history update, and an improvement or stop rationale per changed feature, with no unaccepted regression.
 
 ## Human-Readable Phase Plan
 
