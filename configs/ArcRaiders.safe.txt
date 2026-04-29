@@ -1,0 +1,111 @@
+# ARC RAIDERS — JSM safe config (v1)
+# Device: 8BitDo Ultimate 2 Wireless (DInput via SDL3, branch-a-port)
+# Source: jangman's jyro_v13.vdf
+# Audit:  JangsJyro/findings/arc_raiders_vdf_to_jsm_audit.md
+#
+# COVERS:
+#   Gyro-to-mouse with Local Space (G.1, G.2, G.5), sensitivity scaffold (G.3),
+#   ADS gyro — GYRO_ON = ZL (gyro on while LT held), Aim Layer precision on ZL+L3 (L.2/G.10),
+#   triggers LT/RT (T.1, T.2),
+#   face buttons A/B/X/Y with tap+hold (B.1-B.4), LS WASD + outer ring (S.1, S.3),
+#   L3/R3 clicks (S.2, S.5), LB primary (B.5), RB approx (B.6),
+#   D-pad (B.7), system buttons Select/Menu (B.9, B.10),
+#   global hold/turbo timing (X.2, X.3).
+#
+# OMITS (see ArcRaiders.experimental.txt):
+#   Trigger dampening while ZL held (G.8)
+#   Click-layer gyro freeze on ZR soft-pull (T.3/L.3 — JSM cannot express timed remove_layer)
+#   Click-layer gyro freeze on ZR soft-pull (T.3/L.3 — JSM cannot express timed remove_layer)
+#   Menu action set (L.1 — held-MINUS modeshift or manual READ)
+#   RB scroll-cycle alternation (B.6 — picks one direction; VDF cycles per press)
+#   RS virtual curve (S.4 — RIGHT_STICK requires ViGEm; comment out if unavailable)
+#
+# TEST LIVE:
+#   1. Movement (WASD), jump (S=Space), lean/crouch (E=LAlt).
+#   2. Fire (ZR=LMB), ADS (ZL=RMB).
+#   3. Gyro: aim at a distant target. If sensitivity is wrong, tune GYRO_SENS
+#      and IN_GAME_SENS together (G.3 requires empirical calibration).
+#   4. ADS gyro: hold ZL → gyro activates (+ RMB). Release ZL → gyro stops.
+#   5. Aim Layer: hold L3 while ZL held → gyro switches to precision settings.
+#   6. L3 tap → RShift; L3 hold → LShift (sprint/walk — only meaningful without ZL).
+#   7. R3 tap → C (equip); R3 hold → LCtrl.
+#   8. W tap → E (use/interact); W hold → R (reload).
+#   9. N tap → F (pick up); N hold → X (alt-use).
+#  10. PLUS tap → Tab (scoreboard); PLUS hold → M (map).
+
+RESET_MAPPINGS
+
+# ── Cross-cutting ─────────────────────────────────────────────────────────────
+HOLD_PRESS_TIME = 200            # X.2 — all Long_Press bindings are 200 ms in VDF
+TURBO_PERIOD = 100               # X.3 — 10 Hz (matches VDF repeat_rate on scroll/dpad)
+
+# ── Gyro ──────────────────────────────────────────────────────────────────────
+GYRO_SPACE = LOCAL               # G.2 — VDF conversion_style 3 (Local Space)
+                                 #        note: JSM LOCAL lacks Steam's tilt-angle roll blend
+GYRO_SENS = 2                    # G.3 — starting point; calibrate vs in-game sensitivity
+REAL_WORLD_CALIBRATION = 18.56   # G.3 — from DP360: flickstick_rotation_sensitivity 6680 / 360
+IN_GAME_SENS = 1.0               # G.3 — adjust alongside GYRO_SENS if feel is off
+GYRO_CUTOFF_SPEED = 98           # G.5 — gyro_speed_deadzone = 98 deg/s in VDF
+GYRO_CUTOFF_RECOVERY = 0         # scaffold default (G.6 approx; tune if micro-aim is jumpy)
+GYRO_SMOOTH_THRESHOLD = 0        # scaffold default
+MOUSE_X_FROM_GYRO_AXIS = Y       # yaw → mouse X
+MOUSE_Y_FROM_GYRO_AXIS = X       # pitch → mouse Y
+
+# Gyro-on trigger: gyro active only while ZL (LT) is held — ADS gyro.
+# G.7 ratchet (L1 + ZR) not needed; gyro is off by default between ZL presses.
+GYRO_ON = ZL
+
+# ── Triggers ──────────────────────────────────────────────────────────────────
+ZL = RMOUSE                      # T.1 — LT full-pull = RMB (ADS)
+ZR = LMOUSE                      # T.2 — RT full-pull = LMB (fire)
+
+# ── Face buttons ──────────────────────────────────────────────────────────────
+S = SPACE                        # B.1 — A (South) = Space (jump)
+E = LALT                         # B.2 — B (East) = LAlt (lean/crouch)
+W = E R                          # B.3 — X (West): tap = E (use/interact), hold = R (reload)
+N = F X                          # B.4 — Y (North): tap = F (pick up), hold = X (alt-use)
+
+# ── Left stick ────────────────────────────────────────────────────────────────
+LEFT_STICK_MODE = NO_MOUSE       # S.1 — LS = WASD movement keys
+LUP = W
+LDOWN = S
+LLEFT = A
+LRIGHT = D
+LEFT_RING_MODE = OUTER           # S.3 — outer-ring press fires LRING
+LRING = V                        # S.3 — outer ring edge = V (slide/prone)
+
+# S.2 / L.2 — L3 click: key output + Aim Layer precision-gyro modeshift while held
+# Design: L3 alone = sprint/walk; ZL+L3 = Aim Layer (lower sens, tighter deadzone)
+L3 = RSHIFT LSHIFT               # S.2 — tap = RShift (sprint toggle), hold = LShift (walk)
+L3,GYRO_SENS = 1.67              # L.2/G.10 — Aim Layer: VDF precision group (125 vs 150 = ×0.833)
+L3,GYRO_CUTOFF_SPEED = 48        # L.2/G.10 — tighter gyro deadzone in Aim Layer
+
+# ── Right stick ───────────────────────────────────────────────────────────────
+# RIGHT_STICK_MODE = RIGHT_STICK # S.4 approx — virtual RS output (requires ViGEm on Windows)
+                                 #   uncomment after installing ViGEm + setting VIRTUAL_CONTROLLER
+R3 = C LCONTROL                  # S.5 — tap = C (equip), hold = LCtrl
+
+# ── Bumpers ───────────────────────────────────────────────────────────────────
+L = Q                            # B.5 — LB primary = Q (weapon slot)
+                                 #   LB mode_shift (dpad remap while held) → experimental
+                                 #   LB + paddle chord (B.14 "key 3" = digit 3) → needs HW verify
+
+R = SCROLLUP H                   # B.6 approx — tap = ScrollUp (weapon cycle), hold = H (?)
+                                 #   VDF alternates SCROLLUP/SCROLLDOWN per tap; JSM picks one
+
+# ── D-pad ─────────────────────────────────────────────────────────────────────
+UP = G                           # B.7 — gadget slot 1
+DOWN = B                         # B.7 — gadget slot 2
+RIGHT = MMOUSE                   # B.7 — middle click (ping/marker)
+LEFT = Z                         # B.7 — gadget slot 3
+
+# ── System buttons ────────────────────────────────────────────────────────────
+- = ESC                          # B.9 — Select/View = Escape (pause)
++ = TAB M                        # B.10 — Menu/Start: tap = Tab (scoreboard), hold = M (map)
+
+# ── Rear paddles / mini-shoulders ─────────────────────────────────────────────
+# Scaffolded as NONE; fill in as you find game uses for them.
+LMINI = NONE                     # physical L4 — unassigned
+RMINI = NONE                     # physical R4 — unassigned
+LSL = NONE                       # physical PL (paddle left) — unassigned
+RSR = NONE                       # physical PR (paddle right) — unassigned

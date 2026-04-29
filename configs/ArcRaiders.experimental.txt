@@ -1,0 +1,56 @@
+# ARC RAIDERS — JSM experimental config (v1)
+# Device: 8BitDo Ultimate 2 Wireless (DInput via SDL3, branch-a-port)
+#
+# Extends the safe base. All safe-tier bindings apply unless overridden here.
+#
+# INCLUDE PATH: assumes JSM is run from the repo root
+#   C:\Users\Entro\Claude\JangsJyro-JSM\
+# so that "configs\ArcRaiders.safe.txt" resolves via CWD.
+# If JSM is run from its exe directory, use the full absolute path instead.
+#
+# COVERS (beyond safe tier):
+#   ZR analog split — soft-pull silenced, full-pull fires LMB (T.3/L.3 approx)
+#   Menu modeshift skeleton — held MINUS swaps dpad + face buttons (L.1)
+#
+# NOTE: ZL trigger dampening (G.8) dropped — with GYRO_ON = ZL, gyro is already
+#   gated to ZL-held. Dampening the sensitivity while ZL is held would reduce ALL
+#   ADS gyro, not just a soft-pull zone. Not meaningful; omitted.
+#
+# KNOWN LIMITATIONS (documented in audit; not fixable in JSM):
+#   Click-layer gyro freeze: JSM cannot express the 50 ms timed remove_layer.
+#     The ZR soft-pull zone silences the trigger output but does NOT freeze gyro.
+#     Accept cursor drift on inventory clicks; flag for future JSM feature request.
+#   Menu hold-time (L.1): VDF uses 200 ms Long_Press; HOLD_PRESS_TIME is global at 200 ms
+#     (set in safe base) — matches VDF exactly.
+#
+# TEST LIVE:
+#   1. ZR split: soft-pull ZR → no mouse click (just pull); full-pull ZR → LMB fires.
+#      Compare cursor drift during drag vs safe tier; note absence of gyro freeze.
+#   2. Menu modeshift: hold MINUS → dpad becomes scroll nav; face A = MiddleClick/LCtrl.
+
+configs\ArcRaiders.safe.txt
+
+# ── T.3/L.3 — ZR analog split (click-layer approximation) ────────────────────
+# VDF: RT fires add_layer(t=0ms) → LMB(t=50ms) → remove_layer(t=150ms)
+# JSM: split into soft-pull zone (silent) and full-pull zone (LMB)
+# Gyro freeze is NOT implemented; see KNOWN LIMITATIONS above.
+ZR_MODE = NO_SKIP                # enable independent soft-pull (ZR) and full-pull (ZRF)
+ZR = NONE                        # soft-pull ZR = no output (replaces safe-tier LMOUSE)
+ZRF = LMOUSE                     # full-pull ZR = LMB (fire on hard click)
+
+# ── L.1 — Menu modeshift (held "-" = Select) ─────────────────────────────────
+# VDF: Menu preset (Preset_1000006) swaps gyro ratchet, dpad, and face buttons.
+# JSM: held "-" approximates a subset of Menu preset bindings.
+# Note: JSM names Switch's "-" / "+" buttons as the literal symbols `-` / `+`,
+# not the words MINUS / PLUS (operators.cpp:41-50).
+# B.8 Menu D-pad (scroll nav at 10 Hz):
+-,UP = SCROLLUP+
+-,DOWN = SCROLLDOWN+
+-,RIGHT = TAB
+-,LEFT = ESC
+# B.11 Menu system buttons:
+-,- = E                          # Select-in-menu context = E
+-,+ = Q                          # Menu-in-menu context = Q
+# B.12 Menu face A/B (global HOLD_PRESS_TIME = 200 ms; matches VDF):
+-,S = MMOUSE LCONTROL            # A in menu: tap = MiddleClick, hold = LCtrl  # approx
+-,E = ESC LALT                   # B in menu: tap = Esc, hold = LAlt            # approx
