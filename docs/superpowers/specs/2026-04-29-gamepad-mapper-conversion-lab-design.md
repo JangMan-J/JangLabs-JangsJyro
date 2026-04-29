@@ -48,6 +48,17 @@ Main components:
 
 Real Steam Input versus real JSM comparison remains authoritative. Headless JSM can accelerate iteration only after parity with real JSM is proven for a feature class.
 
+## Agent Roles
+
+The lab is designed for isolated agents that receive small assignments with limited context. These are implementation roles, not fixed processes:
+
+- Converter agent: changes Steam-to-JSM or JSM-to-Steam conversion rules and emits candidate configs.
+- Validator agent: runs configured trace suites, compares reference and candidate event streams, and writes delta/loss/cycle artifacts.
+- Adversarial trace generator agent: creates trace files intended to expose behavioral differences between Steam Input and JSM. It reads config features, previous deltas, knowledge-base notes, and trace schemas, then writes versioned trace files and trace-suite manifests.
+- Knowledge curator agent: reviews lab notes and promotes evidence-backed behavior notes into canonical references.
+
+The adversarial trace generator is a required system component. It must produce concrete trace artifacts that the converter and validator use; it is not just a review persona or commentary style.
+
 ## Generated Artifacts
 
 Each run should produce structured artifacts that agents can consume without prose interpretation:
@@ -299,7 +310,7 @@ Lab notes may suggest hypotheses. Canonical files guide conversion decisions.
 
 6a. Add baseline traces.
 
-6b. Add feature-directed adversarial traces.
+6b. Implement the adversarial trace generator agent and have it write feature-directed trace files.
 
 6c. Add boundary and mutation traces.
 
