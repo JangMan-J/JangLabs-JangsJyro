@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-05-02T16:15:34.644791",
+  "agents": [
+    {
+      "name": "fast-scout",
+      "success": true,
+      "duration": 49.49596190452576,
+      "response_length": 8091,
+      "tool_calls_count": 60,
+      "session_file": ".acp-sessions/session_fast-scout_20260502_161110.log",
+      "transcript_file": ".acp-sessions/transcript_fast-scout_20260502_161110.jsonl"
+    },
+    {
+      "name": "specialist",
+      "success": false,
+      "duration": 0,
+      "response_length": 8,
+      "tool_calls_count": 0,
+      "session_file": ".acp-sessions/session_specialist_20260502_161110.log",
+      "transcript_file": ".acp-sessions/transcript_specialist_20260502_161110.jsonl"
+    },
+    {
+      "name": "deep-analyzer",
+      "success": true,
+      "duration": 262.30919218063354,
+      "response_length": 9608,
+      "tool_calls_count": 66,
+      "session_file": ".acp-sessions/session_deep-analyzer_20260502_161110.log",
+      "transcript_file": ".acp-sessions/transcript_deep-analyzer_20260502_161110.jsonl"
+    }
+  ],
+  "summary": {}
+}
