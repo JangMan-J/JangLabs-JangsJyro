@@ -621,8 +621,14 @@ void initConsole(std::function<void()>)
 
 std::tuple<std::string, std::string> GetActiveWindowName()
 {
-	if (X11Display == nullptr)
+	// One-shot init: attempt X11 setup exactly once per process. On Wayland/tty
+	// (no X server) XOpenDisplay returns NULL; this flag keeps us from re-running
+	// dlopen/XOpenDisplay (and re-crashing) on every AutoLoad poll cycle.
+	static bool X11InitAttempted = false;
+	if (!X11InitAttempted)
 	{
+		X11InitAttempted = true;
+
 		static auto *libX11 = ::dlopen("libX11.so", RTLD_LAZY);
 
 		if (libX11)
@@ -634,8 +640,23 @@ std::tuple<std::string, std::string> GetActiveWindowName()
 			XGetWindowProperty = reinterpret_cast<decltype(XGetWindowProperty)>(::dlsym(libX11, "XGetWindowProperty"));
 			XFree = reinterpret_cast<decltype(XFree)>(::dlsym(libX11, "XFree"));
 
-			X11Display = XOpenDisplay(nullptr);
-			_NET_WM_PID = XInternAtom(X11Display, "_NET_WM_PID", true);
+			// Only proceed if every symbol resolved; otherwise calling a null
+			// function pointer below would SIGSEGV just like the null Display did.
+			if (XOpenDisplay && XGetInputFocus && XFetchName && XInternAtom && XGetWindowProperty && XFree)
+			{
+				X11Display = XOpenDisplay(nullptr);
+				if (X11Display != nullptr)
+				{
+					_NET_WM_PID = XInternAtom(X11Display, "_NET_WM_PID", true);
+				}
+			}
+		}
+
+		if (X11Display == nullptr)
+		{
+			// No usable X11 display (e.g. pure Wayland / tty). Window-based AutoLoad
+			// is X11-only and will silently no-op from here on. Single-fire note.
+			std::cerr << "[AUTOLOAD] No X11 display available (Wayland/tty?); window-based autoload disabled." << std::endl;
 		}
 	}
 
@@ -644,11 +665,11 @@ std::tuple<std::string, std::string> GetActiveWindowName()
 	if (X11Display != nullptr)
 	{
 		constexpr std::size_t MAX_PATH{ 256 };
-		X11Window focusedWindow;
+		X11Window focusedWindow = 0;
 		char *focusedWindowName = nullptr;
 		unsigned char *processPID = nullptr;
 		char focusedWindowExecutableName[MAX_PATH];
-		int revert;
+		int revert = 0;
 
 		focusedWindowExecutableName[0] = '\0';
 		XGetInputFocus(X11Display, &focusedWindow, &revert);
