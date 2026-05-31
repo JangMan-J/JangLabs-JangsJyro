@@ -1,90 +1,96 @@
 #include "linux/StatusNotifierItem.h"
 
-#include <cstring>
-#if __has_include(<libayatana-appindicator/app-indicator.h>)
-#include <libayatana-appindicator/app-indicator.h>
-#else
-#include <libappindicator/app-indicator.h>
-#endif
-
+#include <cstdlib>
+#include <string>
+#include <utility>
 
 TrayIcon *TrayIcon::getNew(TrayIconData applicationName, std::function<void()> &&beforeShow)
 {
 	return new StatusNotifierItem(applicationName, std::forward<std::function<void()>>(beforeShow));
 }
 
-
 StatusNotifierItem::StatusNotifierItem(TrayIconData, std::function<void()> &&beforeShow)
-  // Capture beforeShow BY MOVE, not by reference: the lambda runs on thread_,
-  // which outlives this constructor. Capturing the rvalue-ref parameter by
-  // reference left a dangling reference once the ctor returned, segfaulting
-  // when the thread later called beforeShow().
-  : thread_{ [this, beforeShow = std::move(beforeShow)] {
-	  int argc = 0;
-	  gtk_init(&argc, nullptr);
+  : context_{ g_main_context_new() }
+  , loop_{ g_main_loop_new(context_, FALSE) }
+  // Capture beforeShow BY MOVE: the lambda runs on thread_, which outlives this
+  // constructor; capturing the rvalue-ref parameter by reference would dangle.
+  , thread_{ [this, beforeShow = std::move(beforeShow)] {
+	  g_main_context_push_thread_default(context_);
 
-	  std::string iconPath{};
-	  const auto APPDIR = ::getenv("APPDIR");
-	  if (APPDIR != nullptr)
+	  std::string iconName = "jsm-status-dark";
+	  if (const char *appdir = ::getenv("APPDIR"); appdir != nullptr)
 	  {
-		  iconPath = APPDIR;
-		  iconPath += "/usr/share/icons/hicolor/24x24/status/jsm-status-dark.svg";
-		  gtk_icon_theme_prepend_search_path(gtk_icon_theme_get_default(), iconPath.c_str());
-	  }
-	  else
-	  {
-		  iconPath = "jsm-status-dark";
+		  iconName = std::string(appdir) + "/usr/share/icons/hicolor/24x24/status/jsm-status-dark.svg";
 	  }
 
-	  menu_ = std::unique_ptr<GtkMenu, decltype(&::g_object_unref)>{ GTK_MENU(gtk_menu_new()), &g_object_unref };
+	  menu_ = g_menu_new();
+	  actions_ = g_simple_action_group_new();
+	  indicator_ = app_indicator_new(APPLICATION_RDN APPLICATION_NAME, iconName.c_str(), APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
 
-	  indicator_ = app_indicator_new(APPLICATION_RDN APPLICATION_NAME, iconPath.c_str(), APP_INDICATOR_CATEGORY_APPLICATION_STATUS);
-	  app_indicator_set_status(indicator_, APP_INDICATOR_STATUS_ACTIVE);
-	  app_indicator_set_menu(indicator_, menu_.get());
-
+	  // beforeShow() builds the menu via AddMenuItem on this thread, so all
+	  // GMenu/GAction construction stays single-threaded.
 	  beforeShow();
 
-	  gtk_main();
+	  // The indicator renders only once it has BOTH a menu and actions.
+	  app_indicator_set_menu(indicator_, menu_);
+	  app_indicator_set_actions(indicator_, actions_);
+	  app_indicator_set_status(indicator_, APP_INDICATOR_STATUS_ACTIVE);
+
+	  g_main_loop_run(loop_);
+
+	  g_main_context_pop_thread_default(context_);
   } }
 {
 }
 
 StatusNotifierItem::~StatusNotifierItem()
 {
-	g_idle_add([](void *) -> int {
-		gtk_main_quit();
-		return false;
-	},
-	  this);
+	if (loop_ != nullptr)
+	{
+		// Quit the loop on its own thread, then join.
+		g_main_context_invoke(
+		  context_,
+		  [](void *data) -> gboolean {
+			  g_main_loop_quit(static_cast<StatusNotifierItem *>(data)->loop_);
+			  return G_SOURCE_REMOVE;
+		  },
+		  this);
+	}
 
-	thread_.join();
+	if (thread_.joinable())
+	{
+		thread_.join();
+	}
+
+	for (auto &entry : subMenus_)
+	{
+		g_clear_object(&entry.second);
+	}
+	g_clear_object(&indicator_);
+	g_clear_object(&menu_);
+	g_clear_object(&actions_);
+	if (loop_ != nullptr)
+	{
+		g_main_loop_unref(loop_);
+		loop_ = nullptr;
+	}
+	if (context_ != nullptr)
+	{
+		g_main_context_unref(context_);
+		context_ = nullptr;
+	}
 }
 
-bool StatusNotifierItem::Show()
+std::string StatusNotifierItem::addAction(GSimpleAction *action, ClickCallbackType &&onClick)
 {
-	g_idle_add([](void *self) -> int {
-		gtk_widget_show_all(GTK_WIDGET(static_cast<StatusNotifierItem *>(self)->menu_.get()));
-		return false;
-	},
-	  this);
-
-	return true;
-}
-
-bool StatusNotifierItem::Hide()
-{
-	g_idle_add([](void *self) -> int {
-		gtk_widget_hide(GTK_WIDGET(static_cast<StatusNotifierItem *>(self)->menu_.get()));
-		return false;
-	},
-	  this);
-
-	return true;
-}
-
-bool StatusNotifierItem::SendNotification(const std::string &)
-{
-	return true;
+	callbacks_.emplace_back(std::move(onClick));
+	// std::list keeps element addresses stable, so &back() is valid for the
+	// lifetime of the action.
+	g_signal_connect(action, "activate", G_CALLBACK(&StatusNotifierItem::OnActivate), &callbacks_.back());
+	g_action_map_add_action(G_ACTION_MAP(actions_), G_ACTION(action)); // takes its own ref
+	std::string detailed = std::string("indicator.") + g_action_get_name(G_ACTION(action));
+	g_object_unref(action);
+	return detailed;
 }
 
 void StatusNotifierItem::AddMenuItem(const std::string &label, ClickCallbackType &&onClick)
@@ -93,17 +99,13 @@ void StatusNotifierItem::AddMenuItem(const std::string &label, ClickCallbackType
 	if (label == "Show Console")
 		return;
 
-	menuItems_.emplace_back(GTK_MENU_ITEM(gtk_menu_item_new_with_label(label.c_str())));
+	const std::string name = "item" + std::to_string(actionCounter_++);
+	GSimpleAction *action = g_simple_action_new(name.c_str(), nullptr);
+	const std::string detailed = addAction(action, std::move(onClick));
 
-	auto &menuItem = menuItems_.back();
-
-	callbacks_.emplace_back(std::move(onClick));
-	auto &cb = callbacks_.back();
-
-	g_signal_connect(menuItem, "activate", G_CALLBACK(&StatusNotifierItem::OnActivate), const_cast<ClickCallbackType *>(&cb));
-
-	gtk_container_add(GTK_CONTAINER(menu_.get()), GTK_WIDGET(menuItem));
-	gtk_widget_show_all(GTK_WIDGET(menuItem));
+	GMenuItem *item = g_menu_item_new(label.c_str(), detailed.c_str());
+	g_menu_append_item(menu_, item);
+	g_object_unref(item);
 }
 
 void StatusNotifierItem::AddMenuItem(const std::string &label, ClickCallbackTypeChecked &&onClick, StateCallbackType &&getState)
@@ -112,80 +114,90 @@ void StatusNotifierItem::AddMenuItem(const std::string &label, ClickCallbackType
 	if (label == "Show Console")
 		return;
 
-	menuItems_.emplace_back(GTK_MENU_ITEM(gtk_check_menu_item_new_with_label(label.c_str())));
-
-	auto &menuItem = menuItems_.back();
-
-	gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(menuItem), getState());
-
-	callbacks_.emplace_back([=] {
+	const std::string name = "item" + std::to_string(actionCounter_++);
+	// Boolean-stateful action with no parameter type toggles its visual state on
+	// activation; we mirror the click into the app-side state via onClick.
+	GSimpleAction *action = g_simple_action_new_stateful(name.c_str(), nullptr, g_variant_new_boolean(getState()));
+	const std::string detailed = addAction(action, [onClick = std::move(onClick), getState = std::move(getState)] {
 		onClick(!getState());
 	});
-	auto &cb = callbacks_.back();
 
-	g_signal_connect(menuItem, "activate", G_CALLBACK(&StatusNotifierItem::OnActivate), const_cast<ClickCallbackType *>(&cb));
-
-	gtk_container_add(GTK_CONTAINER(menu_.get()), GTK_WIDGET(menuItem));
-	gtk_widget_show_all(GTK_WIDGET(menuItem));
+	GMenuItem *item = g_menu_item_new(label.c_str(), detailed.c_str());
+	g_menu_append_item(menu_, item);
+	g_object_unref(item);
 }
 
-void StatusNotifierItem::AddMenuItem(const std::string &l, const std::string &sl, ClickCallbackType &&onClick)
+void StatusNotifierItem::AddMenuItem(const std::string &label, const std::string &subLabel, ClickCallbackType &&onClick)
 {
 	// Disable show-hide console since this is not supported on Linux
-	if (l == "Show Console")
+	if (label == "Show Console")
 		return;
 
-	const auto *label = l.c_str();
-	const auto *subLabel = sl.c_str();
+	GMenu *submenu = getOrCreateSubMenu(label);
 
-	const auto it = std::find_if(menuItems_.begin(), menuItems_.end(), [&label](GtkMenuItem *item) {
-		return strcmp(label, gtk_menu_item_get_label(item)) == 0;
-	});
+	const std::string name = "item" + std::to_string(actionCounter_++);
+	GSimpleAction *action = g_simple_action_new(name.c_str(), nullptr);
+	const std::string detailed = addAction(action, std::move(onClick));
 
-	GtkMenuItem *menuItem = nullptr;
+	GMenuItem *item = g_menu_item_new(subLabel.c_str(), detailed.c_str());
+	g_menu_append_item(submenu, item);
+	g_object_unref(item);
+}
 
-	if (it == menuItems_.end())
+GMenu *StatusNotifierItem::getOrCreateSubMenu(const std::string &label)
+{
+	if (auto it = subMenus_.find(label); it != subMenus_.end())
 	{
-		menuItems_.emplace_back(GTK_MENU_ITEM(gtk_check_menu_item_new_with_label(label)));
-		menuItem = menuItems_.back();
-		gtk_container_add(GTK_CONTAINER(menu_.get()), GTK_WIDGET(menuItem));
-		gtk_widget_show_all(GTK_WIDGET(menuItem));
-	}
-	else
-	{
-		menuItem = *it;
+		return it->second;
 	}
 
-	auto subMenuIt = subMenus_.find(menuItem);
-	if (subMenuIt == subMenus_.end())
-	{
-		subMenuIt = subMenus_.emplace(menuItem, std::pair<GtkMenu *, std::vector<GtkMenuItem *>>{ GTK_MENU(gtk_menu_new()), std::vector<GtkMenuItem *>{} }).first;
-		gtk_menu_item_set_submenu(menuItem, GTK_WIDGET(subMenuIt->second.first));
-		gtk_widget_show_all(GTK_WIDGET(menuItem));
-	}
-
-	auto &subMenu = subMenuIt->second.first;
-	auto &subMenuItems = subMenuIt->second.second;
-
-	subMenuItems.emplace_back(GTK_MENU_ITEM(gtk_menu_item_new_with_label(subLabel)));
-	auto &subMenuItem = subMenuItems.back();
-
-	callbacks_.emplace_back(std::move(onClick));
-	auto &cb = callbacks_.back();
-	g_signal_connect(subMenuItem, "activate", G_CALLBACK(&StatusNotifierItem::OnActivate), const_cast<ClickCallbackType *>(&cb));
-
-	gtk_container_add(GTK_CONTAINER(subMenu), GTK_WIDGET(subMenuItem));
-	gtk_widget_show_all(GTK_WIDGET(subMenuItem));
+	GMenu *submenu = g_menu_new();
+	g_menu_append_submenu(menu_, label.c_str(), G_MENU_MODEL(submenu)); // takes its own ref
+	subMenus_.emplace(label, submenu);                                  // keep our ref; released in dtor
+	return submenu;
 }
 
 void StatusNotifierItem::ClearMenuMap()
 {
 }
 
-void StatusNotifierItem::OnActivate(GtkMenuItem *, void *data) noexcept
+void StatusNotifierItem::OnActivate(GSimpleAction *, GVariant *, void *data) noexcept
 {
 	auto *cb = static_cast<ClickCallbackType *>(data);
 	(*cb)();
+}
+
+bool StatusNotifierItem::Show()
+{
+	g_main_context_invoke(
+	  context_,
+	  [](void *data) -> gboolean {
+		  auto *self = static_cast<StatusNotifierItem *>(data);
+		  if (self->indicator_ != nullptr)
+			  app_indicator_set_status(self->indicator_, APP_INDICATOR_STATUS_ACTIVE);
+		  return G_SOURCE_REMOVE;
+	  },
+	  this);
+	return true;
+}
+
+bool StatusNotifierItem::Hide()
+{
+	g_main_context_invoke(
+	  context_,
+	  [](void *data) -> gboolean {
+		  auto *self = static_cast<StatusNotifierItem *>(data);
+		  if (self->indicator_ != nullptr)
+			  app_indicator_set_status(self->indicator_, APP_INDICATOR_STATUS_PASSIVE);
+		  return G_SOURCE_REMOVE;
+	  },
+	  this);
+	return true;
+}
+
+bool StatusNotifierItem::SendNotification(const std::string &)
+{
+	return true;
 }
 
 StatusNotifierItem::operator bool()

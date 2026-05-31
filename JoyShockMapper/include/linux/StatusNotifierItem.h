@@ -3,34 +3,26 @@
 #include "PlatformDefinitions.h"
 #include "TrayIcon.h"
 
-#include <algorithm>
 #include <functional>
+#include <list>
 #include <string>
 #include <thread>
-#include <vector>
-#include <memory>
 #include <unordered_map>
-#include <list>
 
-#include <gtk/gtk.h>
-#if __has_include(<libayatana-appindicator/app-indicator.h>)
-#include <libayatana-appindicator/app-indicator.h>
-#else
-#include <libappindicator/app-indicator.h>
-#endif
+#include <gio/gio.h>
+#include <ayatana-appindicator.h>
 
+// GTK-free StatusNotifierItem backed by libayatana-appindicator-glib: the menu
+// is a GMenu model whose items bind to a GSimpleActionGroup (the "indicator."
+// action namespace), serviced by a GLib main loop on a dedicated thread.
 class StatusNotifierItem : public TrayIcon
 {
-private:
-
 public:
 	using StringType = std::string;
 
-public:
 	StatusNotifierItem(TrayIconData applicationName, std::function<void()> &&beforeShow);
 	~StatusNotifierItem();
 
-public:
 	bool Show() override;
 	bool Hide() override;
 
@@ -45,15 +37,22 @@ public:
 	operator bool() override;
 
 private:
-	static void OnActivate(GtkMenuItem *item, void *data) noexcept;
+	static void OnActivate(GSimpleAction *action, GVariant *parameter, void *data) noexcept;
 
-private:
+	// Registers `action` + its callback and returns the "indicator.<name>"
+	// detailed-action string to attach to a GMenuItem. Consumes `action`'s ref.
+	std::string addAction(GSimpleAction *action, ClickCallbackType &&onClick);
+	GMenu *getOrCreateSubMenu(const std::string &label);
+
 	AppIndicator *indicator_{ nullptr };
-	std::unique_ptr<GtkMenu, decltype(&::g_object_unref)> menu_{ nullptr, nullptr };
-	std::vector<GtkMenuItem *> menuItems_{};
-	std::unordered_map<GtkMenuItem *, std::pair<GtkMenu *, std::vector<GtkMenuItem *>>> subMenus_;
+	GMenu *menu_{ nullptr };
+	GSimpleActionGroup *actions_{ nullptr };
+	GMainContext *context_{ nullptr };
+	GMainLoop *loop_{ nullptr };
 
+	std::unordered_map<std::string, GMenu *> subMenus_;
 	std::list<ClickCallbackType> callbacks_;
+	unsigned actionCounter_{ 0 };
 
 	std::thread thread_;
 };
