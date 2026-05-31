@@ -25,6 +25,7 @@
 #include "TriggerEffectGenerator.h"
 #include <cstdint>
 #include <cmath>
+#include <algorithm>
 
 namespace ExtendInput::DataTools::DualSense
 {

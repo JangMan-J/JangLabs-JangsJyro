@@ -4,7 +4,7 @@ if (UNIX AND NOT APPLE)
     find_package (PkgConfig QUIET REQUIRED)
 
     pkg_search_module (Gtkmm REQUIRED IMPORTED_TARGET gtk+-3.0)
-    pkg_search_module (appindicator REQUIRED IMPORTED_TARGET appindicator3-0.1)
+    pkg_search_module (appindicator REQUIRED IMPORTED_TARGET appindicator3-0.1 ayatana-appindicator3-0.1)
     pkg_search_module (evdev REQUIRED IMPORTED_TARGET libevdev)
 
     add_library (

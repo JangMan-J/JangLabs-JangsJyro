@@ -1,7 +1,11 @@
 #include "linux/StatusNotifierItem.h"
 
 #include <cstring>
+#if __has_include(<libayatana-appindicator/app-indicator.h>)
+#include <libayatana-appindicator/app-indicator.h>
+#else
 #include <libappindicator/app-indicator.h>
+#endif
 
 
 TrayIcon *TrayIcon::getNew(TrayIconData applicationName, std::function<void()> &&beforeShow)

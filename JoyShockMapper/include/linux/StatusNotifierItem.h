@@ -13,7 +13,11 @@
 #include <list>
 
 #include <gtk/gtk.h>
+#if __has_include(<libayatana-appindicator/app-indicator.h>)
+#include <libayatana-appindicator/app-indicator.h>
+#else
 #include <libappindicator/app-indicator.h>
+#endif
 
 class StatusNotifierItem : public TrayIcon
 {
