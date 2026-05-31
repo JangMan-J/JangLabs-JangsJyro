@@ -8,9 +8,15 @@ namespace JSM
 {
 
 AutoConnect::AutoConnect(shared_ptr<JslWrapper> joyshock, bool start)
-  : PollingThread("AutoConnect thread", std::bind(&AutoConnect::AutoConnectPoll, this, std::placeholders::_1), nullptr, 1000, start)
+  // Pass `false` to the base so PollingThread does NOT spawn the poll thread
+  // before our `jsl` member is constructed (base ctor runs before derived
+  // member init). Starting below, after `jsl` is set, fixes a use-before-init
+  // race that segfaulted AutoConnectPoll on a null `jsl` at startup on Linux.
+  : PollingThread("AutoConnect thread", std::bind(&AutoConnect::AutoConnectPoll, this, std::placeholders::_1), nullptr, 1000, false)
   , jsl(joyshock)
 {
+	if (start)
+		Start();
 }
 
 bool AutoConnect::AutoConnectPoll(void* param)

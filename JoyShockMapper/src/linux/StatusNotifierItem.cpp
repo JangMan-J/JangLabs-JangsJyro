@@ -15,7 +15,11 @@ TrayIcon *TrayIcon::getNew(TrayIconData applicationName, std::function<void()> &
 
 
 StatusNotifierItem::StatusNotifierItem(TrayIconData, std::function<void()> &&beforeShow)
-  : thread_{ [this, &beforeShow] {
+  // Capture beforeShow BY MOVE, not by reference: the lambda runs on thread_,
+  // which outlives this constructor. Capturing the rvalue-ref parameter by
+  // reference left a dangling reference once the ctor returned, segfaulting
+  // when the thread later called beforeShow().
+  : thread_{ [this, beforeShow = std::move(beforeShow)] {
 	  int argc = 0;
 	  gtk_init(&argc, nullptr);
 
