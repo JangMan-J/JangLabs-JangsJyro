@@ -617,6 +617,10 @@ void initConsole(std::function<void()>)
 		}
 		std::cout << "[DEBUG] consoleForwardThread exiting" << std::endl;
 	});
+	// Same rationale as ttyForwardThread: detach so the static std::thread is not
+	// destroyed while joinable at exit (-> std::terminate()). This overload is
+	// currently unreachable, but keep it symmetric with the no-arg overload.
+	consoleForwardThread.detach();
 }
 
 std::tuple<std::string, std::string> GetActiveWindowName()
@@ -790,6 +794,11 @@ void initConsole() {
 		free(lineptr);
 		fclose(tty);
 	});
+	// Process-lifetime input forwarder: detach so the static std::thread is not
+	// destroyed while joinable at exit() (__cxa_finalize), which would call
+	// std::terminate(). Matches the .detach() idiom in initFifoCommandListener().
+	// Safe to detach unconditionally: initConsole() is called exactly once.
+	ttyForwardThread.detach();
 }
 
 bool ClearConsole() {
