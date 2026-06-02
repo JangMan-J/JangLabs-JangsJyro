@@ -29,6 +29,7 @@ Trace DSL (one action per line; '#' comments; blanks ignored):
 Requires rw on /dev/uinput (python-evdev).
 """
 import argparse
+import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -102,6 +103,30 @@ def replay(ui, trace_path):
             do_action(ui, line.split())
 
 
+def hold_control(ui, fifo_path):
+    """Keep the pad alive and execute DSL actions written to a control FIFO, one
+    per line, until a 'quit' line (or repeated EOF). Lets a caller bind the pad in
+    an external app (e.g. Steam Input) and THEN inject on cue. Reusable for any
+    interactive lane work."""
+    if not os.path.exists(fifo_path):
+        os.mkfifo(fifo_path, 0o666)
+    log(f"CONTROL-FIFO {fifo_path} — write DSL actions (e.g. 'press SOUTH 120'); 'quit' to stop")
+    running = True
+    while running:
+        with open(fifo_path) as f:  # blocks until a writer connects; EOF when it closes
+            for raw in f:
+                line = raw.split("#", 1)[0].strip()
+                if not line:
+                    continue
+                if line.lower() == "quit":
+                    running = False
+                    break
+                try:
+                    do_action(ui, line.split())
+                except Exception as ex:  # noqa: BLE001 — keep the holder alive on a bad line
+                    log(f"WARN bad action {line!r}: {ex}")
+
+
 def demo(ui, repeat):
     for i in range(repeat):
         do_action(ui, ["press", "SOUTH", "120"]); time.sleep(0.4)
@@ -122,6 +147,7 @@ def main():
     ap.add_argument("--linger", type=float, default=5.0)
     ap.add_argument("--repeat", type=int, default=1, help="demo-sequence repeats (ignored with --trace)")
     ap.add_argument("--trace", default=None, help="replay this trace DSL file instead of the demo sequence")
+    ap.add_argument("--control-fifo", default=None, help="hold the pad alive and execute DSL actions written to this FIFO until 'quit' (live, on-cue injection)")
     ap.add_argument("--name", default="Microsoft X-Box 360 pad")
     ap.add_argument("--vendor", default="0x045e")
     ap.add_argument("--product", default="0x028e")
@@ -137,12 +163,16 @@ def main():
         log(f"CREATED pad name={args.name!r} {args.vendor}:{args.product} -> {ui.device.path if ui.device else '?'}")
         log(f"WARMUP {args.warmup}s")
         time.sleep(args.warmup)
-        if args.trace:
+        if args.control_fifo:
+            hold_control(ui, args.control_fifo)
+        elif args.trace:
             replay(ui, args.trace)
+            log(f"SEQUENCE done; LINGER {args.linger}s")
+            time.sleep(args.linger)
         else:
             demo(ui, args.repeat)
-        log(f"SEQUENCE done; LINGER {args.linger}s")
-        time.sleep(args.linger)
+            log(f"SEQUENCE done; LINGER {args.linger}s")
+            time.sleep(args.linger)
     finally:
         log("DESTROY pad")
         ui.close()

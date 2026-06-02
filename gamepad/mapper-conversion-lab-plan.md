@@ -29,10 +29,13 @@ blocked on the user (Steam GUI) or on root/Phase-6 setup. State:
   **simultaneous press = `degraded` (sticky-state bug)** — a lone `L` after an `L+R` chord re-emits `Q`;
   root-cause hypothesis (`getMatchingSimBtn` state-equality match) filed in the finding.
 - **BLOCKED — Steam Input (reference) lane** (the cross-runtime delta for every A-B pair needs it): Steam
-  is **not running** (no process, no `controller.log`) and binding a key needs the Steam Input GUI. When
-  back: launch Steam (Beta+SteamRT3), enable Steam Input for a `synthetic_gamepad.py` pad, bind one key
-  (e.g. F9), run `tools/xi2_capture.py` (Steam emits at the XI2/Wayland seat, not evdev — Phase 0b). First
-  question: does Steam Input even recognize a synthetic `uinput` pad? (If not, the Steam lane needs a `uhid` device.)
+  is **not running** and binding a key needs the Steam Input GUI. **Turnkey harness ready —
+  `tools/steam_lane_spike.sh`** (mechanically validated 2026-06-02): with Steam up, run it; it creates a
+  live-controllable synthetic pad (`synthetic_gamepad.py --control-fifo`), guides you through the single
+  GUI step (enable Steam Input + bind the pad's South button → F9), then auto-captures **both** planes and
+  reports F9-at-XI2 vs F9-at-evdev. It answers the first open question — does Steam Input even recognize a
+  synthetic `uinput` pad? (If not, the Steam lane needs a `uhid` device.) Steam emits at the XI2/Wayland
+  seat, not evdev (Phase 0b).
 - **BLOCKED/deferred — gyro (R2, Phase 6):** needs a native-`2dc8:6012` `uhid` spoof so SDL's
   `SDL_hidapi_8bitdo` surfaces sensors. `/dev/uhid` is **root-only** here (needs a udev rule / group / ACL,
   or sudo) and `python-hid` isn't installed — setup the unattended agent can't do. Covers gyro quick-wins
