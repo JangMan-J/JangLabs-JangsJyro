@@ -1,0 +1,16 @@
+{"t": 1780412757.737337, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_A", "value": 1}
+{"t": 1780412757.737337, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412757.77866, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_A", "value": 0}
+{"t": 1780412757.77866, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412758.541938, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_B", "value": 1}
+{"t": 1780412758.541938, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412758.719619, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_B", "value": 0}
+{"t": 1780412758.719619, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412759.399535, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_C", "value": 1}
+{"t": 1780412759.399535, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412759.440481, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_C", "value": 0}
+{"t": 1780412759.440481, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412760.199885, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_D", "value": 1}
+{"t": 1780412760.199885, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412760.380066, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_D", "value": 0}
+{"t": 1780412760.380066, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}

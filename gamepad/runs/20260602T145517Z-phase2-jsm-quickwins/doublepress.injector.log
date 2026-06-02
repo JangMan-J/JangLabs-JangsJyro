@@ -1,0 +1,28 @@
+[15:05:24.954Z mono=14257.901] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event30
+[15:05:24.954Z mono=14257.901] WARMUP 9.0s
+[15:05:33.954Z mono=14266.902] REPLAY trace /home/jangmanj/JangLabs/jangsjyro/gamepad/runs/20260602T145517Z-phase2-jsm-quickwins/traces/doublepress.trace
+[15:05:33.954Z mono=14266.902] press NORTH 60.0ms (down)
+[15:05:34.014Z mono=14266.962] press NORTH (up)
+[15:05:34.015Z mono=14266.962] wait 500.0ms
+[15:05:34.515Z mono=14267.463] press NORTH 60.0ms (down)
+[15:05:34.575Z mono=14267.523] press NORTH (up)
+[15:05:34.575Z mono=14267.523] wait 90.0ms
+[15:05:34.665Z mono=14267.613] press NORTH 60.0ms (down)
+[15:05:34.726Z mono=14267.674] press NORTH (up)
+[15:05:34.726Z mono=14267.674] wait 600.0ms
+[15:05:35.326Z mono=14268.274] SEQUENCE done; LINGER 4.0s
+[15:05:39.326Z mono=14272.274] DESTROY pad
+[15:08:01.133Z mono=14414.081] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event30
+[15:08:01.134Z mono=14414.081] WARMUP 9.0s
+[15:08:10.134Z mono=14423.082] REPLAY trace /home/jangmanj/JangLabs/jangsjyro/gamepad/runs/20260602T145517Z-phase2-jsm-quickwins/traces/doublepress.trace
+[15:08:10.134Z mono=14423.082] press NORTH 60.0ms (down)
+[15:08:10.194Z mono=14423.142] press NORTH (up)
+[15:08:10.194Z mono=14423.142] wait 500.0ms
+[15:08:10.695Z mono=14423.642] press NORTH 60.0ms (down)
+[15:08:10.755Z mono=14423.703] press NORTH (up)
+[15:08:10.755Z mono=14423.703] wait 90.0ms
+[15:08:10.845Z mono=14423.793] press NORTH 60.0ms (down)
+[15:08:10.905Z mono=14423.853] press NORTH (up)
+[15:08:10.906Z mono=14423.853] wait 600.0ms
+[15:08:11.506Z mono=14424.454] SEQUENCE done; LINGER 4.0s
+[15:08:15.506Z mono=14428.454] DESTROY pad

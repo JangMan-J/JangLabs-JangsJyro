@@ -1,0 +1,8 @@
+press WEST 120
+wait 600
+down TL
+wait 80
+press WEST 120
+wait 80
+up TL
+wait 400

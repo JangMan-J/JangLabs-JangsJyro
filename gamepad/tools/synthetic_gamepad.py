@@ -35,8 +35,16 @@ from datetime import datetime, timezone
 
 from evdev import UInput, AbsInfo, ecodes as e
 
+# NB the evdev gamepad-button aliasing: BTN_NORTH==BTN_X (0x133), BTN_WEST==BTN_Y
+# (0x134). Those evdev *names* are letter buttons, NOT screen positions. On a 360
+# pad the faces are A=south, B=east, X=west, Y=north, so SDL's mapping routes
+# BTN_X(=evdev BTN_NORTH)->WEST and BTN_Y(=evdev BTN_WEST)->NORTH. We name keys by
+# CARDINAL (matching JSM's N/E/S/W), so WEST/NORTH map to the swapped evdev codes.
 BTN = {
-    "SOUTH": e.BTN_SOUTH, "EAST": e.BTN_EAST, "NORTH": e.BTN_NORTH, "WEST": e.BTN_WEST,
+    "SOUTH": e.BTN_SOUTH,  # BTN_A 0x130 -> SDL SOUTH
+    "EAST": e.BTN_EAST,    # BTN_B 0x131 -> SDL EAST
+    "WEST": e.BTN_NORTH,   # BTN_X 0x133 -> SDL WEST
+    "NORTH": e.BTN_WEST,   # BTN_Y 0x134 -> SDL NORTH
     "TL": e.BTN_TL, "TR": e.BTN_TR, "SELECT": e.BTN_SELECT, "START": e.BTN_START,
     "MODE": e.BTN_MODE, "THUMBL": e.BTN_THUMBL, "THUMBR": e.BTN_THUMBR,
 }
