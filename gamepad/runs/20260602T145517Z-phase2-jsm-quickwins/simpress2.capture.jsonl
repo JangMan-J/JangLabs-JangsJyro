@@ -1,0 +1,12 @@
+{"t": 1780412372.418133, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 1}
+{"t": 1780412372.418133, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412372.563385, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 0}
+{"t": 1780412372.563385, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412373.267623, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_Q", "value": 1}
+{"t": 1780412373.267623, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412373.563677, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_Q", "value": 0}
+{"t": 1780412373.563677, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412374.316892, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_Q", "value": 1}
+{"t": 1780412374.316892, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780412374.465138, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_Q", "value": 0}
+{"t": 1780412374.465138, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}

@@ -1,0 +1,7 @@
+# soft pull (RZ=100) => RMOUSE ; full (RZ=255) => RMOUSE + LSHIFT ; release
+axis RZ 100
+wait 450
+axis RZ 255
+wait 450
+axis RZ 0
+wait 450

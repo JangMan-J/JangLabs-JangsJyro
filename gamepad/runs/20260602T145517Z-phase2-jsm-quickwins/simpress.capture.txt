@@ -1,0 +1,13 @@
+# watching 2 device(s):
+#   /dev/input/event31  'JoyShockMapper_MOUSE'  [GRABBED]
+#   /dev/input/event256  'JoyShockMapper_KEYBOARD'  [GRABBED]
+# types=['KEY', 'REL', 'SYN']  seconds=16.0
+1780412171.351494  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1780412171.351494  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1780412171.648762  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1780412171.648762  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1780412172.304013  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1780412172.304013  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1780412172.449717  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1780412172.449717  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+# captured 8 event(s).

@@ -1,0 +1,11 @@
+# lone L FIRST (expect LSHIFT), then L+R (expect Q), then lone L again (expect LSHIFT)
+press TL 200
+wait 700
+down TL
+down TR
+wait 300
+up TR
+up TL
+wait 700
+press TL 200
+wait 400

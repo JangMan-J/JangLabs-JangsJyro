@@ -1,0 +1,13 @@
+[14:56:48.597Z mono=13741.545] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event30
+[14:56:48.597Z mono=13741.545] WARMUP 9.0s
+[14:56:57.598Z mono=13750.546] REPLAY trace /home/jangmanj/JangLabs/jangsjyro/gamepad/runs/20260602T145517Z-phase2-jsm-quickwins/traces/stickwasd.trace
+[14:56:57.598Z mono=13750.546] axis LY=-32000
+[14:56:57.598Z mono=13750.546] wait 500.0ms
+[14:56:58.098Z mono=13751.046] axis LY=0
+[14:56:58.098Z mono=13751.046] wait 400.0ms
+[14:56:58.498Z mono=13751.446] axis LX=-32000
+[14:56:58.499Z mono=13751.446] wait 500.0ms
+[14:56:58.999Z mono=13751.947] axis LX=0
+[14:56:58.999Z mono=13751.947] wait 400.0ms
+[14:56:59.399Z mono=13752.347] SEQUENCE done; LINGER 4.0s
+[14:57:03.399Z mono=13756.347] DESTROY pad

@@ -1,0 +1,5 @@
+# short EAST press (<150ms) => tap => KEY_A ; long press (>150ms) => hold => KEY_B
+press EAST 80
+wait 700
+press EAST 450
+wait 400

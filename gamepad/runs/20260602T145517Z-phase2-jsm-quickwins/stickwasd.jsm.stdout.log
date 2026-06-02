@@ -1,0 +1,41 @@
+[1;32mWelcome to JoyShockMapper version v-128-NOTFOUND.-128-NOTFOUND.-128-NOTFOUND!
+[0;37m[FIFO] Opened FIFO for reading (fd=15)
+[FIFO] Dummy writer opened (fd=17)
+[1;34m[AUTOCONNECT] Going from 0 devices to 1.
+[0;37m[0;32mAUTOLOAD is available. Files in [0;37m[1;34m/home/jangmanj/.config/JoyShockMapper/AutoLoad/[0;37m[0;32m folder will get loaded automatically when a matching application is in focus.
+[0;37m[0;32m1 device connected
+[0;37m[0;32mResetting all mappings to defaults
+[0;37m[0;32mThere is no [0;37m[1;34mOnReset.txt[0;37m[0;32m file to load.
+[0;37m[0;32mThere is no [0;37m[1;34mOnStartup.txt[0;37m[0;32m file to load.
+[0;37m[0;32mReconnecting controllers: MERGE
+[0;37m[0;32m1 device connected
+[0;37m[0;32mThere is no [0;37m[1;34mOnReconnect.txt[0;37m[0;32m file to load.
+[0;37mRESET_MAPPINGS
+LEFT_STICK_MODE = NO_MOUSE
+LUP = W
+LDOWN = S
+LLEFT = A
+LRIGHT = D
+[0;32mResetting all mappings to defaults
+[0;37m[0;32mThere is no [0;37m[1;34mOnReset.txt[0;37m[0;32m file to load.
+[0;37m[0;32mLEFT_STICK_MODE has been set to NO_MOUSE
+[0;37m[0;32mLUP mapped to W
+[0;37m[0;32mLDOWN mapped to S
+[0;37m[0;32mLLEFT mapped to A
+[0;37m[0;32mLRIGHT mapped to D
+[0;37mRECONNECT_CONTROLLERS
+[0;32mReconnecting controllers: MERGE
+[0;37m[0;32m1 device connected
+[0;37m[0;32mThere is no [0;37m[1;34mOnReconnect.txt[0;37m[0;32m file to load.
+[0;37m[0;32mLRING: true
+[0;37m[0;32mLUP: true
+[0;37m[0;32mLRING: false
+[0;37m[0;32mLUP: false
+[0;37m[0;32mLRING: true
+[0;37m[0;32mLLEFT: true
+[0;37m[0;32mLRING: false
+[0;37m[0;32mLLEFT: false
+[0;37m[1;34m[AUTOCONNECT] Going from 1 devices to 0.
+[0;37m[0;32mReconnecting controllers: MERGE
+[0;37m[0;32mThere is no [0;37m[1;34mOnReconnect.txt[0;37m[0;32m file to load.
+[0;37m

@@ -1,0 +1,17 @@
+[14:59:23.361Z mono=13896.309] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event30
+[14:59:23.361Z mono=13896.309] WARMUP 9.0s
+[14:59:32.361Z mono=13905.309] REPLAY trace /home/jangmanj/JangLabs/jangsjyro/gamepad/runs/20260602T145517Z-phase2-jsm-quickwins/traces/simpress2.trace
+[14:59:32.362Z mono=13905.309] press TL 200.0ms (down)
+[14:59:32.562Z mono=13905.510] press TL (up)
+[14:59:32.562Z mono=13905.510] wait 700.0ms
+[14:59:33.262Z mono=13906.210] down TL
+[14:59:33.262Z mono=13906.210] down TR
+[14:59:33.262Z mono=13906.210] wait 300.0ms
+[14:59:33.562Z mono=13906.510] up TR
+[14:59:33.562Z mono=13906.510] up TL
+[14:59:33.562Z mono=13906.510] wait 700.0ms
+[14:59:34.263Z mono=13907.210] press TL 200.0ms (down)
+[14:59:34.463Z mono=13907.411] press TL (up)
+[14:59:34.463Z mono=13907.411] wait 400.0ms
+[14:59:34.863Z mono=13907.811] SEQUENCE done; LINGER 4.0s
+[14:59:38.863Z mono=13911.811] DESTROY pad
