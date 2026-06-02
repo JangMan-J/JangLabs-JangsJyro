@@ -4,7 +4,7 @@
 # Extends the safe base. All safe-tier bindings apply unless overridden here.
 #
 # INCLUDE PATH: assumes JSM is run from the repo root
-#   C:\Users\Entro\Claude\JangsJyro-JSM\
+#   C:\Users\Entro\Claude\JangLabs-JangsJyro\
 # so that "configs\ArcRaiders.safe.txt" resolves via CWD.
 # If JSM is run from its exe directory, use the full absolute path instead.
 #

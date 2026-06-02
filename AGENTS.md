@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-The root `CMakeLists.txt` selects the backend and delegates the real build to `JoyShockMapper/CMakeLists.txt`. Main C++ code lives in `JoyShockMapper/src/`, with headers in `JoyShockMapper/include/`. Platform-specific implementations are under `JoyShockMapper/src/win32`, `JoyShockMapper/src/linux`, and matching include subfolders. Runtime config templates and packaging assets are in `dist/`; diagrams and reference docs are in `JoyShockMapper/doc/`. `JSM_GUI/jsm-gui-app/` is a separate GUI subtree and is not built by the root CMake project.
+The root `CMakeLists.txt` selects the backend and delegates the real build to `JoyShockMapper/CMakeLists.txt`. Main C++ code lives in `JoyShockMapper/src/`, with headers in `JoyShockMapper/include/`. Platform-specific implementations are under `JoyShockMapper/src/win32`, `JoyShockMapper/src/linux`, and matching include subfolders. Runtime config templates and packaging assets are in `dist/`; diagrams and reference docs are in `JoyShockMapper/doc/`. `JSM_GUI/jsm-gui-app/` is a separate GUI subtree and is not built by the root CMake project. `gamepad/` is the gamepad-input research lab (8BitDo Ultimate 2 / gyro / Steam-Input-vs-JSM behavioral lab); it is not part of the build and carries its own conventions in `gamepad/CLAUDE.md`.
 
 ## Build, Test, and Development Commands
 
@@ -34,4 +34,4 @@ Recent history uses short imperative, sentence-case commit subjects, for example
 
 ## Security, Configuration, and Agent Notes
 
-Do not include local-only workspace files such as `.mcp.json`, `.claude/`, `handoffs/`, or machine-specific configs in upstream PRs. Before reverse-engineering controller behavior, check existing findings in the sibling `../JangsJyro/findings/` workspace and prefer primary sources such as SDL HIDAPI code. Always use the OpenAI developer documentation MCP server when working with the OpenAI API, ChatGPT Apps SDK, Codex, or related OpenAI developer products.
+Do not include local-only workspace files such as `.mcp.json`, `.claude/`, `handoffs/`, or machine-specific configs in upstream PRs. Before reverse-engineering controller behavior, check the existing findings in this repo's `gamepad/findings/` (e.g. `gyro_hid.md`, `jsm_linux_port.md`, `steam_input_linux.md`) and prefer primary sources such as SDL HIDAPI code. Always use the OpenAI developer documentation MCP server when working with the OpenAI API, ChatGPT Apps SDK, Codex, or related OpenAI developer products.

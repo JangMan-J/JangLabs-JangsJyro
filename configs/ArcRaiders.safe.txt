@@ -1,7 +1,7 @@
 # ARC RAIDERS — JSM safe config (v1)
 # Device: 8BitDo Ultimate 2 Wireless (DInput via SDL3, branch-a-port)
 # Source: jangman's jyro_v13.vdf
-# Audit:  JangsJyro/findings/arc_raiders_vdf_to_jsm_audit.md
+# Audit:  gamepad/vdf/translation_audit.md (VDF→JSM audit, in this repo)
 #
 # COVERS:
 #   Gyro-to-mouse with Local Space (G.1, G.2, G.5), sensitivity scaffold (G.3),

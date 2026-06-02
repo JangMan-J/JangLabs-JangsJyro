@@ -1,0 +1,19 @@
+# Transient per-run process-id files written by the lab harness (tools/*.py, run scripts).
+# Run artifacts (result.md, *.jsonl, *.txt, *.log captures) ARE tracked as evidence.
+*.pid
+
+# This lab is a subdir of the JangsJyro repo, whose root .gitignore drops *.log.
+# Re-include the tracked run-evidence logs under runs/ (they are evidence, not build output).
+!runs/**/*.log
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editors / OS
+*.swp
+*~
+.DS_Store
