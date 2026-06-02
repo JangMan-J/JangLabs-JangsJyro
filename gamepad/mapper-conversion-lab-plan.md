@@ -18,24 +18,30 @@ can't separate them — and extest's relevance is an untested follow-up. Durable
 `findings/steam_input_linux.md` + `findings/jsm_linux_port.md`; runs `20260601T065426Z-phase0-runtime-smoke/`
 and `20260601T070951Z-phase0b-steam-input/`.
 
-**▶ NEXT SESSION — START HERE (updated 2026-06-02).** Phase 0 done; **Phase 1 JSM-lane tracer bullet
-DONE + PASS** (run `runs/20260602T144140Z-phase1-jsm-synthetic-spike/`): a **synthetic** `uinput` Xbox-360
-pad (`045e:028e`, no `uhid`) drives JSM → `KEY_SPACE`/`BTN_LEFT` at **evdev**, exact count + order, ~2 ms.
-SDL classifies a plain `uinput` gamepad — **the native-`2dc8:6012` `uhid` spoof is needed only for gyro
-(R2, Phase 6)**, not for digital buttons or analog triggers. The JSM lane now has a complete **headless
-synthetic pipeline, no physical pad**: `tools/synthetic_gamepad.py` → JSM (`build-linux/`) →
-`tools/evdev_capture.py --grab-name JoyShockMapper`.
-- **Next autonomous step — Phase 2 (JSM-lane half):** walk the `vdf` "quick wins" (§10 Phase 2) as
-  JSM-lane tracer slices — extend `synthetic_gamepad.py` to emit each mechanic's stimulus, feed the
-  matching `ArcRaiders.safe.txt` mapping via the FIFO, classify the evdev output. Build the
-  comparator/normalizer only as far as each slice needs.
-- **BLOCKED on the user (Steam GUI):** the **Steam Input lane** synthetic spike — does Steam Input
-  recognize a *synthetic* pad, and observe its output at **XI2/seat** (not evdev; Phase 0b) via
-  `tools/xi2_capture.py`. Needs Steam running with Steam Input bound to the synthetic controller. Until
-  then the **reference (Steam) half** of every A-B pair can't be captured live; the JSM (candidate) half
-  proceeds.
-- **Box-ready (verified 2026-06-02):** `/dev/uinput` rw (user in `input` + a `user:jangmanj:rw-` ACL);
-  JSM builds Linux/clang (SDL3 3.4.8 via CPM) and starts/stops clean.
+**▶ NEXT SESSION — START HERE (updated 2026-06-02, session 2).** Phases 0–1 done; **Phase 2 JSM-lane
+(candidate) half DONE.** The autonomously-reachable lab surface is exhausted — everything remaining is
+blocked on the user (Steam GUI) or on root/Phase-6 setup. State:
+- **JSM lane fully operational, headless, no physical pad:** `tools/synthetic_gamepad.py` (trace runner,
+  `--trace` DSL) → JSM (`build-linux/`, clang + SDL3 3.4.8 via CPM) → `tools/evdev_capture.py --grab-name JoyShockMapper`.
+- **7 vdf-mechanic verdicts** (runs `…phase1-jsm-synthetic-spike` + `…phase2-jsm-quickwins`; see
+  `findings/jsm_lane_behavior.md`): digital button, tap/hold, trigger soft/full, stick→WASD, chord,
+  double-press = **`exact`** (~2 ms); global `HOLD_PRESS_TIME` = audit gotcha **X.2 confirmed**;
+  **simultaneous press = `degraded` (sticky-state bug)** — a lone `L` after an `L+R` chord re-emits `Q`;
+  root-cause hypothesis (`getMatchingSimBtn` state-equality match) filed in the finding.
+- **BLOCKED — Steam Input (reference) lane** (the cross-runtime delta for every A-B pair needs it): Steam
+  is **not running** (no process, no `controller.log`) and binding a key needs the Steam Input GUI. When
+  back: launch Steam (Beta+SteamRT3), enable Steam Input for a `synthetic_gamepad.py` pad, bind one key
+  (e.g. F9), run `tools/xi2_capture.py` (Steam emits at the XI2/Wayland seat, not evdev — Phase 0b). First
+  question: does Steam Input even recognize a synthetic `uinput` pad? (If not, the Steam lane needs a `uhid` device.)
+- **BLOCKED/deferred — gyro (R2, Phase 6):** needs a native-`2dc8:6012` `uhid` spoof so SDL's
+  `SDL_hidapi_8bitdo` surfaces sensors. `/dev/uhid` is **root-only** here (needs a udev rule / group / ACL,
+  or sudo) and `python-hid` isn't installed — setup the unattended agent can't do. Covers gyro quick-wins
+  (primary mode, deadzone, ratchet) + the Local-Space gotcha G.2.
+- **Converter (Phase 9):** gated by the plan on the behavioral loop (both lanes) — don't build it against
+  the static audit alone (anti-Goodhart, D3). The JSM (candidate) half of each pair is characterized; it
+  waits on the Steam reference half.
+- **Box-ready (verified 2026-06-02):** `/dev/uinput` rw (user in `input` + `user:jangmanj:rw-` ACL); JSM
+  builds Linux/clang (SDL3 3.4.8 via CPM), starts/stops clean; `build-linux/` git-ignored.
 
 **JSM source:** this repository — the user's JoyShockMapper fork
 (`https://github.com/JangMan-J/JangLabs-JangsJyro.git`, branch **`branch-a-port`**). The `gamepad/`
