@@ -1,0 +1,16 @@
+{"t": 1780411681.128242, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_SPACE", "value": 1}
+{"t": 1780411681.128242, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411681.248656, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_SPACE", "value": 0}
+{"t": 1780411681.248656, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411681.662212, "dev": "JoyShockMapper_MOUSE", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1780411681.662212, "dev": "JoyShockMapper_MOUSE", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411682.043586, "dev": "JoyShockMapper_MOUSE", "type": "KEY", "code": "BTN_LEFT", "value": 0}
+{"t": 1780411682.043586, "dev": "JoyShockMapper_MOUSE", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411682.443402, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_SPACE", "value": 1}
+{"t": 1780411682.443402, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411682.562888, "dev": "JoyShockMapper_KEYBOARD", "type": "KEY", "code": "KEY_SPACE", "value": 0}
+{"t": 1780411682.562888, "dev": "JoyShockMapper_KEYBOARD", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411682.976488, "dev": "JoyShockMapper_MOUSE", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1780411682.976488, "dev": "JoyShockMapper_MOUSE", "type": "SYN", "code": "SYN_REPORT", "value": 0}
+{"t": 1780411683.36054, "dev": "JoyShockMapper_MOUSE", "type": "KEY", "code": "BTN_LEFT", "value": 0}
+{"t": 1780411683.36054, "dev": "JoyShockMapper_MOUSE", "type": "SYN", "code": "SYN_REPORT", "value": 0}

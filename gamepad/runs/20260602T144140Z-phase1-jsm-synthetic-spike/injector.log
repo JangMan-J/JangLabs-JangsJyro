@@ -1,0 +1,12 @@
+[14:47:51.126Z mono=13204.074] CREATED uinput gamepad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event30
+[14:47:51.126Z mono=13204.074] WARMUP 10.0s (mapper should enumerate the pad now)
+[14:48:01.126Z mono=13214.074] [0] BTN_SOUTH down
+[14:48:01.246Z mono=13214.194] [0] BTN_SOUTH up
+[14:48:01.646Z mono=13214.594] [0] ABS_RZ ramp 0->255 (right trigger pull)
+[14:48:01.944Z mono=13214.892] [0] ABS_RZ ramp 255->0 (right trigger release)
+[14:48:02.442Z mono=13215.389] [1] BTN_SOUTH down
+[14:48:02.562Z mono=13215.510] [1] BTN_SOUTH up
+[14:48:02.962Z mono=13215.910] [1] ABS_RZ ramp 0->255 (right trigger pull)
+[14:48:03.260Z mono=13216.208] [1] ABS_RZ ramp 255->0 (right trigger release)
+[14:48:03.758Z mono=13216.706] SEQUENCE done; LINGER 8.0s
+[14:48:11.758Z mono=13224.706] DESTROY uinput device

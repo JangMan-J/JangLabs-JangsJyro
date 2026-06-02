@@ -5,6 +5,7 @@
 
 build-jsm-*
 build/
+build-linux/
 
 # custom:
 *.tlog

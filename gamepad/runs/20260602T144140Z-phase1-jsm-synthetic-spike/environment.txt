@@ -1,0 +1,13 @@
+# Phase 1 synthetic-injection spike — environment
+date_utc: 2026-06-02T14:41:40Z
+host: Linux JangsJail 7.1.0-rc6-1-cachyos-rc #1 SMP PREEMPT_DYNAMIC Mon, 01 Jun 2026 06:31:39 +0000 x86_64 GNU/Linux
+jangsjyro HEAD: 8d100f1cde79230f33fadc03cd4f7bbb9b6383ca (branch-a-port)
+clang: clang version 22.1.6
+cmake: cmake version 4.3.3
+ninja: 1.13.2
+sdl3(system): sdl3 3.4.8-1.1
+appindicator: libayatana-appindicator-glib 2.0.1-2
+uinput node: [1;40;33mc[0m[1;33mr[31mw[90m-[0m[33mr[31mw[1;90m----[0m@ [1;32m10[90m,[0m[32m223[0m openlinkhub [34m 2 Jun 04:07[0m [36m/dev/[1;40;33muinput[0m
+uinput module: uinput                 32768  3
+user groups: jangmanj sys network openrazer localrepo nopasswdlogin rfkill users video storage lp input audio wheel
+wayland-protocols: not installed
