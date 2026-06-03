@@ -4,9 +4,13 @@
 
 ## Read first
 
+0. **[`HANDOFF.md`](./HANDOFF.md) — START HERE if resuming cold.** The full pickup guide for the
+   mapper-conversion lab: mental model, what runs today, what's proven (Phase 0–2), the open
+   sim-press bug, the blockers + exactly how to clear them, and the one cross-repo loose end.
 1. [`README.md`](./README.md) — current focus and lab layout.
-2. [`8bitdo-ultimate2-arch-linux-troubleshooting.md`](./8bitdo-ultimate2-arch-linux-troubleshooting.md) — current investigation. Living doc; update as steps land.
-3. [`../docs/superpowers/specs/2026-04-29-gamepad-mapper-conversion-lab-design.md`](../docs/superpowers/specs/2026-04-29-gamepad-mapper-conversion-lab-design.md) — long-term direction (Steam-Input-vs-JSM behavioral lab). Canonical design spec, preserved in the parent tree; not active.
+2. [`mapper-conversion-lab-plan.md`](./mapper-conversion-lab-plan.md) — the working plan; its **"▶ NEXT SESSION — START HERE"** banner holds the freshest live state.
+3. [`8bitdo-ultimate2-arch-linux-troubleshooting.md`](./8bitdo-ultimate2-arch-linux-troubleshooting.md) — a separate (Steam-Input native-input) investigation. Living doc; update as steps land.
+4. [`../docs/superpowers/specs/2026-04-29-gamepad-mapper-conversion-lab-design.md`](../docs/superpowers/specs/2026-04-29-gamepad-mapper-conversion-lab-design.md) — long-term direction (Steam-Input-vs-JSM behavioral lab). Canonical design spec, preserved in the parent tree; not active.
 
 ## What changed
 
