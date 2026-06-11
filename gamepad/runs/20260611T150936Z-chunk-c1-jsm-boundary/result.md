@@ -127,27 +127,18 @@ Probe 3 provides independent confirmation: d2d=251ms (far above 150ms) still fir
 
 ---
 
-## Batch 2b — discriminating probes: window reference point RESOLVED (lead adjudication)
+## Lead adjudication (Batch 2b)
 
-Probes designed by team-lead, captured by runner (`doublepress_discriminate.*`), analyzed by
-team-lead from the normalized capture. Config unchanged (`DBL_PRESS_WINDOW=150`, `N=B`, `N,N=X`).
+Lead's independent read of the same captures reached the identical conclusion before the
+runner's write-up landed (sections merged; this addendum replaces the duplicate). Adjudicated:
 
-| Probe | d2d | first hold | r2d | release-ref predicts | down-ref predicts | Observed |
-|---|---|---|---|---|---|---|
-| 1 | 200ms | 60ms | 140ms | double (X) | single (B) | **B + X — double** |
-| 2 | 200ms | 20ms | 180ms | single | single | B + B — single |
-| 3 | 250ms | 110ms | 140ms | double (X) | single (B) | **B + X — double** |
-| 4 | 300ms | 60ms | 240ms | single | single | B + B — single |
-
-Probes 1 vs 2 share the identical down-to-down gap and differ only in first-press hold time;
-their outcomes differ ⇒ **JSM's `DBL_PRESS_WINDOW` is measured first-RELEASE-to-second-DOWN,
-proven by construction** (probe 3 confirms at a second gap; probe 4 sanity passes). This also
-retroactively explains every Batch-2 observation (all its r2d values were < 150ms).
-
-**Cross-runtime consequence (with C2 Batch 2):** Steam's Double Tap Time is DOWN-to-DOWN
-referenced (C2: 190ms d2d = ~130ms r2d did NOT fire), JSM's window is RELEASE-to-DOWN. The
-offset between the two epochs is the user's first-press hold duration — unknowable at convert
-time ⇒ Steam↔JSM double-press window translation is `bounded_approximation` with the loss:
-"window reference epoch differs; effective JSM window = Steam window − first-press hold time."
-
-**Verdict:** `bounded_approximation` (replaces Batch 2's `anomaly/needs-wider-probe`).
+- **JSM `DBL_PRESS_WINDOW` epoch = first-release → second-down, proven by construction**
+  (probes 1 vs 2). The `doublepress_boundary` slice verdict moves from `anomaly` to
+  **`bounded_approximation`**.
+- **Steam epoch (C2 cross-check): release-to-DOWN is ruled out** (130ms r2d < 190ms window
+  fired single). But C2's two probes used equal hold times, so down-to-down and
+  release-to-release remain indistinguishable on current data. **Steam-side discriminating
+  probe queued** (same vary-the-hold design).
+- **Converter consequence regardless of the Steam residual:** the epochs differ across lanes,
+  and the offset involves user hold duration ⇒ double-press window translation is
+  `bounded_approximation`, loss: "window reference epoch differs between mappers."

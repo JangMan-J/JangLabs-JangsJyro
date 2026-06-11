@@ -78,9 +78,10 @@ hypothesis until a trace fires it.
 - **Long Press Time is inclusive and tick-exact at the configured value:** 430ms → tap (F10);
   450ms and 470ms → hold (F11) at Long Press Time 450. Contrast JSM: exclusive + poll slack
   (`jsm_lane_behavior.md` boundary section) — comparator must parameterize per lane.
-- **Double Tap Time is DOWN-to-DOWN referenced, exclusive at the configured value:** 170ms d2d
-  fires the double; 190ms d2d (≈130ms release-to-down) does NOT — which rules out
-  release-referencing by construction. JSM's window is release-to-down ⇒ epoch mismatch,
+- **Double Tap Time: release-to-DOWN referencing is ruled out** (190ms d2d ≈ 130ms r2d, well
+  inside the 190ms window, fired single); 170ms d2d fires. Down-to-down and release-to-release
+  are both still consistent (C2's probes used equal hold times) — vary-the-hold discriminating
+  probe queued. Either way the epoch differs from JSM's proven release-to-down ⇒
   `bounded_approximation` for window translation.
 - **`interruptable 0` (vdf, on Full_Press) CONFIRMED at runtime** — Regular fires on
   press-down and is NOT suppressed when Long fires at threshold; both keys active together.
