@@ -18,7 +18,34 @@ can't separate them — and extest's relevance is an untested follow-up. Durable
 `findings/steam_input_linux.md` + `findings/jsm_linux_port.md`; runs `20260601T065426Z-phase0-runtime-smoke/`
 and `20260601T070951Z-phase0b-steam-input/`.
 
-**▶ NEXT SESSION — START HERE (updated 2026-06-11, session 4).** Phases 0–2 **COMPLETE — both lanes.**
+**▶ NEXT SESSION — START HERE (updated 2026-06-11, session 5 save-state).** Phases 0–3 **COMPLETE.**
+Phase 3 closed both gates lead-verified (Gate A `99e1675`, Gate B `13049e7`): schemas + validator +
+XI2 normalization with canonical key namespace, comparator v0 reproducing the Phase-2 verdict table
+from raw artifacts (role-aligned via manifest `key_roles`, configured state in `binding_params`).
+Boundary semantics characterized BOTH lanes (runs `…chunk-c1-jsm-boundary`, `…chunk-c2-steam-boundary`,
+`…trigger-softpull-adjudication`; promoted to both lane findings): JSM hold = threshold+poll-slack vs
+Steam inclusive-exact; JSM double-window release-to-down (proven by construction) vs Steam NOT
+release-to-down (d2d vs r2r unresolved — probe designed, ON HOLD); Steam soft-pull threshold is
+adaptive state (RZ=200 for reliable staged probes); interruptable=0 runtime-confirmed; double-press
+pause semantics (singles latency-shift up to DTT).
+**WAIT STATE: the user is preparing a Steam Input mechanics knowledge dump** — consult it (and them:
+they are a deep Steam Input mechanics oracle, memory `user-steam-input-mechanics-expert`) BEFORE any
+new Steam-lane probe loops. Open question for them: double-tap decision epoch + emission timing.
+**Execution model (user-directed):** Fable session = lead only (specs, gate verification, claim-
+strength audits, commits); ALL iterative work via Sonnet teammates per plan §14 (team `jsmlab`:
+`builder` = code/TDD, `runner` = serial live-system runs). Teammates were shut down cleanly at
+save-state; re-form via TeamCreate + Agent(model:sonnet) with the §14 role briefs. Lead protocol:
+re-run every gate yourself; audit teammate claim strength (memory
+`method-team-lead-rerun-gates-audit-claim-strength`); live runs strictly serial; ignore stale
+replayed task assignments after resume (verify against git, not mailbox).
+**Environment:** fully torn down (no Steam, no nested KWin, no pad holder). Recreate seat-free lane
+with `tools/steam-virtual-env.sh` (nested KWin + Steam on its own Xwayland; canary slice first —
+finding `steam_lane_behavior.md` has the canary rule + vdf-edit protocol; reference layout:
+`reference/desktop-layout-phase2-reference.vdf`).
+**Next work, ready to dispatch:** Phase 4 adversarial set — now FULLY autonomous via vdf-programmatic
+binding control (timed `remove_layer`, two-action-set swap, RZ=200 trigger traces, Start/Release-Press
+diagnostic layouts per the user's tip); then Phase 5 orchestration, Phase 8 KB seeding from the
+trace-verified rules. Phase 6 (gyro) still gated on root uhid setup. Prior session-4 state:
 The Steam-lane spike passed (synthetic uinput pad recognized, no uhid needed; output at XI2 only —
 `runs/20260611T114909Z-steam-lane-spike/`), then the full Steam half of Phase 2 ran in one GUI sitting
 (`runs/20260611T124018Z-phase2-steam-quickwins/result.md`): all seven mechanics + per-binding hold-time
