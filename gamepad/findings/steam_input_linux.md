@@ -73,6 +73,20 @@ final KeyRelease of a burst can arrive seconds late (don't gate Steam-lane timin
 last release); re-verify the binding survives pad re-creation (no serial) at next use.
 Artifacts: `runs/20260611T114909Z-steam-lane-spike/`.
 
+## Update 2026-06-11 (later) — seat-free Steam lane via nested headless KWin
+
+`tools/steam-virtual-env.sh`: `kwin_wayland --virtual --socket=wayland-jsmlab --xwayland`
+spawns a headless KWin with its own Xwayland (`:1` here); Steam launched with
+`DISPLAY=:1 WAYLAND_DISPLAY=wayland-jsmlab` runs there, recognizes the synthetic pad
+identically, and its Steam Input output lands **only on the nested Xwayland seat** —
+dual-observer canary measured 12/12 F9 events on `:1` and **0 on the user's `:0`**.
+Consequences: (1) the user's desktop seat is fully reclaimed — captures can run while the
+user works, and user typing can no longer contaminate captures (the old hands-off rule is
+obsolete in this lane); (2) Steam is single-instance per account — desktop Steam must be
+shut down first (the script checks); (3) same KWin+Xwayland stack as the real session, so
+the plane findings transfer; the desktop-layout autosave config is account-scoped and
+applies unchanged. Observer targeting: `DISPLAY=$(cat /tmp/jsmlab_display)`.
+
 ## Method note (avoiding false negatives — these traps bit twice before the clean run)
 - **Blocking foreground captures miss user-driven stimuli** that happen between conversation turns. Use
   **background observers that span the turn**; have the user act, then stop+read.

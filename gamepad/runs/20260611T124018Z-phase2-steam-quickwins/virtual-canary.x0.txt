@@ -1,0 +1,2 @@
+# xinput test-xi2 --root  types=['KeyPress', 'KeyRelease', 'RawKeyPress', 'RawKeyRelease']  seconds=9.0
+# captured 0 event(s).

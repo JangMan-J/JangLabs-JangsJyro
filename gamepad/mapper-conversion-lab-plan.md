@@ -29,7 +29,13 @@ is ramp-dependent on Steam). Desktop-layout bindings persist across pad re-creat
 the `digital` slice first each Steam session (a transient all-silent state exists — see the finding).
 **Next: Phase 3 (artifact schemas; retrofit the three Phase-1/2 run dirs) then Phase 4 (adversarial
 gotcha traces — timed `remove_layer`, action-set swap need new GUI bindings; Local-Space is Phase 6).**
-Still gated on root/user: gyro uhid setup (Phase 6). Prior session-2 state:
+Still gated on root/user: gyro uhid setup (Phase 6).
+**Seat-free Steam lane (2026-06-11, later):** `tools/steam-virtual-env.sh` runs Steam inside a nested
+headless KWin (own Xwayland); output isolated from the user's seat (12/12 F9 on nested `:1`, 0 on `:0`).
+Steam-lane captures no longer need the user present or hands-off. **Cost calibration:** Phase-3/4
+execution is specced for a cheaper-model session (Sonnet) — design contracts, acceptance tests, and
+turnkey scripts are in place precisely so the expensive model is only needed at design/review gates.
+Prior session-2 state:
 - **JSM lane fully operational, headless, no physical pad:** `tools/synthetic_gamepad.py` (trace runner,
   `--trace` DSL) → JSM (`build-linux/`, clang + SDL3 3.4.8 via CPM) → `tools/evdev_capture.py --grab-name JoyShockMapper`.
 - **7 vdf-mechanic verdicts** (runs `…phase1-jsm-synthetic-spike` + `…phase2-jsm-quickwins`; see
