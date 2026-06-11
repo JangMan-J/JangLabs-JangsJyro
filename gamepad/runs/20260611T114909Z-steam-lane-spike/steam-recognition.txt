@@ -1,0 +1,14 @@
+11164:[2026-06-11 04:49:57] Local Device Found
+11165-  type: 045e 028e
+11166-  path: sdl://2
+11167-  serial_number:  - 0
+11168-[2026-06-11 04:49:57]   Manufacturer: 
+11169-[2026-06-11 04:49:57]   Product:      Xbox 360 Controller
+11170-[2026-06-11 04:49:57]   Release:      114
+11171-[2026-06-11 04:49:57]   Interface:    -1
+11172-
+11173-[2026-06-11 04:49:57] !! Steam controller device opened for index 0.
+11174-[2026-06-11 04:49:57] Steam Controller reserving XInput slot 0
+11175-[2026-06-11 04:49:57] SDL Mapping for 45e/28e: 030081b85e0400008e02000014010000,Xbox 360 Controller,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,platform:Linux,
+11176-[2026-06-11 04:49:58] Controller PollState Changed from 0 to 1
+note: log file is controller.txt on client 1781139754 (spike script expects controller.log — stale path)

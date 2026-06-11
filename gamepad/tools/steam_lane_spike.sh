@@ -31,8 +31,9 @@ echo "== Steam-lane spike == artifacts -> $RUN"
 if pgrep -x steam >/dev/null; then echo "[0] Steam: running"; else
   echo "[0] WARNING: Steam is NOT running. Launch Steam (Beta + experimental SteamRT3 per Phase 0b) first, then re-run."
 fi
-for f in ~/.steam/steam/logs/controller.log ~/.local/share/Steam/logs/controller.log; do
-  [ -f "$f" ] && CLOG="$f"; done
+for f in ~/.steam/steam/logs/controller.log ~/.local/share/Steam/logs/controller.log \
+         ~/.steam/steam/logs/controller.txt ~/.local/share/Steam/logs/controller.txt; do
+  [ -f "$f" ] && CLOG="$f"; done   # newer clients (>=1781139754) write controller.txt
 echo "[0] controller.log: ${CLOG:-none found}"
 
 # Phase 1: create the synthetic pad (stays alive via the control FIFO)

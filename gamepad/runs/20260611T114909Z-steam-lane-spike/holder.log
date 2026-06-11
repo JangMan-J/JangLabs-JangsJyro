@@ -1,0 +1,26 @@
+[11:49:14.872Z mono=34704.893] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event256
+[11:49:14.872Z mono=34704.893] WARMUP 0.0s
+[11:49:14.872Z mono=34704.893] CONTROL-FIFO /tmp/synthetic_pad_ctrl — write DSL actions (e.g. 'press SOUTH 120'); 'quit' to stop
+[12:03:50.893Z mono=35580.915] press SOUTH 120.0ms (down)
+[12:03:51.014Z mono=35581.036] press SOUTH (up)
+[12:03:51.343Z mono=35581.364] press SOUTH 120.0ms (down)
+[12:03:51.463Z mono=35581.485] press SOUTH (up)
+[12:03:51.794Z mono=35581.816] press SOUTH 120.0ms (down)
+[12:03:51.915Z mono=35581.936] press SOUTH (up)
+[12:03:52.245Z mono=35582.267] press SOUTH 120.0ms (down)
+[12:03:52.366Z mono=35582.387] press SOUTH (up)
+[12:03:52.697Z mono=35582.718] press SOUTH 120.0ms (down)
+[12:03:52.817Z mono=35582.838] press SOUTH (up)
+[12:03:53.148Z mono=35583.169] press SOUTH 120.0ms (down)
+[12:03:53.268Z mono=35583.289] press SOUTH (up)
+[12:03:53.599Z mono=35583.620] press SOUTH 120.0ms (down)
+[12:03:53.719Z mono=35583.740] press SOUTH (up)
+[12:03:54.050Z mono=35584.071] press SOUTH 120.0ms (down)
+[12:03:54.170Z mono=35584.191] press SOUTH (up)
+[12:03:54.501Z mono=35584.522] press SOUTH 120.0ms (down)
+[12:03:54.621Z mono=35584.643] press SOUTH (up)
+[12:03:54.952Z mono=35584.974] press SOUTH 120.0ms (down)
+[12:03:55.072Z mono=35585.094] press SOUTH (up)
+[12:03:55.403Z mono=35585.425] press SOUTH 120.0ms (down)
+[12:03:55.524Z mono=35585.545] press SOUTH (up)
+[12:06:08.629Z mono=35718.650] DESTROY pad

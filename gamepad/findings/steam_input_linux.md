@@ -56,6 +56,23 @@ robust, lab-relevant result is the **plane** (XI2 yes, evdev no), not the inject
    2); (b) retest under an **X11 (non-Wayland) session**, which *might* route Steam via the legacy XTEST
    device — still not evdev.
 
+## Update 2026-06-11 — synthetic uinput pad: recognized; plane finding generalizes
+
+Steam-lane spike (`tools/steam_lane_spike.sh` flow, run manually): **Steam Input accepts a
+plain synthetic uinput pad** (`synthetic_gamepad.py`, Xbox-360 `045e:028e`) — logged as
+`Local Device Found … sdl://2`, opened on XInput slot 0 with the stock SDL mapping. **No
+`uhid` device is needed for the Steam lane** (uhid stays gyro-only). With A/South bound to
+F9 (Desktop layout, one-time GUI step), 11 FIFO-injected presses produced **11 F9
+press/release pairs at XI2 (`xwayland-keyboard` seat) and 0 `KEY_F9` at evdev** — the
+Phase-0b plane fork holds for synthetic input, on the **publicbeta** client
+(v1781139754; the 0b run was Beta+SteamRT3). Both lanes are now drivable headless from
+one stimulus source after a single human binding step.
+
+Gotchas added: newer clients log to `logs/controller.txt` (not `controller.log`); the
+final KeyRelease of a burst can arrive seconds late (don't gate Steam-lane timing on the
+last release); re-verify the binding survives pad re-creation (no serial) at next use.
+Artifacts: `runs/20260611T114909Z-steam-lane-spike/`.
+
 ## Method note (avoiding false negatives — these traps bit twice before the clean run)
 - **Blocking foreground captures miss user-driven stimuli** that happen between conversation turns. Use
   **background observers that span the turn**; have the user act, then stop+read.

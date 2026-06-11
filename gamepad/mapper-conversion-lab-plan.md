@@ -18,9 +18,15 @@ can't separate them — and extest's relevance is an untested follow-up. Durable
 `findings/steam_input_linux.md` + `findings/jsm_linux_port.md`; runs `20260601T065426Z-phase0-runtime-smoke/`
 and `20260601T070951Z-phase0b-steam-input/`.
 
-**▶ NEXT SESSION — START HERE (updated 2026-06-02, session 2).** Phases 0–1 done; **Phase 2 JSM-lane
-(candidate) half DONE.** The autonomously-reachable lab surface is exhausted — everything remaining is
-blocked on the user (Steam GUI) or on root/Phase-6 setup. State:
+**▶ NEXT SESSION — START HERE (updated 2026-06-11, session 3).** Phases 0–1 done; Phase 2 JSM half done;
+**Steam-lane spike PASS — the reference lane is UNBLOCKED.** Steam Input recognizes the synthetic uinput
+pad (no uhid needed; `045e:028e` opened on XInput slot 0) and emits at XI2 only (11× F9 at the seat, 0 at
+evdev — Phase 0b generalizes; publicbeta client v1781139754). A/South→F9 is bound in the Desktop layout
+(re-verify the binding survives pad re-creation at next use). Evidence:
+`runs/20260611T114909Z-steam-lane-spike/result.md`; durable facts promoted to `findings/steam_input_linux.md`.
+**Next: Steam-half of Phase 2** — re-run the seven mechanics through Steam Input (GUI binding per mechanic,
+then headless capture via `xi2_capture.py`) to produce the first cross-runtime deltas; then Phase 3 schemas
+/ Phase 4 gotchas. Still gated on root/user: gyro uhid setup (Phase 6). Prior session-2 state:
 - **JSM lane fully operational, headless, no physical pad:** `tools/synthetic_gamepad.py` (trace runner,
   `--trace` DSL) → JSM (`build-linux/`, clang + SDL3 3.4.8 via CPM) → `tools/evdev_capture.py --grab-name JoyShockMapper`.
 - **7 vdf-mechanic verdicts** (runs `…phase1-jsm-synthetic-spike` + `…phase2-jsm-quickwins`; see
