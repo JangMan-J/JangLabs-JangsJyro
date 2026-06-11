@@ -73,6 +73,26 @@ Per the lab spine these doc statements are *naming and mechanism* for behavior a
 by trace — any NEW claim sourced here (Start/Release press, interruptable-off, delays) stays a
 hypothesis until a trace fires it.
 
+## Boundary semantics (Chunk C2, 2026-06-11 — runs `20260611T151747Z-chunk-c2-steam-boundary`)
+
+- **Long Press Time is inclusive and tick-exact at the configured value:** 430ms → tap (F10);
+  450ms and 470ms → hold (F11) at Long Press Time 450. Contrast JSM: exclusive + poll slack
+  (`jsm_lane_behavior.md` boundary section) — comparator must parameterize per lane.
+- **Double Tap Time is DOWN-to-DOWN referenced, exclusive at the configured value:** 170ms d2d
+  fires the double; 190ms d2d (≈130ms release-to-down) does NOT — which rules out
+  release-referencing by construction. JSM's window is release-to-down ⇒ epoch mismatch,
+  `bounded_approximation` for window translation.
+- **`interruptable 0` (vdf, on Full_Press) CONFIRMED at runtime** — Regular fires on
+  press-down and is NOT suppressed when Long fires at threshold; both keys active together.
+  Upgrades the docs-sourced hypothesis to verified. (First attempt edited the Long_Press
+  activator's settings — no behavioral change; the flag belongs on the activator being
+  *interrupted*, i.e. Full_Press.) Converter: `interruptable` is load-bearing for tap/hold
+  translation and must be read per-activator, never assumed default.
+- **OPEN — trigger soft-pull did not fire in C2** (staged 0→100→255 NOR instant), contradicting
+  the Phase-2 staged result. Suspect `adaptive_threshold 3` state or intermediate value too low.
+  Follow-up queued (replay the exact Phase-2 staged trace on a fresh client + a RZ=200 staged
+  variant). The Phase-2 trigger entry above stands UNCHANGED until adjudicated.
+
 ## Operational gotchas (Steam lane)
 
 - **xinput keysym aliasing:** F11/F12 print as legacy keysyms **L1/L2** in `xinput test-xi2`

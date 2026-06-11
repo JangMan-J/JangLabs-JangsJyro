@@ -93,3 +93,61 @@
 | `doublepress_boundary` | Window reference appears to be release-to-down, not down-to-down; 160ms down-to-down still fires double | needs wider probe; `anomaly` |
 | `trigramp` | JSM fires soft+full on instant jump; Steam fires full only — cross-runtime delta confirmed | `cross-runtime delta` (Phase 4 material) |
 | `simpress_sticky` | Sticky state persists at 1000ms (not just 600-700ms); extends existing `degraded` classification | `degraded_approximation` (strengthened) |
+
+---
+
+## Batch 2b — double-press window reference point (discriminating probe)
+
+**Slice:** `doublepress_discriminate`
+**Config:** `DBL_PRESS_WINDOW = 150`, `N = B`, `N,N = X`
+**Design rationale:** Batch 2 showed 160ms d2d still firing double. Two competing hypotheses: window is measured (A) release-to-second-down, or (B) first-down-to-second-down. Probes 1 vs 2 share identical d2d=200ms and differ only in first-press hold time — if they produce different outcomes, release-reference is proven by construction.
+
+**Probes (actual injected timings from injector log):**
+
+| # | d2d (actual) | hold (actual) | r2d (actual) | Expected (release-ref) | Expected (down-ref) | Observed |
+|---|---|---|---|---|---|---|
+| 1 | 201ms | 61ms | 140ms | **double** (140 < 150) | single (201 > 150) | **B + X (double)** |
+| 2 | 200ms | 20ms | 180ms | single (180 > 150) | single (200 > 150) | **B + B (single)** |
+| 3 | 251ms | 111ms | 140ms | **double** (140 < 150) | single (251 > 150) | **B + X (double)** |
+| 4 | 301ms | 61ms | 241ms | single (241 > 150) | single (301 > 150) | **B + B (single)** |
+
+**Finding — reference point proven: JSM DBL_PRESS_WINDOW is measured from first-press RELEASE to second-press DOWN.**
+
+Probes 1 and 2 are the decisive pair: same d2d (~200ms), different hold times (61ms vs 20ms) → different r2d (140ms vs 180ms) → different outcomes (double vs single). Down-to-down reference cannot explain this. Release-to-down reference predicts both outcomes exactly.
+
+Probe 3 provides independent confirmation: d2d=251ms (far above 150ms) still fires double because r2d=140ms < 150ms. Probe 4 is the sanity control (both hypotheses predict single; observed single).
+
+**Corrected batch-2 original finding:** The README says "second down press within 150ms from a previous down press" — this wording is wrong (or at least misleading). The actual implementation measures from first press **release** to second press **down**. The effective condition is `r2d < DBL_PRESS_WINDOW`.
+
+**Converter implication:** When comparing Steam vs JSM double-press windows, the measurement reference differs:
+- **JSM:** release-to-down (r2d < DBL_PRESS_WINDOW). Default 150ms.
+- **Steam:** to be confirmed, but C2 batch-2 data (190ms d2d with 60ms hold = 130ms r2d fired as single) suggests Steam may also be release-referenced OR the Steam boundary is smaller. Follow-up: re-examine C2 batch-2 result with the r2d lens. At 190ms d2d with 60ms hold, r2d=130ms < 190ms but Steam fired single — so Steam's boundary may be measured differently, OR Steam's default (190ms) is also a r2d threshold, and 130ms is actually outside Steam's window. Needs Steam-side discriminating probe for completeness.
+
+**Verdict:** `reference-point proven` — JSM DBL_PRESS_WINDOW is release-to-down. The prior `anomaly / needs-wider-probe` verdict is resolved. The original batch-2 result (160ms d2d still fires double) is now explained: with 60ms first-press hold, r2d=100ms < 150ms.
+
+---
+
+## Batch 2b — discriminating probes: window reference point RESOLVED (lead adjudication)
+
+Probes designed by team-lead, captured by runner (`doublepress_discriminate.*`), analyzed by
+team-lead from the normalized capture. Config unchanged (`DBL_PRESS_WINDOW=150`, `N=B`, `N,N=X`).
+
+| Probe | d2d | first hold | r2d | release-ref predicts | down-ref predicts | Observed |
+|---|---|---|---|---|---|---|
+| 1 | 200ms | 60ms | 140ms | double (X) | single (B) | **B + X — double** |
+| 2 | 200ms | 20ms | 180ms | single | single | B + B — single |
+| 3 | 250ms | 110ms | 140ms | double (X) | single (B) | **B + X — double** |
+| 4 | 300ms | 60ms | 240ms | single | single | B + B — single |
+
+Probes 1 vs 2 share the identical down-to-down gap and differ only in first-press hold time;
+their outcomes differ ⇒ **JSM's `DBL_PRESS_WINDOW` is measured first-RELEASE-to-second-DOWN,
+proven by construction** (probe 3 confirms at a second gap; probe 4 sanity passes). This also
+retroactively explains every Batch-2 observation (all its r2d values were < 150ms).
+
+**Cross-runtime consequence (with C2 Batch 2):** Steam's Double Tap Time is DOWN-to-DOWN
+referenced (C2: 190ms d2d = ~130ms r2d did NOT fire), JSM's window is RELEASE-to-DOWN. The
+offset between the two epochs is the user's first-press hold duration — unknowable at convert
+time ⇒ Steam↔JSM double-press window translation is `bounded_approximation` with the loss:
+"window reference epoch differs; effective JSM window = Steam window − first-press hold time."
+
+**Verdict:** `bounded_approximation` (replaces Batch 2's `anomaly/needs-wider-probe`).

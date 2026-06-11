@@ -22,6 +22,24 @@ JSM (`build-linux/`) → `tools/evdev_capture.py --grab-name JoyShockMapper`.
 - **Simultaneous press has sticky state.** `L=LSHIFT`, `R=E`, `L+R=Q`: `L+R` → `Q` is correct, **but a lone `L` press that follows an `L+R` chord re-emits `Q` instead of `LSHIFT`** — the sim-press association is not cleared when the chord releases. A lone `L` press *before* any chord is correct (→`LSHIFT`), so it is residual state, not a mapping error (disambiguated by `simpress2`, lone-press-first; a 600–700 ms gap does **not** clear it, so it is persistent residual state, not a short race). The audit grades Simultaneous Press a clean quick-win; the real-runtime verdict is **clean once, then sticky** → `degraded_approximation` for any layout that reuses a chord member as a lone button. Per the lab's non-semantic boundary it is *classified*, not patched.
   - **Root-cause hypothesis (source review — NOT runtime-confirmed, treat as a lead).** `JoyShock::getMatchingSimBtn` (`src/JoyShock.cpp`) decides two buttons are chording with `index != iter->first && button1->getState() == button2->getState()` — pure **state-equality**, not "both specifically in `WaitSim`". The author flagged it inline: *"POTENTIAL FLAW: the mapping you find may not necessarily be the one that got you in a Simultaneous state."* In the `DigitalButton` `pocket_fsm` (`NoPress→WaitSim→SimPressSlave/SimPressMaster→SimRelease→NoPress`), a chord member that has not cleanly settled back to `NoPress` (relative to the partner's poll) can be observed in a state equal to the new presser's `WaitSim`, so `getMatchingSimBtn` re-pairs them and re-enters the sim mapping (`Q`) instead of the lone binding. **Confirm** by `DEBUG_LOG`-ing both buttons' states across the second lone press, or by widening the state-match to require `WaitSim`/checking `_masterPress`. (Real-runtime evidence is authoritative here; this is a source hypothesis only.)
 
+## Boundary semantics (Chunk C1, 2026-06-11 — runs `20260611T150936Z-chunk-c1-jsm-boundary`)
+
+- **Tap/hold boundary = `HOLD_PRESS_TIME` + up to ~1 poll tick.** At `HOLD_PRESS_TIME=150`,
+  presses of 150ms and 155ms still TAP; hold fires by 170ms. The threshold is logical, the
+  wall-clock boundary carries poll-granularity slack (~8–16ms) → `bounded_approximation` for
+  any per-ms-exact translation.
+- **`DBL_PRESS_WINDOW` is measured first-RELEASE-to-second-DOWN — proven by construction**
+  (two probes with identical 200ms down-to-down gaps but different hold times produced
+  different outcomes; Batch 2b). Steam's Double Tap Time is DOWN-to-DOWN (Steam-lane C2). The
+  epoch offset is the user's hold duration ⇒ window translation is `bounded_approximation`
+  ("effective JSM window = Steam window − first-press hold time").
+- **Instant trigger jump fires soft+full ~3ms apart** (`NO_SKIP`): JSM's soft binding is a
+  pure axis-threshold crossing — even a 0→255 single-event jump fires it. Steam skipped soft
+  on the instant jump (ramp-dependent) → cross-runtime delta, Phase-4 adversarial material.
+- **Sticky sim-press state is persistent, not a race:** lone-member-after-chord still emits
+  the chord binding at 100/300/1000ms gaps; only JSM restart/reconnect clears it. Strengthens
+  the `degraded_approximation` classification above.
+
 ## Minor anomalies
 - **Disconnect-time spurious trigger press**: when the synthetic pad is destroyed, JSM emitted a lone `BTN_RIGHT` **down** (trigger axis re-read during SDL device-removal). Seen only in the trigger slice. The normalizer should discard output bracketing a connect/disconnect event.
 
