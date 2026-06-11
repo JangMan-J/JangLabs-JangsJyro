@@ -105,18 +105,15 @@ Steam→JSM prediction set (hypotheses); your job is to confirm/refute each by t
 
 ---
 
-## Repo state & the ONE cross-repo loose end
+## Repo state
 
 - **`jangsjyro`:** `branch-a-port` == `master` == `origin` all at the latest tip; working tree
   clean. Ongoing lab work commits to `branch-a-port`; `master` is fast-forwarded to match.
   (jangsjyro's mainline is **`master`** — there is no `main`.) Build dir `build-linux/` is git-ignored.
-- **⚠ Workspace root (`~/JangLabs`) — unfinished, needs the human:** the root coordinator commits
-  (gamepad-submodule retirement + doc updates) are on `origin/chore/labs-to-submodules` but
-  **`main` was NOT pushed** — it would publish a **dangling `claude` submodule pointer**
-  (`claude@2e8cd4a` isn't on the claude remote; the claude worktree is the user's dirty WIP).
-  **Remedy (user):** `git -C ~/JangLabs/claude push origin main`, then
-  `cd ~/JangLabs && git checkout main && git merge --ff-only chore/labs-to-submodules && git push origin main`.
-  Do **not** push root `main` or touch the `claude` submodule yourself.
+- **Workspace root (`~/JangLabs`):** healthy — the former `chore/labs-to-submodules` loose end
+  (dangling `claude` pointer) was resolved 2026-06-10 (root `main` pushed at `a368277`; the chore
+  branch is merged and deleted). After committing lab work here, bump the root's `jangsjyro`
+  submodule pointer as usual. Leave the other submodules' dirty state to their own sessions.
 
 ---
 
