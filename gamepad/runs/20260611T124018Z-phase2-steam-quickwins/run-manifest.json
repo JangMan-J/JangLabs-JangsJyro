@@ -1,0 +1,85 @@
+{
+  "schema_version": "1",
+  "run_id": "20260611T124018Z-phase2-steam-quickwins",
+  "date": "2026-06-11",
+  "phase": "phase2-steam",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "1781139754",
+  "lanes": ["steam"],
+  "slices": [
+    {
+      "slice": "digital",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "digital-retest.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "South->F9. 3 presses -> 3 exact F9 pairs at XI2. Canary slice: confirmed active before proceeding."
+    },
+    {
+      "slice": "taphold",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "taphold.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "East: F10 tap / F11 long-press @450ms. 80ms->F10 on release; 450ms->F11 only (F10 suppressed). Same tap/hold model as JSM but different default threshold (450ms Steam vs 150ms JSM)."
+    },
+    {
+      "slice": "doublepress",
+      "verdict": "bounded_approximation",
+      "jsm_capture": null,
+      "steam_capture": "doublepress.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "North: F12 single / F7 double @190ms. Lone->F12; double pair->F7 only, base F12 suppressed. DELTA: JSM fires base on first press of double pair; Steam suppresses it."
+    },
+    {
+      "slice": "chord",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "chord.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "West F6; Select+West->F8. West alone->F6; chord->F8, no Select leak. Matches JSM chord override."
+    },
+    {
+      "slice": "simpress",
+      "verdict": "degraded_approximation",
+      "jsm_capture": "simpress.evdev.jsonl",
+      "steam_capture": "simpress.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "TL->Shift,TR->E,TL+TR->Q. Steam chord: Shift held+Q (member binding leaks), E suppressed. No sticky-state bug on Steam. DELTA both ways: Steam leaks member binding; JSM SIMPRESS suppresses both."
+    },
+    {
+      "slice": "simpress2",
+      "verdict": "degraded_approximation",
+      "jsm_capture": "simpress2.evdev.jsonl",
+      "steam_capture": "simpress2.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "Lone TL after chord -> Shift correctly on Steam (no sticky state). Confirms JSM degraded is JSM-specific."
+    },
+    {
+      "slice": "trigfull",
+      "verdict": "exact",
+      "jsm_capture": "trigfull.evdev.jsonl",
+      "steam_capture": "trigfull.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "Steam: staged pull->F3 down->F4 added->both released. Matches JSM NO_SKIP. Caveat: instant 0->255 jump emitted F4 only (ramp-dependent soft-pull; Phase 4 material)."
+    },
+    {
+      "slice": "stickwasd",
+      "verdict": "exact",
+      "jsm_capture": "stickwasd.evdev.jsonl",
+      "steam_capture": "stickwasd.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "Dpad mode, requires_click 0. LY-->w pair; LX-->a pair. Matches JSM."
+    },
+    {
+      "slice": "holdtime",
+      "verdict": "bounded_approximation",
+      "jsm_capture": "holdtime.evdev.jsonl",
+      "steam_capture": "holdtime.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "East F10/F11@450ms; Start F5/F2@603ms (custom per-binding). Both honored in one layout. Confirms X.2 from Steam side: per-binding hold times real; JSM global-only -> bounded loss."
+    }
+  ],
+  "notes": "Phase 2 Steam-lane quick-wins. All seven mechanics + per-binding hold-time probe. First cross-runtime deltas: doublepress (bounded), simpress (degraded), trigfull ramp caveat (Phase 4). Transient silence anomaly during first pass -> canary rule. Orchestrated by run-slice.sh. Reference layout archived at reference/desktop-layout-phase2-reference.vdf."
+}

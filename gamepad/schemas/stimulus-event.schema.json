@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/stimulus-event.schema.json",
+  "title": "StimulusEvent",
+  "description": "One injected gamepad action from synthetic_gamepad.py's injector/holder log. Records the raw stimulus trace that was replayed, for noise-flagging correlation in the normalizer.",
+  "type": "object",
+  "required": ["t_mono", "action", "target"],
+  "additionalProperties": false,
+  "properties": {
+    "t_mono": {
+      "type": "number",
+      "description": "Monotonic seconds (from synthetic_gamepad mono field) at which this action was injected"
+    },
+    "action": {
+      "type": "string",
+      "enum": ["down", "up", "press", "axis", "wait", "create", "destroy"],
+      "description": "The DSL action type"
+    },
+    "target": {
+      "type": "string",
+      "description": "Button name (SOUTH, EAST, NORTH, WEST, LT, RT, …) or axis name (LX, LY, RX, RY, ABS_RZ, …)"
+    },
+    "value": {
+      "type": ["number", "null"],
+      "description": "Axis value for axis actions, duration_ms for press actions, null otherwise"
+    },
+    "note": {
+      "type": "string",
+      "description": "Optional free-text note (e.g. 'down', 'up' sub-event of a press)"
+    }
+  }
+}

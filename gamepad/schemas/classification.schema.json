@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/classification.schema.json",
+  "title": "Classification",
+  "description": "Empirical verdict for one mechanic trace comparison (plan §7: 5-way enum + loss text + evidence refs). Produced by compare_lanes.py from two normalized streams.",
+  "type": "object",
+  "required": ["schema_version", "mechanic", "verdict", "evidence_refs"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1"
+    },
+    "mechanic": {
+      "type": "string",
+      "description": "Short mechanic identifier matching the slice name (e.g. 'taphold', 'doublepress', 'simpress')"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "exact",
+        "bounded_approximation",
+        "degraded_approximation",
+        "unsupported_omitted",
+        "requires_user_choice"
+      ],
+      "description": "5-way empirical result (plan §7 / design §151-162)"
+    },
+    "loss_text": {
+      "type": ["string", "null"],
+      "description": "Human-readable description of the behavioral loss for non-exact verdicts; null for exact"
+    },
+    "jsm_summary": {
+      "type": ["string", "null"],
+      "description": "Brief description of JSM-lane behavior relevant to this verdict"
+    },
+    "steam_summary": {
+      "type": ["string", "null"],
+      "description": "Brief description of Steam-lane behavior relevant to this verdict"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative paths to supporting artifacts (capture files, normalized JSONs, run result.md, findings files)"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Optional extended notes or open questions"
+    }
+  }
+}

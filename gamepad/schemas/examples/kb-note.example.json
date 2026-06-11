@@ -1,0 +1,14 @@
+{
+  "schema_version": "1",
+  "id": "taphold-jsm-boundary-150ms",
+  "date": "2026-06-02",
+  "source": "trace",
+  "mechanic": "taphold",
+  "lane": "jsm",
+  "text": "JSM tap/hold boundary: HOLD_PRESS_TIME default 150ms. Short press (<150ms) -> tap binding fires on release; long press (>150ms) -> hold binding fires at threshold, hold suppresses tap. Verified with synthetic EAST 80ms (tap) and 450ms (hold) stimuli.",
+  "evidence_refs": [
+    "runs/20260602T145517Z-phase2-jsm-quickwins/taphold.capture.jsonl",
+    "runs/20260602T145517Z-phase2-jsm-quickwins/taphold.injector.log"
+  ],
+  "promoted": false
+}

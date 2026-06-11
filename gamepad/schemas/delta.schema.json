@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/delta.schema.json",
+  "title": "Delta",
+  "description": "Structural diff between the JSM-lane and Steam-lane normalized streams for one mechanic slice. Each entry names a divergence: an event present in one lane but absent/different in the other.",
+  "type": "object",
+  "required": ["schema_version", "mechanic", "jsm_run", "steam_run", "entries"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1"
+    },
+    "mechanic": {
+      "type": "string",
+      "description": "Slice/mechanic name (e.g. 'taphold', 'doublepress')"
+    },
+    "jsm_run": {
+      "type": "string",
+      "description": "Relative path to the JSM-lane run directory (e.g. 'runs/20260602T145517Z-phase2-jsm-quickwins')"
+    },
+    "steam_run": {
+      "type": "string",
+      "description": "Relative path to the Steam-lane run directory"
+    },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/DeltaEntry" },
+      "description": "List of per-event or per-press divergences, in timeline order"
+    }
+  },
+  "$defs": {
+    "DeltaEntry": {
+      "type": "object",
+      "required": ["kind", "name", "delta_type"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["key", "mousebtn", "button", "rel", "other"],
+          "description": "Normalized event kind"
+        },
+        "name": {
+          "type": "string",
+          "description": "Canonical event name"
+        },
+        "delta_type": {
+          "type": "string",
+          "enum": [
+            "jsm-only",
+            "steam-only",
+            "dur-differs",
+            "count-differs",
+            "order-differs",
+            "rel-total-differs"
+          ],
+          "description": "Nature of the divergence"
+        },
+        "jsm_value": {
+          "description": "JSM-side value (count, duration, rel_total, or null if absent)",
+          "type": ["number", "string", "null"]
+        },
+        "steam_value": {
+          "description": "Steam-side value (count, duration, rel_total, or null if absent)",
+          "type": ["number", "string", "null"]
+        },
+        "note": {
+          "type": "string",
+          "description": "Optional human-readable explanation of this entry"
+        }
+      }
+    }
+  }
+}

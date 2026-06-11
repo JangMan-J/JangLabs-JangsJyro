@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "run_id": "20260602T144140Z-phase1-jsm-synthetic-spike",
+  "date": "2026-06-02",
+  "phase": "phase1-jsm-tracer",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": "8d100f1",
+  "steam_client": null,
+  "lanes": ["jsm"],
+  "slices": [
+    {
+      "slice": "digital",
+      "verdict": "exact",
+      "jsm_capture": "capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "injector.log",
+      "notes": "Synthetic uinput Xbox-360 pad (045e:028e). S=SPACE (2 presses exact), ZR=LMOUSE via ABS_RZ threshold (2 presses exact). ~2ms latency. Confirms synthetic pad recognized by SDL/JSM; uhid not needed for digital/trigger."
+    }
+  ],
+  "notes": "Phase 1 tracer bullet — synthetic uinput gamepad -> JSM -> evdev. Orchestrated by orchestrate.sh. Phase 1 DoD met for JSM lane."
+}

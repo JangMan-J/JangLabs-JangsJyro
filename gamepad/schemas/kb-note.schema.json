@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/kb-note.schema.json",
+  "title": "KbNote",
+  "description": "One entry in kb/lab-notes/observations.jsonl — a provenance-tagged, mutable lab observation. Canonical promotion (to kb/canonical/) requires real-runtime evidence + conflict check (plan §9).",
+  "type": "object",
+  "required": ["schema_version", "id", "date", "source", "mechanic", "lane", "text"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Kebab-case unique identifier (e.g. 'taphold-jsm-boundary-150ms')"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "ISO 8601 date of observation"
+    },
+    "source": {
+      "type": "string",
+      "enum": ["trace", "source-review", "doc", "static-audit", "inferred"],
+      "description": "Evidence provenance. 'trace' = real-runtime capture; others are hypotheses until confirmed by trace."
+    },
+    "mechanic": {
+      "type": "string",
+      "description": "Mechanic identifier or 'global' for cross-cutting observations"
+    },
+    "lane": {
+      "type": "string",
+      "enum": ["jsm", "steam", "both", "neither"],
+      "description": "Which mapper lane this observation applies to"
+    },
+    "text": {
+      "type": "string",
+      "description": "Human-readable observation text"
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative paths to supporting artifacts (captures, run dirs, findings files)"
+    },
+    "promoted": {
+      "type": "boolean",
+      "description": "True if this note has been promoted to kb/canonical/ (requires real-runtime evidence)"
+    }
+  }
+}

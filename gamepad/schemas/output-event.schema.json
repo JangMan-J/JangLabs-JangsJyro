@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/output-event.schema.json",
+  "title": "OutputEvent",
+  "description": "One raw output event from a lane capture — either an evdev record (JSM lane, evdev_capture.py --jsonl) or an XI2 record (Steam lane, xi2_capture.py capture --jsonl). The union of both capture schemas; 'plane' identifies which.",
+  "type": "object",
+  "required": ["t", "plane", "code"],
+  "additionalProperties": false,
+  "properties": {
+    "t": {
+      "type": "number",
+      "description": "Wall-clock epoch seconds at capture time"
+    },
+    "plane": {
+      "type": "string",
+      "enum": ["evdev", "xi2"],
+      "description": "Observation plane: evdev = JSM lane (/dev/input/event*); xi2 = Steam lane (XI2/Xwayland seat)"
+    },
+    "dev": {
+      "type": "string",
+      "description": "Device name string (e.g. 'JoyShockMapper_KEYBOARD', 'xwayland-keyboard:10')"
+    },
+    "dev_id": {
+      "type": ["integer", "null"],
+      "description": "XI2 device id (xi2 plane only)"
+    },
+    "flag": {
+      "type": "string",
+      "description": "Device-class flag from xi2_capture.py (xi2 plane only, e.g. 'Xwayland-seat(XTEST/libei/phys)')"
+    },
+    "type": {
+      "type": "string",
+      "description": "evdev event type string (evdev plane only: KEY, REL, ABS, SYN)"
+    },
+    "event": {
+      "type": "string",
+      "description": "XI2 event type string (xi2 plane only: KeyPress, KeyRelease, RawKeyPress, …)"
+    },
+    "code": {
+      "type": "string",
+      "description": "Event code: KEY_SPACE, BTN_LEFT, REL_X (evdev); keysym name F9 or 'kc<n>' (xi2)"
+    },
+    "value": {
+      "type": ["integer", "null"],
+      "description": "Event value: 1=down, 0=up for KEY/BTN (evdev); axis value for REL/ABS; null for xi2 key events"
+    }
+  }
+}

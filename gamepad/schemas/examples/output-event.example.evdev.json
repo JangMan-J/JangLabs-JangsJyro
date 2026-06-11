@@ -1,0 +1,11 @@
+{
+  "t": 1780412148.7545,
+  "plane": "evdev",
+  "dev": "JoyShockMapper_KEYBOARD",
+  "dev_id": null,
+  "flag": null,
+  "type": "KEY",
+  "event": null,
+  "code": "KEY_A",
+  "value": 1
+}

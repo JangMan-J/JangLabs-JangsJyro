@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/run-manifest.schema.json",
+  "title": "RunManifest",
+  "description": "run-manifest.json placed in each runs/<UTC>-<slug>/ directory. Describes the run: phase, lanes present, slices captured, and per-slice artifact filenames. Produced at run time or retrofitted for historical runs.",
+  "type": "object",
+  "required": ["schema_version", "run_id", "date", "phase", "host", "lanes", "slices"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^\\d{8}T\\d{6}Z-.+$",
+      "description": "Directory name / run identifier (UTC timestamp + slug)"
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "ISO 8601 date the run was captured"
+    },
+    "phase": {
+      "type": "string",
+      "description": "Lab phase label (e.g. 'phase0', 'phase1', 'phase2-jsm', 'phase2-steam')"
+    },
+    "host": {
+      "type": "string",
+      "description": "Host / environment description (e.g. 'CachyOS/Wayland/KDE/NVIDIA')"
+    },
+    "jsm_commit": {
+      "type": ["string", "null"],
+      "description": "JSM git commit SHA for JSM-lane runs; null if JSM was not used"
+    },
+    "steam_client": {
+      "type": ["string", "null"],
+      "description": "Steam client build ID for Steam-lane runs; null if Steam was not used"
+    },
+    "lanes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["jsm", "steam"] },
+      "minItems": 1,
+      "description": "Which mapper lanes are present in this run"
+    },
+    "slices": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/SliceEntry" },
+      "description": "One entry per captured slice"
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Optional free-text notes about this run (anomalies, setup deviations)"
+    }
+  },
+  "$defs": {
+    "SliceEntry": {
+      "type": "object",
+      "required": ["slice", "verdict"],
+      "additionalProperties": false,
+      "properties": {
+        "slice": {
+          "type": "string",
+          "description": "Slice/mechanic name (e.g. 'taphold', 'digital', 'chord')"
+        },
+        "verdict": {
+          "type": ["string", "null"],
+          "enum": [
+            "exact",
+            "bounded_approximation",
+            "degraded_approximation",
+            "unsupported_omitted",
+            "requires_user_choice",
+            "blocked",
+            null
+          ],
+          "description": "Per-slice empirical verdict; null or 'blocked' if not yet classified"
+        },
+        "jsm_capture": {
+          "type": ["string", "null"],
+          "description": "Relative filename of the JSM-lane capture JSONL (e.g. 'taphold.capture.jsonl' or 'taphold.evdev.jsonl')"
+        },
+        "steam_capture": {
+          "type": ["string", "null"],
+          "description": "Relative filename of the Steam-lane XI2 capture JSONL (e.g. 'taphold.xi2.jsonl')"
+        },
+        "injector_log": {
+          "type": ["string", "null"],
+          "description": "Relative filename of the injector/holder log for stimulus-timestamp correlation"
+        },
+        "notes": {
+          "type": ["string", "null"],
+          "description": "Per-slice notes"
+        }
+      }
+    }
+  }
+}

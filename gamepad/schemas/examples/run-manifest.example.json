@@ -1,0 +1,69 @@
+{
+  "schema_version": "1",
+  "run_id": "20260602T145517Z-phase2-jsm-quickwins",
+  "date": "2026-06-02",
+  "phase": "phase2-jsm",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": "68dcb97",
+  "steam_client": null,
+  "lanes": ["jsm"],
+  "slices": [
+    {
+      "slice": "taphold",
+      "verdict": "exact",
+      "jsm_capture": "taphold.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "taphold.injector.log",
+      "notes": null
+    },
+    {
+      "slice": "trigfull",
+      "verdict": "exact",
+      "jsm_capture": "trigfull.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "trigfull.injector.log",
+      "notes": "Spurious BTN_RIGHT at pad disconnect; normalizer flags still-held-at-end"
+    },
+    {
+      "slice": "stickwasd",
+      "verdict": "exact",
+      "jsm_capture": "stickwasd.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "stickwasd.injector.log",
+      "notes": null
+    },
+    {
+      "slice": "simpress",
+      "verdict": "degraded_approximation",
+      "jsm_capture": "simpress.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "simpress.injector.log",
+      "notes": "Sticky-state bug: lone press after chord re-emits chord binding"
+    },
+    {
+      "slice": "chord",
+      "verdict": "exact",
+      "jsm_capture": "chord.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "chord.injector.log",
+      "notes": null
+    },
+    {
+      "slice": "doublepress",
+      "verdict": "exact",
+      "jsm_capture": "doublepress.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "doublepress.injector.log",
+      "notes": null
+    },
+    {
+      "slice": "holdtimeglobal",
+      "verdict": "bounded_approximation",
+      "jsm_capture": "holdtimeglobal.capture.jsonl",
+      "steam_capture": null,
+      "injector_log": "holdtimeglobal.injector.log",
+      "notes": "HOLD_PRESS_TIME is global; per-binding Steam values collapse to one global"
+    }
+  ],
+  "notes": "JSM-lane only (Steam lane blocked on GUI at capture time). simpress2 slice run for disambiguation; not listed separately here."
+}

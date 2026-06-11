@@ -1,0 +1,33 @@
+{
+  "schema_version": "1",
+  "plane": "xi2",
+  "n_raw": 6,
+  "t0_epoch": 1781181729.604038,
+  "events": [
+    {
+      "kind": "key",
+      "name": "F9",
+      "t_ms": 0.0,
+      "dur_ms": 500.6,
+      "value": null
+    },
+    {
+      "kind": "key",
+      "name": "F9",
+      "t_ms": 1000.3,
+      "dur_ms": 501.2,
+      "value": null
+    },
+    {
+      "kind": "key",
+      "name": "F9",
+      "t_ms": 2100.5,
+      "dur_ms": 498.9,
+      "value": null
+    }
+  ],
+  "summary": {
+    "presses": { "F9": 3 },
+    "rel_totals": {}
+  }
+}

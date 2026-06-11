@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jangman.local/jsmlab/normalized-stream.schema.json",
+  "title": "NormalizedStream",
+  "description": "Output of normalize_capture.py: a mapper-neutral, press-paired event stream from one lane capture. This is the form the comparator diffs. Produced from an evdev or xi2 capture JSONL.",
+  "type": "object",
+  "required": ["schema_version", "plane", "n_raw", "events", "summary"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "1",
+      "description": "Schema version identifier"
+    },
+    "plane": {
+      "type": "string",
+      "enum": ["evdev", "xi2"],
+      "description": "Source observation plane"
+    },
+    "n_raw": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of raw events before normalization (SYN dropped; Raw/Device dedup applied for xi2)"
+    },
+    "t0_epoch": {
+      "type": ["number", "null"],
+      "description": "Epoch timestamp of the first event (null if n_raw==0)"
+    },
+    "events": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/NormalizedEvent" },
+      "description": "Normalized events, sorted by t_ms. Key/button events are press-paired (one record per press with dur_ms); REL events are individual with a value."
+    },
+    "summary": {
+      "type": "object",
+      "required": ["presses", "rel_totals"],
+      "additionalProperties": false,
+      "properties": {
+        "presses": {
+          "type": "object",
+          "description": "Canonical-name -> count of completed press records",
+          "additionalProperties": { "type": "integer" }
+        },
+        "rel_totals": {
+          "type": "object",
+          "description": "Canonical-name -> net accumulated relative motion",
+          "additionalProperties": { "type": "number" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "NormalizedEvent": {
+      "type": "object",
+      "required": ["kind", "name", "t_ms"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["key", "mousebtn", "button", "rel", "other"],
+          "description": "Canonical event kind"
+        },
+        "name": {
+          "type": "string",
+          "description": "Canonical name: SPACE, F9, MOUSE_LEFT, MOUSE_DX, W, … (mapper-neutral)"
+        },
+        "t_ms": {
+          "type": "number",
+          "description": "Milliseconds since t0_epoch (first event in the stream)"
+        },
+        "dur_ms": {
+          "type": ["number", "null"],
+          "description": "Press duration in ms for key/button/mousebtn events; null if up-only or still-held-at-end"
+        },
+        "value": {
+          "type": ["number", "null"],
+          "description": "REL event sample value (non-null for kind==rel only)"
+        },
+        "note": {
+          "type": "string",
+          "enum": ["up-only", "still-held-at-end", "noise-stimulus-gap", "deduped-raw"],
+          "description": "Anomaly annotation: up-only (no down seen), still-held-at-end, noise-stimulus-gap (output outside any stimulus window), deduped-raw (Raw event removed as duplicate of Device event)"
+        }
+      }
+    }
+  }
+}

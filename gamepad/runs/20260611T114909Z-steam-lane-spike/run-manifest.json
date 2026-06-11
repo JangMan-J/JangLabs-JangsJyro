@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "run_id": "20260611T114909Z-steam-lane-spike",
+  "date": "2026-06-11",
+  "phase": "phase1-steam-spike",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "1781139754",
+  "lanes": ["steam"],
+  "slices": [
+    {
+      "slice": "digital",
+      "verdict": "exact",
+      "jsm_capture": "evdev.jsonl",
+      "steam_capture": "xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "Synthetic uinput Xbox-360 pad (045e:028e). South->F9 binding. 11 presses -> 11 F9 pairs at XI2; 0 KEY_F9 at evdev (negative control confirmed). Delayed final KeyRelease anomaly (~8.4s) on 11th pair."
+    }
+  ],
+  "notes": "Steam lane spike: confirms synthetic uinput pad recognized by Steam Input (no uhid needed), output at XI2 seat only (not evdev). Unblocks Phase 2 Steam side. Canary note: desktop-layout bindings persist across pad re-creation."
+}

@@ -1,0 +1,11 @@
+{
+  "t": 1781181729.604038,
+  "plane": "xi2",
+  "dev": "xwayland-keyboard:10",
+  "dev_id": 9,
+  "flag": "Xwayland-seat(XTEST/libei/phys)",
+  "type": null,
+  "event": "KeyPress",
+  "code": "F9",
+  "value": null
+}

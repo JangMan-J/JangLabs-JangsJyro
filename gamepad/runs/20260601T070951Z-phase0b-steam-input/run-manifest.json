@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "run_id": "20260601T070951Z-phase0b-steam-input",
+  "date": "2026-06-01",
+  "phase": "phase0-steam-observability",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": null,
+  "lanes": ["steam"],
+  "slices": [
+    {
+      "slice": "f9-observability",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "r1-final.jsonl",
+      "injector_log": null,
+      "notes": "Real 8BitDo pad. A/South->F9 binding. 11 presses -> 11 KeyPress+KeyRelease at XI2 xwayland-keyboard:10; 0 KEY_F9 at evdev. Confirms Steam Output plane = XI2 seat, not evdev. Capture file is xi2-format but pre-JSONL era (r1-final.jsonl)."
+    }
+  ],
+  "notes": "Phase 0b R1 resolution: Steam Input observable at XI2/Wayland seat only, not evdev. Injector mechanism (XTEST vs libei) undetermined. Durable facts in findings/steam_input_linux.md."
+}

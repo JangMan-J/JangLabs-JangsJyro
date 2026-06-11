@@ -1,0 +1,21 @@
+{
+  "schema_version": "1",
+  "run_id": "20260601T065426Z-phase0-runtime-smoke",
+  "date": "2026-06-01",
+  "phase": "phase0-jsm-smoke",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": "ae7accc",
+  "steam_client": null,
+  "lanes": ["jsm"],
+  "slices": [
+    {
+      "slice": "digital",
+      "verdict": "exact",
+      "jsm_capture": "jsm.stdout.log",
+      "steam_capture": null,
+      "injector_log": null,
+      "notes": "Real 8BitDo pad (D-Input 2dc8:6012). S=SPACE (3 presses, 3 KEY_SPACE at evdev, ~1-3ms). ZR=LMOUSE (4 presses via analog ABS_RZ threshold, not BTN_TR2 latch). No JSONL capture file — pre-JSONL era; raw capture in jsm.stdout.log."
+    }
+  ],
+  "notes": "Phase 0a runtime smoke with real physical pad. Confirms JSM->evdev output chain end-to-end. ZR fires off analog ABS_RZ threshold (behavioral finding promoted to findings/jsm_lane_behavior.md)."
+}

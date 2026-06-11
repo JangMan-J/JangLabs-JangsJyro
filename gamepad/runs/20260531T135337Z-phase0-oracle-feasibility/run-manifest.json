@@ -1,0 +1,12 @@
+{
+  "schema_version": "1",
+  "run_id": "20260531T135337Z-phase0-oracle-feasibility",
+  "date": "2026-05-31",
+  "phase": "phase0-build",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": "ae7accc",
+  "steam_client": null,
+  "lanes": ["jsm"],
+  "slices": [],
+  "notes": "Phase 0a build + clean-start/stop validation. No stimulus slices — this run confirms the JSM binary builds and runs on Linux. Four crashes fixed and committed (ad11ea0-ae7accc). No capture JSONL produced; artifacts are backtraces and logs."
+}

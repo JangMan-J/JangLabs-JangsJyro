@@ -1,0 +1,16 @@
+{
+  "schema_version": "1",
+  "mechanic": "doublepress",
+  "jsm_run": "runs/20260602T145517Z-phase2-jsm-quickwins",
+  "steam_run": "runs/20260611T124018Z-phase2-steam-quickwins",
+  "entries": [
+    {
+      "kind": "key",
+      "name": "B",
+      "delta_type": "jsm-only",
+      "jsm_value": 1,
+      "steam_value": 0,
+      "note": "JSM fires the base binding on the first press of a double pair; Steam suppresses it when the second press lands inside Double Tap Time"
+    }
+  ]
+}

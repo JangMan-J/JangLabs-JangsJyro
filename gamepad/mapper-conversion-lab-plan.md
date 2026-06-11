@@ -396,9 +396,12 @@ push, never patch JSM semantics (plan §2), never use `claude -p`/SDK.
 
 **Chunk A — schemas + validator + xi2 normalization (builder).**
 - `gamepad/schemas/` (JSON Schema 2020-12): `run-manifest`, `stimulus-event`, `output-event`,
-  `normalized-stream`, `delta`, `classification` (enum: exact/bounded/degraded/unsupported/
-  requires_user_choice + loss text + evidence refs), `kb-note`. Each with a validating example
-  under `schemas/examples/`.
+  `normalized-stream`, `delta`, `classification`, `kb-note`. Each with a validating example
+  under `schemas/examples/`. **Canonical verdict enum (lead ruling, Gate A):** `exact` /
+  `bounded_approximation` / `degraded_approximation` / `unsupported_omitted` /
+  `requires_user_choice` — the long forms used by the findings and schemas; the short names in
+  §1 are prose aliases. A slice whose evidence doesn't support a classification carries
+  `verdict: null`, never a forced value.
 - `tools/validate_artifacts.py` (+ tests): validate a run dir against the schemas.
 - `normalize_capture.py`: add XI2-plane input — keysym fold (incl. `L1`→F11, `L2`→F12),
   Raw-vs-device dedup, press-pairing, noise flagging by stimulus-timestamp correlation

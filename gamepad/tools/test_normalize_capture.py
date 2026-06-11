@@ -88,5 +88,124 @@ class TestNormalize(unittest.TestCase):
         self.assertEqual(n["summary"]["presses"], {"A": 2})
 
 
+def xi2_cap(*rows):
+    """rows: (t, event, dev_id, dev, code, flag) -> jsonl lines."""
+    return [json.dumps({"t": t, "event": ev, "dev_id": did,
+                        "dev": dev, "code": code, "flag": flag})
+            for (t, ev, did, dev, code, flag) in rows]
+
+
+_SEAT_DEV = "xwayland-keyboard:10"
+_MASTER_DEV = "Virtual core keyboard"
+_SEAT_FLAG = "Xwayland-seat(XTEST/libei/phys)"
+_MASTER_FLAG = "master"
+
+
+class TestNormalizeXI2(unittest.TestCase):
+    def test_plane_detected_as_xi2(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.5, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["plane"], "xi2")
+
+    def test_press_pairing_xi2(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.5, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(len(n["events"]), 1)
+        ev = n["events"][0]
+        self.assertEqual(ev["kind"], "key")
+        self.assertEqual(ev["name"], "F9")
+        self.assertAlmostEqual(ev["dur_ms"], 500.0, places=0)
+        self.assertEqual(n["summary"]["presses"], {"F9": 1})
+
+    def test_raw_events_deduped(self):
+        # Both Raw (master) and Device (xwayland) events for the same key
+        lines = xi2_cap(
+            (1.0, "RawKeyPress", 3, _MASTER_DEV, "F9", _MASTER_FLAG),
+            (1.001, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.002, "RawKeyRelease", 3, _MASTER_DEV, "F9", _MASTER_FLAG),
+            (1.5, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        # n_raw includes all 4, but only 1 press event after dedup
+        self.assertEqual(n["n_raw"], 4)
+        self.assertEqual(len(n["events"]), 1)
+        self.assertEqual(n["events"][0]["name"], "F9")
+
+    def test_keysym_fold_l1_to_f11(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "L1", _SEAT_FLAG),
+            (1.2, "KeyRelease", 9, _SEAT_DEV, "L1", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "F11")
+        self.assertIn("F11", n["summary"]["presses"])
+
+    def test_keysym_fold_l2_to_f12(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "L2", _SEAT_FLAG),
+            (1.2, "KeyRelease", 9, _SEAT_DEV, "L2", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "F12")
+
+    def test_up_only_xi2(self):
+        lines = xi2_cap(
+            (1.0, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["note"], "up-only")
+        self.assertIsNone(n["events"][0]["dur_ms"])
+
+    def test_still_held_xi2(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["note"], "still-held-at-end")
+
+    def test_empty_xi2(self):
+        n = nc.normalize([], plane="xi2")
+        self.assertEqual(n["n_raw"], 0)
+        self.assertEqual(n["events"], [])
+        self.assertEqual(n["plane"], "xi2")
+
+    def test_multiple_distinct_keys_xi2(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.1, "KeyPress", 9, _SEAT_DEV, "F10", _SEAT_FLAG),
+            (1.5, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.6, "KeyRelease", 9, _SEAT_DEV, "F10", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["summary"]["presses"], {"F9": 1, "F10": 1})
+        self.assertEqual(len(n["events"]), 2)
+
+    def test_schema_version_and_plane_fields_xi2(self):
+        n = nc.normalize([], plane="xi2")
+        self.assertEqual(n["schema_version"], "1")
+        self.assertEqual(n["plane"], "xi2")
+
+    def test_schema_version_and_plane_fields_evdev(self):
+        n = nc.normalize([])
+        self.assertEqual(n["schema_version"], "1")
+        self.assertEqual(n["plane"], "evdev")
+
+    def test_explicit_plane_override(self):
+        # Force evdev plane even though input looks like xi2
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        # With plane="evdev" the xi2-shaped records have no "type" or "value";
+        # the evdev path should return empty (no valid evdev events)
+        n = nc.normalize(lines, plane="evdev")
+        self.assertEqual(n["plane"], "evdev")
+
+
 if __name__ == "__main__":
     unittest.main()

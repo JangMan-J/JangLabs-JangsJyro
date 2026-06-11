@@ -1,0 +1,15 @@
+{
+  "schema_version": "1",
+  "mechanic": "doublepress",
+  "verdict": "bounded_approximation",
+  "loss_text": "JSM fires the base binding on the first press of a double pair; Steam suppresses it. Steam->JSM conversion adds an extra base-keystroke; JSM->Steam loses the first-press echo.",
+  "jsm_summary": "Single press -> KEY_B; double pair -> KEY_B (first) then KEY_X (second). Base fires on every first press.",
+  "steam_summary": "Single press -> F12; double pair (90ms gap) -> F7 only, base F12 suppressed entirely.",
+  "evidence_refs": [
+    "runs/20260602T145517Z-phase2-jsm-quickwins/doublepress.capture.jsonl",
+    "runs/20260611T124018Z-phase2-steam-quickwins/doublepress.xi2.jsonl",
+    "findings/jsm_lane_behavior.md",
+    "findings/steam_lane_behavior.md"
+  ],
+  "notes": "Steam's Double Tap Time default 190ms; JSM's DBL_PRESS_WINDOW may differ. Comparator must parameterize threshold."
+}
