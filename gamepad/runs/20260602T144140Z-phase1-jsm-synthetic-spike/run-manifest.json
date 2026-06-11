@@ -14,6 +14,9 @@
       "jsm_capture": "capture.jsonl",
       "steam_capture": null,
       "injector_log": "injector.log",
+      "key_roles": {
+        "jsm": {"digital": "SPACE"}
+      },
       "notes": "Synthetic uinput Xbox-360 pad (045e:028e). S=SPACE (2 presses exact), ZR=LMOUSE via ABS_RZ threshold (2 presses exact). ~2ms latency. Confirms synthetic pad recognized by SDL/JSM; uhid not needed for digital/trigger."
     }
   ],

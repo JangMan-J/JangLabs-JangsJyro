@@ -14,6 +14,12 @@
       "jsm_capture": "taphold.capture.jsonl",
       "steam_capture": null,
       "injector_log": "taphold.injector.log",
+      "key_roles": {
+        "jsm": {"tap": "A", "hold": "B"}
+      },
+      "binding_params": {
+        "HOLD_PRESS_TIME": 150
+      },
       "notes": "E=A B. Short 80ms press->tap KEY_A; long 450ms press->hold KEY_B at 150ms HOLD_PRESS_TIME."
     },
     {
@@ -22,6 +28,9 @@
       "jsm_capture": "trigfull.capture.jsonl",
       "steam_capture": null,
       "injector_log": "trigfull.injector.log",
+      "key_roles": {
+        "jsm": {"soft": "MOUSE_RIGHT", "full": "LSHIFT"}
+      },
       "notes": "ZR_MODE=NO_SKIP. Soft->BTN_RIGHT; full->adds KEY_LEFTSHIFT (NO_SKIP). Spurious BTN_RIGHT at pad disconnect flagged by normalizer as still-held-at-end."
     },
     {
@@ -30,6 +39,9 @@
       "jsm_capture": "stickwasd.capture.jsonl",
       "steam_capture": null,
       "injector_log": "stickwasd.injector.log",
+      "key_roles": {
+        "jsm": {"up": "W", "left": "A"}
+      },
       "notes": "LEFT_STICK_MODE=NO_MOUSE, LUP/LDOWN/LLEFT/LRIGHT=W/S/A/D."
     },
     {
@@ -38,6 +50,9 @@
       "jsm_capture": "simpress.capture.jsonl",
       "steam_capture": null,
       "injector_log": "simpress.injector.log",
+      "key_roles": {
+        "jsm": {"chord": "Q", "member_l": "LSHIFT", "member_r": "E"}
+      },
       "notes": "L=LSHIFT,R=E,L+R=Q. L+R->Q correct; lone L after chord->Q (sticky state bug)."
     },
     {
@@ -46,6 +61,9 @@
       "jsm_capture": "simpress2.capture.jsonl",
       "steam_capture": null,
       "injector_log": "simpress2.injector.log",
+      "key_roles": {
+        "jsm": {"chord": "Q", "member_l": "LSHIFT", "member_r": "E"}
+      },
       "notes": "Lone press first (correct), then chord, then lone again (wrong). Disambiguates that sticky state is residual, not a mapping error."
     },
     {
@@ -54,6 +72,9 @@
       "jsm_capture": "chord.capture.jsonl",
       "steam_capture": null,
       "injector_log": "chord.injector.log",
+      "key_roles": {
+        "jsm": {"base": "B", "chord": "G"}
+      },
       "notes": "L=NONE,W=B,L,W=G. W alone->KEY_B; L+W->KEY_G."
     },
     {
@@ -62,6 +83,12 @@
       "jsm_capture": "doublepress.capture.jsonl",
       "steam_capture": null,
       "injector_log": "doublepress.injector.log",
+      "key_roles": {
+        "jsm": {"base": "B", "double": "X"}
+      },
+      "binding_params": {
+        "DBL_PRESS_WINDOW": 150
+      },
       "notes": "N=B,N,N=X. Single->KEY_B; double->KEY_B then KEY_X."
     },
     {
@@ -70,6 +97,9 @@
       "jsm_capture": "holdtimeglobal.capture.jsonl",
       "steam_capture": null,
       "injector_log": "holdtimeglobal.injector.log",
+      "binding_params": {
+        "HOLD_PRESS_TIME": 300
+      },
       "notes": "HOLD_PRESS_TIME=300 governs E and S simultaneously. Confirms audit gotcha X.2: per-binding hold time unsupported in JSM."
     }
   ],

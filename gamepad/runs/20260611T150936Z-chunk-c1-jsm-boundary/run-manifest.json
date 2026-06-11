@@ -14,15 +14,27 @@
       "jsm_capture": "taphold_boundary.capture.jsonl",
       "steam_capture": null,
       "injector_log": "taphold_boundary.injector.log",
+      "key_roles": {
+        "jsm": {"tap": "A", "hold": "B"}
+      },
+      "binding_params": {
+        "HOLD_PRESS_TIME": 150
+      },
       "notes": "HOLD_PRESS_TIME=150. Presses at 130/145/150/155/170ms. Hold only fires at 170ms; 150/155ms produce tap. Effective boundary is HOLD_PRESS_TIME + ~1 poll interval (~8-16ms). Poll-granularity caveat for converter."
     },
     {
       "slice": "doublepress_boundary",
-      "verdict": null,
+      "verdict": "bounded_approximation",
       "jsm_capture": "doublepress_boundary.capture.jsonl",
       "steam_capture": null,
       "injector_log": "doublepress_boundary.injector.log",
-      "notes": "DBL_PRESS_WINDOW=150. Gaps 140/150/160ms (down-to-down) all fire double. Window reference appears to be release-to-down, not down-to-down. Needs wider probe (200/250ms gaps). Escalated to orchestrator."
+      "key_roles": {
+        "jsm": {"base": "B", "double": "X"}
+      },
+      "binding_params": {
+        "DBL_PRESS_WINDOW": 150
+      },
+      "notes": "DBL_PRESS_WINDOW=150. Gaps 140/150/160ms (down-to-down) all fire double. JSM window reference is release-to-down (confirmed commit 4c8fab5: C1 Batch 2b wider probe). Cross-runtime delta: Steam measures down-to-down (C2); epoch mismatch confirmed — bounded_approximation for window translation."
     },
     {
       "slice": "trigramp",
@@ -30,6 +42,12 @@
       "jsm_capture": "trigramp.capture.jsonl",
       "steam_capture": null,
       "injector_log": "trigramp.injector.log",
+      "key_roles": {
+        "jsm": {"soft": "MOUSE_RIGHT", "full": "LSHIFT"}
+      },
+      "binding_params": {
+        "ZR_MODE": "NO_SKIP"
+      },
       "notes": "ZR_MODE=NO_SKIP. Staged pull: soft then full sequentially. Instant 0->255 jump: soft + full both fire (~3ms apart). Confirms cross-runtime delta vs Steam (Steam instant jump: full only, no soft). Phase 4 adversarial material."
     },
     {
@@ -38,8 +56,11 @@
       "jsm_capture": "simpress_sticky.capture.jsonl",
       "steam_capture": null,
       "injector_log": "simpress_sticky.injector.log",
+      "key_roles": {
+        "jsm": {"chord": "Q", "member_l": "LSHIFT", "member_r": "E"}
+      },
       "notes": "L=LSHIFT,R=E,L+R=Q. Sticky state confirmed at 100/300/1000ms gaps — persistent, not a short race. Extends jsm_lane_behavior.md finding (was 600-700ms; now 1000ms confirmed)."
     }
   ],
-  "notes": "Chunk C1 JSM-lane boundary traces. Four slices: taphold boundary (bounded), doublepress window (anomaly/needs wider probe), trigramp instant vs staged (cross-runtime delta), simpress sticky (degraded, strengthened). Orchestrated by run-slice.sh."
+  "notes": "Chunk C1 JSM-lane boundary traces. Four slices: taphold boundary (bounded), doublepress window (bounded — JSM reference confirmed release-to-down, epoch mismatch with Steam down-to-down), trigramp instant vs staged (cross-runtime delta), simpress sticky (degraded, strengthened). Orchestrated by run-slice.sh."
 }

@@ -88,6 +88,21 @@
           "type": ["string", "null"],
           "description": "Relative filename of the injector/holder log for stimulus-timestamp correlation"
         },
+        "key_roles": {
+          "type": ["object", "null"],
+          "description": "Role → canonical-key-name mapping for each lane. Tells the comparator which key name in each stream corresponds to which mechanic role (e.g. 'tap', 'hold', 'base', 'double', 'chord', 'soft', 'full'). Identity (role == key name) is the Phase-9 production default and need not be listed. Only required when JSM and Steam use different key names for the same role (Phase-2 characterization captures). Example: {\"jsm\": {\"tap\": \"A\", \"hold\": \"B\"}, \"steam\": {\"tap\": \"F10\", \"hold\": \"F11\"}}",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          }
+        },
+        "binding_params": {
+          "type": ["object", "null"],
+          "description": "Binding configuration in force during this slice — the configured state, not observed events. Free-form string/number/bool map. Examples: hold_time_ms, double_tap_time_ms, interruptable, adaptive_threshold, DBL_PRESS_WINDOW. Recorded as evidence metadata so the comparator and converter can account for configured parameters. Kept in the manifest (configured state), separate from normalized-stream (observed events).",
+          "additionalProperties": {
+            "type": ["string", "number", "boolean"]
+          }
+        },
         "notes": {
           "type": ["string", "null"],
           "description": "Per-slice notes"

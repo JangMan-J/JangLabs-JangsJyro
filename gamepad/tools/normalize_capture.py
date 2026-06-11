@@ -38,6 +38,41 @@ import argparse
 import json
 import sys
 
+# Canonical key namespace: both evdev and xi2 output must speak ONE vocabulary
+# so the comparator can compare role-aligned key names directly.
+#
+# evdev: canon() strips KEY_ then applies this table.
+# xi2:   _xi2_canon() applies this table after keysym fold.
+# Single lowercase letters (a-z) are uppercased by the xi2 path without a table entry.
+_CANON_KEY_FOLD: dict[str, str] = {
+    # Shift
+    "LEFTSHIFT":  "LSHIFT",
+    "RIGHTSHIFT": "RSHIFT",
+    # Ctrl
+    "LEFTCTRL":   "LCTRL",
+    "RIGHTCTRL":  "RCTRL",
+    # Alt
+    "LEFTALT":    "LALT",
+    "RIGHTALT":   "RALT",
+    # Meta/Super
+    "LEFTMETA":   "LMETA",
+    "RIGHTMETA":  "RMETA",
+}
+
+# XI2 modifier keysym -> canonical name (applied before _CANON_KEY_FOLD lookup)
+_XI2_MOD_FOLD: dict[str, str] = {
+    "Shift_L":   "LSHIFT",
+    "Shift_R":   "RSHIFT",
+    "Control_L": "LCTRL",
+    "Control_R": "RCTRL",
+    "Alt_L":     "LALT",
+    "Alt_R":     "RALT",
+    "Meta_L":    "LMETA",
+    "Meta_R":    "RMETA",
+    "Super_L":   "LMETA",
+    "Super_R":   "RMETA",
+}
+
 # XI2 keysym fold: legacy names that xinput prints for certain F-keys
 _XI2_KEYSYM_FOLD: dict[str, str] = {
     "L1": "F11",
@@ -58,7 +93,8 @@ _DEDUP_WINDOW_S = 0.005  # 5 ms
 def canon(code: str) -> tuple[str, str]:
     """(kind, canonical_name) for an evdev code string."""
     if code.startswith("KEY_"):
-        return "key", code[4:]
+        name = code[4:]
+        return "key", _CANON_KEY_FOLD.get(name, name)
     if code in ("BTN_LEFT", "BTN_RIGHT", "BTN_MIDDLE"):
         return "mousebtn", "MOUSE_" + code[4:]
     if code in ("BTN_SIDE", "BTN_EXTRA", "BTN_FORWARD", "BTN_BACK"):
@@ -89,8 +125,22 @@ def _detect_plane(records: list[dict]) -> str:
 
 
 def _xi2_canon(code: str) -> tuple[str, str]:
-    """(kind, canonical_name) for an xi2 keysym/button code string."""
+    """(kind, canonical_name) for an xi2 keysym/button code string.
+
+    Fold order:
+      1. _XI2_MOD_FOLD: Shift_L -> LSHIFT, Control_L -> LCTRL, etc.
+      2. _XI2_KEYSYM_FOLD: L1 -> F11, L2 -> F12.
+      3. Lowercase single letter (a-z) -> uppercase (Steam emits 'q'; JSM emits 'Q').
+      4. Button/wheel classification.
+    """
+    # Modifier fold first (takes precedence over everything else)
+    if code in _XI2_MOD_FOLD:
+        return "key", _XI2_MOD_FOLD[code]
+    # Legacy F-key keysym fold
     code = _XI2_KEYSYM_FOLD.get(code, code)
+    # Uppercase single lowercase letters (Steam emits e.g. 'q', 'w', 'a', 'd')
+    if len(code) == 1 and code.islower():
+        code = code.upper()
     if code.startswith("BTN_"):
         return "mousebtn", "MOUSE_" + code[4:]
     if code.startswith("btn"):
@@ -125,14 +175,16 @@ def normalize_xi2(records: list[dict]) -> dict:
     deduped_raw_set: set[int] = set()  # indices into records
     for i, r in enumerate(records):
         ev = r.get("event", "")
-        code = _XI2_KEYSYM_FOLD.get(r.get("code", ""), r.get("code", ""))
+        raw_code: str = r.get("code") or ""
+        code: str = _XI2_KEYSYM_FOLD.get(raw_code, raw_code)
         if ev in _XI2_PRESS_EVENTS or ev in _XI2_RELEASE_EVENTS:
             device_timestamps.setdefault(code, []).append(r["t"])
     for i, r in enumerate(records):
         ev = r.get("event", "")
         if ev not in _XI2_RAW_EVENTS:
             continue
-        code = _XI2_KEYSYM_FOLD.get(r.get("code", ""), r.get("code", ""))
+        raw_code = r.get("code") or ""
+        code = _XI2_KEYSYM_FOLD.get(raw_code, raw_code)
         times = device_timestamps.get(code, [])
         if any(abs(r["t"] - dt) <= _DEDUP_WINDOW_S for dt in times):
             deduped_raw_set.add(i)
@@ -150,7 +202,7 @@ def normalize_xi2(records: list[dict]) -> dict:
         ev = r.get("event", "")
         if i in deduped_raw_set:
             continue  # Raw duplicate — counted in n_raw but not emitted
-        raw_code = r.get("code", "")
+        raw_code = r.get("code") or ""
         code = _XI2_KEYSYM_FOLD.get(raw_code, raw_code)
         kind, name = _xi2_canon(code)
         dev_id = r.get("dev_id")

@@ -16,7 +16,7 @@ def cap(*rows):
 class TestCanon(unittest.TestCase):
     def test_keys(self):
         self.assertEqual(nc.canon("KEY_SPACE"), ("key", "SPACE"))
-        self.assertEqual(nc.canon("KEY_LEFTSHIFT"), ("key", "LEFTSHIFT"))
+        self.assertEqual(nc.canon("KEY_LEFTSHIFT"), ("key", "LSHIFT"))  # namespace fold
 
     def test_mouse_buttons(self):
         self.assertEqual(nc.canon("BTN_LEFT"), ("mousebtn", "MOUSE_LEFT"))
@@ -99,6 +99,115 @@ _SEAT_DEV = "xwayland-keyboard:10"
 _MASTER_DEV = "Virtual core keyboard"
 _SEAT_FLAG = "Xwayland-seat(XTEST/libei/phys)"
 _MASTER_FLAG = "master"
+
+
+class TestCanonNamespace(unittest.TestCase):
+    """Canonical key namespace fold: both evdev and xi2 paths must speak one vocabulary."""
+
+    # evdev: KEY_LEFTSHIFT -> LSHIFT (not LEFTSHIFT)
+    def test_evdev_leftshift_folded(self):
+        n = nc.normalize(cap(
+            (1.0, "kbd", "KEY", "KEY_LEFTSHIFT", 1),
+            (1.1, "kbd", "KEY", "KEY_LEFTSHIFT", 0),
+        ))
+        self.assertEqual(n["events"][0]["name"], "LSHIFT")
+        self.assertIn("LSHIFT", n["summary"]["presses"])
+
+    def test_evdev_rightshift_folded(self):
+        n = nc.normalize(cap(
+            (1.0, "kbd", "KEY", "KEY_RIGHTSHIFT", 1),
+            (1.1, "kbd", "KEY", "KEY_RIGHTSHIFT", 0),
+        ))
+        self.assertEqual(n["events"][0]["name"], "RSHIFT")
+
+    def test_evdev_leftctrl_folded(self):
+        n = nc.normalize(cap(
+            (1.0, "kbd", "KEY", "KEY_LEFTCTRL", 1),
+            (1.1, "kbd", "KEY", "KEY_LEFTCTRL", 0),
+        ))
+        self.assertEqual(n["events"][0]["name"], "LCTRL")
+
+    def test_evdev_leftalt_folded(self):
+        n = nc.normalize(cap(
+            (1.0, "kbd", "KEY", "KEY_LEFTALT", 1),
+            (1.1, "kbd", "KEY", "KEY_LEFTALT", 0),
+        ))
+        self.assertEqual(n["events"][0]["name"], "LALT")
+
+    # xi2: Shift_L -> LSHIFT; lowercase 'q' -> 'Q'
+    def test_xi2_shift_l_folded(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "Shift_L", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "Shift_L", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "LSHIFT")
+        self.assertIn("LSHIFT", n["summary"]["presses"])
+
+    def test_xi2_shift_r_folded(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "Shift_R", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "Shift_R", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "RSHIFT")
+
+    def test_xi2_ctrl_l_folded(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "Control_L", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "Control_L", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "LCTRL")
+
+    def test_xi2_alt_l_folded(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "Alt_L", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "Alt_L", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "LALT")
+
+    def test_xi2_lowercase_letter_upcased(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "q", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "q", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "Q")
+
+    def test_xi2_lowercase_wasd_upcased(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "w", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "w", _SEAT_FLAG),
+            (1.2, "KeyPress", 9, _SEAT_DEV, "a", _SEAT_FLAG),
+            (1.3, "KeyRelease", 9, _SEAT_DEV, "a", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        names = [e["name"] for e in n["events"]]
+        self.assertIn("W", names)
+        self.assertIn("A", names)
+
+    # F-keys and special keys must NOT be altered
+    def test_xi2_fkey_passthrough(self):
+        lines = xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(n["events"][0]["name"], "F9")
+
+    # After namespace fold: evdev KEY_LEFTSHIFT and xi2 Shift_L both map to LSHIFT
+    def test_both_planes_agree_on_lshift(self):
+        evdev_n = nc.normalize(cap(
+            (1.0, "kbd", "KEY", "KEY_LEFTSHIFT", 1),
+            (1.1, "kbd", "KEY", "KEY_LEFTSHIFT", 0),
+        ))
+        xi2_n = nc.normalize(xi2_cap(
+            (1.0, "KeyPress", 9, _SEAT_DEV, "Shift_L", _SEAT_FLAG),
+            (1.1, "KeyRelease", 9, _SEAT_DEV, "Shift_L", _SEAT_FLAG),
+        ))
+        self.assertEqual(evdev_n["events"][0]["name"], xi2_n["events"][0]["name"])
 
 
 class TestNormalizeXI2(unittest.TestCase):

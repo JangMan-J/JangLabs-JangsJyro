@@ -1,0 +1,57 @@
+{
+  "schema_version": "1",
+  "run_id": "20260611T153109Z-trigger-softpull-adjudication",
+  "date": "2026-06-11",
+  "phase": "phase4-steam-adjudication",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "1781139754",
+  "lanes": ["steam"],
+  "slices": [
+    {
+      "slice": "digital",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "digital.xi2.jsonl",
+      "injector_log": "holder.log",
+      "key_roles": {
+        "steam": {"digital": "F9"}
+      },
+      "notes": "Canary slice. South->F9. 3/3 F9 pairs confirmed. Run before all adjudication slices."
+    },
+    {
+      "slice": "trig_phase2_exact",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "trig_phase2_exact.xi2.jsonl",
+      "injector_log": "holder.log",
+      "key_roles": {
+        "steam": {"soft": "F3", "full": "F4"}
+      },
+      "notes": "Phase-2 exact stimulus (RZ=100 staged to RZ=255) on fresh client. F3 did NOT fire — F4 only at +450ms. Confirms C2 anomaly was not state-dependent; RZ=100 is below the edge/soft threshold. Phase-2 result claiming F3+F4 at RZ=100 is not reproducible."
+    },
+    {
+      "slice": "trig_staged_high",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "trig_staged_high.xi2.jsonl",
+      "injector_log": "holder.log",
+      "key_roles": {
+        "steam": {"soft": "F3", "full": "F4"}
+      },
+      "notes": "Staged RZ=200 -> RZ=255 (higher soft-pull intermediate). F3 fires at +380ms, F4 at +830ms, both held simultaneously until release. Confirms: adaptive_threshold=3 sets the soft threshold between RZ=100 and RZ=200; use RZ=200 for reproducible soft+full behavior. Exact soft+full overlap confirmed — matches Phase-2 intent."
+    },
+    {
+      "slice": "trig_instant",
+      "verdict": "bounded_approximation",
+      "jsm_capture": null,
+      "steam_capture": "trig_instant.xi2.jsonl",
+      "injector_log": "holder.log",
+      "key_roles": {
+        "steam": {"full": "F4"}
+      },
+      "notes": "Instant RZ=255 after prior session crossing. F4 only (+450ms). F3 did not fire. Confirms: instant 0->255 jump fires full-only on Steam regardless of session state. Structural delta vs JSM (JSM axis-threshold model fires soft+full on any crossing including instant). Phase-4 adversarial material."
+    }
+  ],
+  "notes": "Trigger soft-pull adjudication run. Resolves C2 batch-3 anomaly: RZ=100 is below the adaptive_threshold=3 soft/edge threshold; use RZ>=200 for reproducible F3. The Phase-2 staged result was plausible but used an effective stimulus exceeding the threshold. Instant jump structural delta vs JSM confirmed. Phase-2 findings/steam_lane_behavior.md trigger entry updated to reflect RZ=200 requirement."
+}
