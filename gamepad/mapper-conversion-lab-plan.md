@@ -387,7 +387,48 @@ unchanged: durable facts → `findings/`; raw artifacts → `reference/<topic>/`
 
 ---
 
-## 14. Cross-references
+## 14. Phase 3–4 execution brief (teammate orchestration, 2026-06-11)
+
+**Roles.** Orchestrator (Fable session): specs, gate reviews, findings promotion, all git
+commits. `builder` (Sonnet teammate): code, strictly TDD. `runner` (Sonnet teammate): ALL
+live-system work, strictly serial (one actor owns pad+Steam+displays at a time). Teammates never
+push, never patch JSM semantics (plan §2), never use `claude -p`/SDK.
+
+**Chunk A — schemas + validator + xi2 normalization (builder).**
+- `gamepad/schemas/` (JSON Schema 2020-12): `run-manifest`, `stimulus-event`, `output-event`,
+  `normalized-stream`, `delta`, `classification` (enum: exact/bounded/degraded/unsupported/
+  requires_user_choice + loss text + evidence refs), `kb-note`. Each with a validating example
+  under `schemas/examples/`.
+- `tools/validate_artifacts.py` (+ tests): validate a run dir against the schemas.
+- `normalize_capture.py`: add XI2-plane input — keysym fold (incl. `L1`→F11, `L2`→F12),
+  Raw-vs-device dedup, press-pairing, noise flagging by stimulus-timestamp correlation
+  (stimulus source: holder/injector logs). Keep existing evdev mode + tests green.
+- **Gate A:** validator green on retrofitted manifests for all six existing `runs/` dirs.
+
+**Chunk B — comparator v0 (builder, after A).**
+- `tools/compare_lanes.py`: two normalized streams + manifests → delta + classification
+  artifacts per schema.
+- **Gate B (known-answer test, no Goodhart surface):** from raw Phase-2 artifacts alone it must
+  reproduce the verdict table in `findings/steam_lane_behavior.md` §matches/§deltas — digital
+  exact; tap/hold match; double-press base-suppression delta; chord match; simpress member-leak
+  + JSM-sticky asymmetry; staged-trigger match. Any mismatch = comparator bug OR a findings
+  error — escalate to orchestrator, never "fix" the expected table to pass.
+
+**Chunk C — boundary + Phase-4 traces (runner; serial).**
+- JSM lane (headless): tap/hold boundary (140/150/160 ms at `HOLD_PRESS_TIME=150`), double-press
+  window edges, trigger ramp instant-vs-staged, sticky-state minimal variants.
+- Steam lane (nested env `tools/steam-virtual-env.sh`; canary slice FIRST, every session):
+  same boundaries (450 ms long-press edges, 190 ms double-tap edges, ramp), then the first
+  vdf-programmatic variants — `interruptable 0` on tap/hold, per the verified protocol:
+  backup → edit autosave vdf → `steam -shutdown` → relaunch nested → canary → run. Restore
+  `reference/desktop-layout-phase2-reference.vdf` when done.
+- Every batch: `runs/<UTC>-<slug>/` with manifest (per Chunk-A schema) + `result.md`.
+- **Gate C:** orchestrator reads verdicts, promotes findings, commits.
+
+**Environment handover (live now):** nested KWin `wayland-jsmlab`, Xwayland display in
+`/tmp/jsmlab_display`; Steam running inside; pad holder FIFO `/tmp/synthetic_pad_ctrl`.
+
+## 15. Cross-references
 
 - JSM source: this repository (`https://github.com/JangMan-J/JangLabs-JangsJyro.git` @ `branch-a-port`; repo root at `../`). Lineage: Electronicks/JoyShockMapper + ceski (@ceski-1) + JangMan.
 - Build recipe + runtime notes (this repo): `../docs/superpowers/2026-05-03-linux-build-reproduction-handoff.md`,

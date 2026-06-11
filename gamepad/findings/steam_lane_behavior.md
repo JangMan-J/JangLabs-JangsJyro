@@ -90,3 +90,11 @@ hypothesis until a trace fires it.
   `Steam Controller Configs/<acct>/config/413080/controller_xbox360.vdf` — human-readable;
   read it to verify what the GUI actually saved (it caught nothing wrong today, and it is the
   ground truth the converter will eventually consume).
+- **Programmatic binding control WORKS (verified 2026-06-11, F9→F7 probe):** edit the autosave
+  vdf on disk, then **restart Steam** — the edited bindings are live (8/8 presses emitted the
+  edited key). On-disk edits are NOT picked up while Steam runs (in-memory copy wins), and
+  shutdown does NOT write back over your edit. Protocol: backup → edit → `steam -shutdown` →
+  relaunch (nested env: `tools/steam-virtual-env.sh`) → canary slice → run. Never disk-edit and
+  GUI-edit the same layout concurrently. **This removes the GUI sitting for any mechanic whose
+  vdf encoding we know** (activator types/settings per the docs snapshots + this layout as the
+  template). Phase-2 reference layout archived at `reference/desktop-layout-phase2-reference.vdf`.
