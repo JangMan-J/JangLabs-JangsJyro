@@ -34,7 +34,7 @@
       "binding_params": {
         "DBL_PRESS_WINDOW": 150
       },
-      "notes": "DBL_PRESS_WINDOW=150. Gaps 140/150/160ms (down-to-down) all fire double. JSM window reference is release-to-down (confirmed commit 4c8fab5: C1 Batch 2b wider probe). Cross-runtime delta: Steam measures down-to-down (C2); epoch mismatch confirmed — bounded_approximation for window translation."
+      "notes": "DBL_PRESS_WINDOW=150. Gaps 140/150/160ms (down-to-down) all fire double. JSM window reference is release-to-down (confirmed commit 4c8fab5: C1 Batch 2b wider probe). Cross-runtime delta: Steam's epoch is NOT release-to-down (C2); down-to-down vs release-to-release unresolved (equal-hold probes) — epoch mismatch with JSM holds either way — bounded_approximation for window translation."
     },
     {
       "slice": "trigramp",
