@@ -1,0 +1,18 @@
+# trigger ramp: instant 0->255 vs staged 0->100->255 (NO_SKIP mode)
+# JSM fires on ABS_RZ threshold crossings; Steam had ramp-dependent behavior (finding)
+# expect for JSM: soft fires on any crossing above soft threshold, regardless of ramp speed
+
+# staged pull: 0->100 (soft fires) -> 255 (full fires) -> release
+axis RZ 100
+wait 450
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600
+
+# instant pull: 0->255 directly (no intermediate soft value)
+# JSM should STILL fire RMOUSE (soft) + LSHIFT (full), same as staged
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600

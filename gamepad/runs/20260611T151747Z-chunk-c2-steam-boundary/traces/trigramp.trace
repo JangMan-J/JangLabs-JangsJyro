@@ -1,0 +1,17 @@
+# Trigger ramp: staged vs instant (right trigger: edge=F3 soft, click=F4 full)
+# Phase-2 finding: instant 0->255 => F4 only (no F3); staged => F3 then F4
+# Confirming and extending with explicit ramp comparison
+
+# staged pull: 0->100 (soft fires F3) -> 255 (full fires F4) -> release
+axis RZ 100
+wait 450
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600
+
+# instant pull: 0->255 directly (expect F4 only, no F3 — confirming anomaly)
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600

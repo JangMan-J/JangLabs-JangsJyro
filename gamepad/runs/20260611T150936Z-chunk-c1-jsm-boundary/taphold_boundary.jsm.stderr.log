@@ -1,0 +1,5 @@
+fopen /dev/tty: No such device or address
+
+(process:509114): GLib-GIO-CRITICAL **: 08:10:51.914: g_dbus_proxy_new: assertion 'G_IS_DBUS_CONNECTION (connection)' failed
+[1;31m0 devices connected
+[0;37m

@@ -1,0 +1,29 @@
+# watching 2 device(s):
+#   /dev/input/event260  'JoyShockMapper_MOUSE'  [GRABBED]
+#   /dev/input/event261  'JoyShockMapper_KEYBOARD'  [GRABBED]
+# types=['KEY', 'REL', 'SYN']  seconds=30.0
+1781190721.542355  'JoyShockMapper_KEYBOARD'          KEY KEY_B            1
+1781190721.542355  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190721.603927  'JoyShockMapper_KEYBOARD'          KEY KEY_B            0
+1781190721.603927  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190721.684843  'JoyShockMapper_KEYBOARD'          KEY KEY_X            1
+1781190721.684843  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190721.744163  'JoyShockMapper_KEYBOARD'          KEY KEY_X            0
+1781190721.744163  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190722.544676  'JoyShockMapper_KEYBOARD'          KEY KEY_B            1
+1781190722.544676  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190722.603667  'JoyShockMapper_KEYBOARD'          KEY KEY_B            0
+1781190722.603667  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190722.696142  'JoyShockMapper_KEYBOARD'          KEY KEY_X            1
+1781190722.696142  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190722.755496  'JoyShockMapper_KEYBOARD'          KEY KEY_X            0
+1781190722.755496  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190723.555612  'JoyShockMapper_KEYBOARD'          KEY KEY_B            1
+1781190723.555612  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190723.616239  'JoyShockMapper_KEYBOARD'          KEY KEY_B            0
+1781190723.616239  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190723.715878  'JoyShockMapper_KEYBOARD'          KEY KEY_X            1
+1781190723.715878  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190723.775501  'JoyShockMapper_KEYBOARD'          KEY KEY_X            0
+1781190723.775501  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+# captured 24 event(s).

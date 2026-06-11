@@ -1,0 +1,43 @@
+# sticky-state minimal: chord (L+R -> Q), then lone L at varying gaps
+# bug: lone L after chord re-emits Q instead of LSHIFT (persistent sticky state)
+# gap: time between chord-release and start of lone L press
+
+# control: lone L first (no prior chord) -> expect LSHIFT (clean baseline)
+press TL 200
+wait 700
+
+# chord: TL+TR -> Q
+down TL
+down TR
+wait 300
+up TR
+up TL
+
+# gap=100ms, then lone L -> expect (bug) Q instead of LSHIFT
+wait 100
+press TL 200
+wait 700
+
+# chord again to reset state for next test
+down TL
+down TR
+wait 300
+up TR
+up TL
+
+# gap=300ms, then lone L -> expect (bug persists) Q instead of LSHIFT
+wait 300
+press TL 200
+wait 700
+
+# chord again
+down TL
+down TR
+wait 300
+up TR
+up TL
+
+# gap=1000ms, then lone L -> expect (bug persists at 600-700ms per finding) Q instead of LSHIFT
+wait 1000
+press TL 200
+wait 700

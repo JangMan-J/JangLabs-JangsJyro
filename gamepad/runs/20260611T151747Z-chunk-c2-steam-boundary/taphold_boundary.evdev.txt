@@ -1,0 +1,80 @@
+# watching 37 device(s):
+#   /dev/input/event0  'Lid Switch'
+#   /dev/input/event1  'Sleep Button'
+#   /dev/input/event2  'Power Button'
+#   /dev/input/event3  'AT Translated Set 2 keyboard'
+#   /dev/input/event4  'Video Bus'
+#   /dev/input/event5  'Video Bus'
+#   /dev/input/event6  'AT AT2040USB Consumer Control'
+#   /dev/input/event7  'AT AT2040USB'
+#   /dev/input/event8  'ASUSTek Computer Inc. N-KEY Device'
+#   /dev/input/event9  'PC Speaker'
+#   /dev/input/event10  'Asus WMI hotkeys'
+#   /dev/input/event11  'ASUF1205:00 2808:0106 Mouse'
+#   /dev/input/event12  'ASUF1205:00 2808:0106 Touchpad'
+#   /dev/input/event13  'HDA NVidia HDMI/DP,pcm=3'
+#   /dev/input/event14  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event15  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event16  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event17  'RustDesk UInput Keyboard'
+#   /dev/input/event18  'mouce-library-fake-mouse'
+#   /dev/input/event19  'HDA NVidia HDMI/DP,pcm=7'
+#   /dev/input/event20  'HDA NVidia HDMI/DP,pcm=8'
+#   /dev/input/event21  'HDA NVidia HDMI/DP,pcm=9'
+#   /dev/input/event22  'HDA Intel PCH Mic'
+#   /dev/input/event23  'HDA Intel PCH Mic'
+#   /dev/input/event24  'HDA Intel PCH Headphone'
+#   /dev/input/event25  'HDA Intel PCH HDMI/DP,pcm=3'
+#   /dev/input/event26  'HDA Intel PCH HDMI/DP,pcm=7'
+#   /dev/input/event27  'HDA Intel PCH HDMI/DP,pcm=8'
+#   /dev/input/event28  'HDA Intel PCH HDMI/DP,pcm=9'
+#   /dev/input/event29  'ydotoold virtual device'
+#   /dev/input/event30  'input-remapper keyboard'
+#   /dev/input/event31  'Razer Basilisk V3 Pro'
+#   /dev/input/event256  'Microsoft X-Box 360 pad'
+#   /dev/input/event257  'Razer Basilisk V3 Pro'
+#   /dev/input/event258  'Razer Basilisk V3 Pro'
+#   /dev/input/event259  'input-remapper Razer Basilisk V3 Pro forwarded'
+#   /dev/input/event260  'Microsoft X-Box 360 pad 0'
+# types=['KEY']  seconds=18.0
+1781191167.416519  'Microsoft X-Box 360 pad'          KEY BTN_B            1
+1781191167.846909  'Microsoft X-Box 360 pad'          KEY BTN_B            0
+1781191168.647335  'Microsoft X-Box 360 pad'          KEY BTN_B            1
+1781191169.097826  'Microsoft X-Box 360 pad'          KEY BTN_B            0
+1781191169.898053  'Microsoft X-Box 360 pad'          KEY BTN_B            1
+1781191170.368244  'Microsoft X-Box 360 pad'          KEY BTN_B            0
+1781191173.285885  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        1
+1781191173.285885  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781191173.294472  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        0
+1781191173.294472  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781191173.456559  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        1
+1781191173.456559  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781191174.169233  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        0
+1781191174.169233  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781191175.288593  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        1
+1781191175.288593  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781191179.384465  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_RIGHT        1
+1781191179.548456  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_RIGHT        0
+1781191181.549833  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        0
+1781191181.549833  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781191181.748559  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    1
+1781191181.828170  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        1
+1781191181.828170  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781191181.960579  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191182.010001  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        0
+1781191182.010001  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781191182.088830  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        1
+1781191182.088830  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781191182.177561  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191182.295538  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191182.378460  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191182.472489  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191182.555628  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191182.658513  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191182.727568  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191183.238446  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           1
+1781191183.372455  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           0
+1781191183.994255  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    0
+1781191184.344467  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        1
+1781191184.438558  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        0
+# captured 40 event(s).

@@ -1,0 +1,53 @@
+{
+  "schema_version": "1",
+  "run_id": "20260611T151747Z-chunk-c2-steam-boundary",
+  "date": "2026-06-11",
+  "phase": "phase4-steam-boundary",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "1781139754",
+  "lanes": ["steam"],
+  "slices": [
+    {
+      "slice": "digital",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "digital.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "Canary slice. South->F9. 3 presses -> 3 exact F9 pairs at XI2. Run before each batch sub-session. All canary passes confirmed (3/3)."
+    },
+    {
+      "slice": "taphold_boundary",
+      "verdict": "bounded_approximation",
+      "jsm_capture": null,
+      "steam_capture": "taphold_boundary.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "East: F10 full-press / F11 long-press @450ms default. Presses at 430/450/470ms. Steam hold fires INCLUSIVE at 450ms (>= threshold). Cross-runtime delta: JSM hold boundary is exclusive + poll-interval offset (~1 poll above HOLD_PRESS_TIME). Converter must account for inclusive vs exclusive boundary semantics."
+    },
+    {
+      "slice": "doublepress_boundary",
+      "verdict": "bounded_approximation",
+      "jsm_capture": null,
+      "steam_capture": "doublepress_boundary.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "North: F12 single / F7 double @190ms default. Gaps 170/190/210ms (down-to-down). Steam window EXCLUSIVE at 190ms measured down-to-down: 170ms fires double, 190ms fires two singles. Contradicts C1 JSM anomaly (JSM fired double at 160ms gap; reference is probably not down-to-down). Both timing models need wider probe to nail JSM boundary."
+    },
+    {
+      "slice": "trigramp",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "trigramp.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "ANOMALY — DO NOT PROMOTE. Staged 0->100->255 and instant 0->255 both emit F4 only; F3 (soft/edge) never fires. Contradicts Phase-2 steam result which showed F3+F4 for staged pull. Hypothesis: adaptive_threshold=3 requires RZ>100 to cross edge activator. Follow-up slice trigramp_highsoft (RZ=200) needed. Do not update findings/steam_lane_behavior.md until resolved."
+    },
+    {
+      "slice": "taphold_interruptable_off",
+      "verdict": "exact",
+      "jsm_capture": null,
+      "steam_capture": "taphold_interruptable_off.xi2.jsonl",
+      "injector_log": "holder.log",
+      "notes": "interruptable=0 on Full_Press activator. Short press (120ms): F10 only. Long press (600ms): F10 fires on press-down AND F11 fires at 450ms threshold — both active simultaneously. Confirms Steamworks doc: interruptable=0 allows Regular to fire alongside Long. Schema implication: taphold normalized-stream and delta schemas must carry interruptable state. Converter cannot assume exclusive tap/hold without reading this per-activator VDF parameter."
+    }
+  ],
+  "notes": "Chunk C2 Steam-lane boundary + interruptable traces. VDF started from reference/desktop-layout-phase2-reference.vdf; restored after batch 4. Key findings: Steam taphold boundary inclusive (>=); Steam doublepress window exclusive (<) measured down-to-down; trigramp contradiction with Phase-2 (escalated, unresolved); interruptable=0 is a Phase-3 schema requirement. Key aliasing: Steam emits F11 as L1, F12 as L2 in xinput — folded by normalize_capture.py."
+}

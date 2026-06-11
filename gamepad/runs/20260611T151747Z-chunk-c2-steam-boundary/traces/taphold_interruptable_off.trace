@@ -1,0 +1,13 @@
+# Interruptable=OFF variant on East's Long_Press (F10 regular, F11 long)
+# Steamworks doc: "Any interruptable activators on same button will not fire if long/double fires"
+# With interruptable=0 on Long_Press: hypothesis = Regular (F10) fires alongside Long (F11)
+# Probing short press (tap only) and long press (both regular + long expected)
+
+# short press (120ms) => only F10 (below hold threshold; long can't fire)
+press EAST 120
+wait 800
+
+# long press (600ms) => WITH interruptable=0: expect F10 AND F11 (regular fires alongside long)
+# Contrast: interruptable=1 (default): only F11 fires (regular suppressed)
+press EAST 600
+wait 800

@@ -1,0 +1,20 @@
+[15:10:50.932Z mono=46800.953] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event256
+[15:10:50.932Z mono=46800.953] WARMUP 9.0s
+[15:10:59.932Z mono=46809.954] REPLAY trace /home/jangmanj/JangLabs/jangsjyro/gamepad/runs/20260611T150936Z-chunk-c1-jsm-boundary/traces/taphold_boundary.trace
+[15:10:59.933Z mono=46809.954] press EAST 130.0ms (down)
+[15:11:00.063Z mono=46810.084] press EAST (up)
+[15:11:00.063Z mono=46810.084] wait 700.0ms
+[15:11:00.763Z mono=46810.784] press EAST 145.0ms (down)
+[15:11:00.908Z mono=46810.929] press EAST (up)
+[15:11:00.908Z mono=46810.929] wait 700.0ms
+[15:11:01.608Z mono=46811.629] press EAST 150.0ms (down)
+[15:11:01.758Z mono=46811.780] press EAST (up)
+[15:11:01.758Z mono=46811.780] wait 700.0ms
+[15:11:02.458Z mono=46812.480] press EAST 155.0ms (down)
+[15:11:02.614Z mono=46812.635] press EAST (up)
+[15:11:02.614Z mono=46812.635] wait 700.0ms
+[15:11:03.314Z mono=46813.335] press EAST 170.0ms (down)
+[15:11:03.484Z mono=46813.505] press EAST (up)
+[15:11:03.484Z mono=46813.505] wait 700.0ms
+[15:11:04.184Z mono=46814.206] SEQUENCE done; LINGER 4.0s
+[15:11:08.185Z mono=46818.206] DESTROY pad

@@ -1,0 +1,46 @@
+# Batch 2b: discriminating probe for DBL_PRESS_WINDOW reference point
+# Config: DBL_PRESS_WINDOW=150, N=B, N,N=X
+#
+# Each probe: down NORTH, hold first_hold_ms, up NORTH, wait gap_ms, press NORTH 60ms
+# d2d = first_hold_ms + gap_ms  (first-down to second-down)
+# r2d = gap_ms                   (first-release to second-down)
+#
+# Probe 1: d2d=200ms, hold=60ms  -> r2d=140ms
+#   IF release-referenced: r2d=140 < 150 => double (KEY_X)
+#   IF down-referenced:    d2d=200 > 150 => single (KEY_B)
+down NORTH
+wait 60
+up NORTH
+wait 140
+press NORTH 60
+wait 800
+
+# Probe 2: d2d=200ms, hold=20ms  -> r2d=180ms
+#   IF release-referenced: r2d=180 > 150 => single (KEY_B)
+#   IF down-referenced:    d2d=200 > 150 => single (KEY_B)
+#   (control: single under BOTH hypotheses — confirms 200ms d2d is unambiguously outside d2d window)
+down NORTH
+wait 20
+up NORTH
+wait 180
+press NORTH 60
+wait 800
+
+# Probe 3: d2d=250ms, hold=110ms -> r2d=140ms
+#   IF release-referenced: r2d=140 < 150 => double (KEY_X)
+#   IF down-referenced:    d2d=250 > 150 => single (KEY_B)
+down NORTH
+wait 110
+up NORTH
+wait 140
+press NORTH 60
+wait 800
+
+# Probe 4: d2d=300ms, hold=60ms  -> r2d=240ms
+#   Both hypotheses: single (KEY_B) — sanity/control
+down NORTH
+wait 60
+up NORTH
+wait 240
+press NORTH 60
+wait 800

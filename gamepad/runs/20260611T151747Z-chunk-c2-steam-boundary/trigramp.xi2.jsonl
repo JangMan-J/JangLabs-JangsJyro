@@ -1,0 +1,8 @@
+{"t": 1781191227.714081, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F4", "flag": "master"}
+{"t": 1781191228.164232, "event": "KeyPress", "dev_id": 6, "dev": "\u21b3 xwayland-keyboard:10", "code": "F4", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781191228.164348, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F4", "flag": "master"}
+{"t": 1781191228.764482, "event": "KeyRelease", "dev_id": 6, "dev": "\u21b3 xwayland-keyboard:10", "code": "F4", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781191228.76458, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F4", "flag": "master"}
+{"t": 1781191229.214238, "event": "KeyPress", "dev_id": 6, "dev": "\u21b3 xwayland-keyboard:10", "code": "F4", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781191229.214315, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F4", "flag": "master"}
+{"t": 1781191244.319873, "event": "KeyRelease", "dev_id": 6, "dev": "\u21b3 xwayland-keyboard:10", "code": "F4", "flag": "Xwayland-seat(XTEST/libei/phys)"}

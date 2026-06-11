@@ -1,0 +1,33 @@
+# watching 2 device(s):
+#   /dev/input/event260  'JoyShockMapper_MOUSE'  [GRABBED]
+#   /dev/input/event261  'JoyShockMapper_KEYBOARD'  [GRABBED]
+# types=['KEY', 'REL', 'SYN']  seconds=30.0
+1781190821.429723  'JoyShockMapper_KEYBOARD'          KEY KEY_LEFTSHIFT    1
+1781190821.429723  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190821.575305  'JoyShockMapper_KEYBOARD'          KEY KEY_LEFTSHIFT    0
+1781190821.575305  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190822.281779  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1781190822.281779  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190822.578954  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1781190822.578954  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190822.731936  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1781190822.731936  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190822.878184  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1781190822.878184  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190823.581843  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1781190823.581843  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190823.880231  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1781190823.880231  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190824.232881  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1781190824.232881  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190824.378916  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1781190824.378916  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190825.083613  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1781190825.083613  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190825.378653  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1781190825.378653  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190826.434586  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            1
+1781190826.434586  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+1781190826.581523  'JoyShockMapper_KEYBOARD'          KEY KEY_Q            0
+1781190826.581523  'JoyShockMapper_KEYBOARD'          SYN SYN_REPORT       0
+# captured 28 event(s).

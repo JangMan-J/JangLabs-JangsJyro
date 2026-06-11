@@ -1,0 +1,29 @@
+# double-press window boundary at DBL_PRESS_WINDOW=150ms
+# gap = time from first press-down to second press-down
+# README: "second down press within 150ms from previous down press"
+# expect: gap < 150ms => double binding (KEY_X); gap >= 150ms => single binding (KEY_B)
+
+# gap=140ms: first down, up after 60ms, wait so gap from first down = 140ms, then second press
+# first-down at t=0; up at t=60; second-down at t=140 (wait 80ms after up)
+down NORTH
+wait 60
+up NORTH
+wait 80
+press NORTH 60
+wait 800
+
+# gap=150ms: second-down exactly at boundary (expect single or double — probing)
+down NORTH
+wait 60
+up NORTH
+wait 90
+press NORTH 60
+wait 800
+
+# gap=160ms: outside window => single binding (KEY_B twice)
+down NORTH
+wait 60
+up NORTH
+wait 100
+press NORTH 60
+wait 800

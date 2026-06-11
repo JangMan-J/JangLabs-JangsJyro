@@ -1,0 +1,16 @@
+# Long-press boundary at Steam Long Press Time = 450ms (East button_b: F10 tap / F11 hold)
+# expect: <450ms => F10 on release (interruptable=on suppresses F10 if F11 fires)
+# expect: >=450ms => F11 only (F10 suppressed by interruptable)
+# probing 430, 450, 470ms press durations
+
+# 430ms => tap => F10 on release
+press EAST 430
+wait 800
+
+# 450ms => at-boundary — probing whether hold fires or tap fires
+press EAST 450
+wait 800
+
+# 470ms => hold => F11 only (F10 suppressed)
+press EAST 470
+wait 800

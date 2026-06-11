@@ -1,0 +1,61 @@
+{"t": 1781191190.446631, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_ENTER", "value": 1}
+{"t": 1781191190.578522, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_ENTER", "value": 0}
+{"t": 1781191190.908608, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 1}
+{"t": 1781191191.163423, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.19739, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.231301, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.265298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.285111, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 1}
+{"t": 1781191191.299391, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.333384, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.345392, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 0}
+{"t": 1781191191.367292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.40155, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 2}
+{"t": 1781191191.41963, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 1}
+{"t": 1781191191.455542, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 1}
+{"t": 1781191191.515674, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 0}
+{"t": 1781191191.553681, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 0}
+{"t": 1781191191.751546, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 1}
+{"t": 1781191191.887586, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 0}
+{"t": 1781191192.315862, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 1}
+{"t": 1781191192.376049, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 0}
+{"t": 1781191192.433536, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 0}
+{"t": 1781191192.506242, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 1}
+{"t": 1781191192.566499, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 0}
+{"t": 1781191192.598617, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_ENTER", "value": 1}
+{"t": 1781191192.705581, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_ENTER", "value": 0}
+{"t": 1781191193.11359, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 1}
+{"t": 1781191193.288584, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 1}
+{"t": 1781191193.366663, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 1}
+{"t": 1781191193.42167, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 0}
+{"t": 1781191193.426866, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 0}
+{"t": 1781191193.577003, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 1}
+{"t": 1781191193.637209, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_WEST", "value": 0}
+{"t": 1781191193.649582, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 1}
+{"t": 1781191193.77773, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 0}
+{"t": 1781191194.15103, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 1}
+{"t": 1781191194.26266, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 0}
+{"t": 1781191194.344557, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 1}
+{"t": 1781191194.444666, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 0}
+{"t": 1781191194.757666, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 1}
+{"t": 1781191194.88758, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 0}
+{"t": 1781191195.497614, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 1}
+{"t": 1781191195.653567, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_DOWN", "value": 0}
+{"t": 1781191196.615606, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 1}
+{"t": 1781191196.761583, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_UP", "value": 0}
+{"t": 1781191197.037624, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTSHIFT", "value": 0}
+{"t": 1781191197.379587, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_ENTER", "value": 1}
+{"t": 1781191197.490582, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_ENTER", "value": 0}
+{"t": 1781191199.48065, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 1}
+{"t": 1781191199.731296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 2}
+{"t": 1781191199.765296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 2}
+{"t": 1781191199.799291, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 2}
+{"t": 1781191199.833295, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 2}
+{"t": 1781191199.867299, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 2}
+{"t": 1781191199.879602, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_LEFTCTRL", "value": 0}
+{"t": 1781191202.974837, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1781191203.06487, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 0}
+{"t": 1781191205.476889, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1781191205.58309, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 0}
+{"t": 1781191208.198896, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1781191208.301811, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 0}

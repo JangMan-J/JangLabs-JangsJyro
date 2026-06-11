@@ -1,0 +1,101 @@
+# watching 37 device(s):
+#   /dev/input/event0  'Lid Switch'
+#   /dev/input/event1  'Sleep Button'
+#   /dev/input/event2  'Power Button'
+#   /dev/input/event3  'AT Translated Set 2 keyboard'
+#   /dev/input/event4  'Video Bus'
+#   /dev/input/event5  'Video Bus'
+#   /dev/input/event6  'AT AT2040USB Consumer Control'
+#   /dev/input/event7  'AT AT2040USB'
+#   /dev/input/event8  'ASUSTek Computer Inc. N-KEY Device'
+#   /dev/input/event9  'PC Speaker'
+#   /dev/input/event10  'Asus WMI hotkeys'
+#   /dev/input/event11  'ASUF1205:00 2808:0106 Mouse'
+#   /dev/input/event12  'ASUF1205:00 2808:0106 Touchpad'
+#   /dev/input/event13  'HDA NVidia HDMI/DP,pcm=3'
+#   /dev/input/event14  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event15  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event16  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event17  'RustDesk UInput Keyboard'
+#   /dev/input/event18  'mouce-library-fake-mouse'
+#   /dev/input/event19  'HDA NVidia HDMI/DP,pcm=7'
+#   /dev/input/event20  'HDA NVidia HDMI/DP,pcm=8'
+#   /dev/input/event21  'HDA NVidia HDMI/DP,pcm=9'
+#   /dev/input/event22  'HDA Intel PCH Mic'
+#   /dev/input/event23  'HDA Intel PCH Mic'
+#   /dev/input/event24  'HDA Intel PCH Headphone'
+#   /dev/input/event25  'HDA Intel PCH HDMI/DP,pcm=3'
+#   /dev/input/event26  'HDA Intel PCH HDMI/DP,pcm=7'
+#   /dev/input/event27  'HDA Intel PCH HDMI/DP,pcm=8'
+#   /dev/input/event28  'HDA Intel PCH HDMI/DP,pcm=9'
+#   /dev/input/event29  'ydotoold virtual device'
+#   /dev/input/event30  'input-remapper keyboard'
+#   /dev/input/event31  'Razer Basilisk V3 Pro'
+#   /dev/input/event256  'Microsoft X-Box 360 pad'
+#   /dev/input/event257  'Razer Basilisk V3 Pro'
+#   /dev/input/event258  'Razer Basilisk V3 Pro'
+#   /dev/input/event259  'input-remapper Razer Basilisk V3 Pro forwarded'
+#   /dev/input/event260  'Microsoft X-Box 360 pad 0'
+# types=['KEY']  seconds=18.0
+1781191190.446631  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        1
+1781191190.578522  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        0
+1781191190.908608  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    1
+1781191191.163423  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.197390  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.231301  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.265298  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.285111  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781191191.299391  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.333384  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.345392  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781191191.367292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.401550  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781191191.419630  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191191.455542  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781191191.515674  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781191191.553681  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191191.751546  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191191.887586  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191192.315862  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781191192.376049  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781191192.433536  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    0
+1781191192.506242  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781191192.566499  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781191192.598617  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        1
+1781191192.705581  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        0
+1781191193.113590  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    1
+1781191193.288584  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191193.366663  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781191193.421670  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191193.426866  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781191193.577003  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781191193.637209  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781191193.649582  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           1
+1781191193.777730  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           0
+1781191194.151030  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           1
+1781191194.262660  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           0
+1781191194.344557  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           1
+1781191194.444666  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           0
+1781191194.757666  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           1
+1781191194.887580  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           0
+1781191195.497614  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         1
+1781191195.653567  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_DOWN         0
+1781191196.615606  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           1
+1781191196.761583  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_UP           0
+1781191197.037624  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    0
+1781191197.379587  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        1
+1781191197.490582  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_ENTER        0
+1781191199.480650  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     1
+1781191199.731296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     2
+1781191199.765296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     2
+1781191199.799291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     2
+1781191199.833295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     2
+1781191199.867299  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     2
+1781191199.879602  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTCTRL     0
+1781191202.974837  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         1
+1781191203.064870  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         0
+1781191205.476889  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         1
+1781191205.583090  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         0
+1781191208.198896  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         1
+1781191208.301811  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         0
+# captured 61 event(s).

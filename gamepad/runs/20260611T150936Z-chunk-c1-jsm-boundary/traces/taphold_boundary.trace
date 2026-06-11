@@ -1,0 +1,17 @@
+# tap/hold boundary at HOLD_PRESS_TIME=150ms
+# expect: <150ms => KEY_A (tap); >=150ms => KEY_B (hold)
+# 130ms => tap => KEY_A
+press EAST 130
+wait 700
+# 145ms => tap => KEY_A
+press EAST 145
+wait 700
+# 150ms => hold => KEY_B (at-boundary: hold fires at threshold)
+press EAST 150
+wait 700
+# 155ms => hold => KEY_B
+press EAST 155
+wait 700
+# 170ms => hold => KEY_B
+press EAST 170
+wait 700

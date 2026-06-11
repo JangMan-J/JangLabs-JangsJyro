@@ -1,0 +1,27 @@
+# Double-tap boundary at Steam Double Tap Time = 190ms (North button_y: F12 single / F7 double)
+# gap = time between first press-down and second press-down
+# expect: gap < 190ms => double => F7 only (base suppressed); gap >= 190ms => single => F12
+
+# gap=170ms: first down, 60ms hold, up; wait so gap from first down = 170ms, then second press
+down NORTH
+wait 60
+up NORTH
+wait 110
+press NORTH 60
+wait 800
+
+# gap=190ms: at-boundary
+down NORTH
+wait 60
+up NORTH
+wait 130
+press NORTH 60
+wait 800
+
+# gap=210ms: outside window => two singles (two F12 presses)
+down NORTH
+wait 60
+up NORTH
+wait 150
+press NORTH 60
+wait 800
