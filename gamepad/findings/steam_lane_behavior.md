@@ -43,6 +43,36 @@ these deltas.
    regular). JSM has only global `HOLD_PRESS_TIME` → Steam→JSM is a confirmed bounded loss
    (audit gotcha X.2, now proven from BOTH sides).
 
+## Official semantics (Steamworks docs — naming/mechanism for the verified behavior)
+
+Steam Input partner docs (`https://partner.steamgames.com/doc/features/steam_controller`,
+sub-page `…/activators`, read 2026-06-11; **local snapshots:
+`reference/steamworks-input-docs/`**) confirm and *mechanize* the runtime verdicts:
+
+- The base-binding suppression we measured on long press, double press, and the 603 ms probe is
+  the documented **`Interruptable`** mechanism: *"Any interruptable activators on the same button
+  will not fire if a long/double press is fired."* **Converter implication: `interruptable` is a
+  per-activator vdf parameter, default on.** With it OFF, Regular fires alongside Long/Double —
+  which maps to a *different* JSM construct than the tap/hold pair (JSM tap/hold ≈ interruptable
+  ON). The converter must read this flag, not assume the default.
+- **Two more press primitives exist beyond the Phase-2 set:** `Start_Press` (fires on press-down,
+  instantly deactivates even if held) and `Release_Press` (fires on release). Future mechanics
+  rows for the capability matrix; JSM analogues (instant `!`-style vs release bindings) need
+  their own A-B traces before any equivalence rule.
+- Chorded press is documented only as "a specific button must be held down at the same time" —
+  the docs make **no claim that the chord member's own bindings are suppressed**, consistent with
+  the member-leak we measured (and confirming the leak is by-design, not a bug to be waited out).
+- Fire Start/End Delay range is 0.0–1.0 s; Turbo/Toggle/Cycle exist per-activator. All were 0/off
+  in this run's layout (screenshots + vdf) — variations are Phase-4+ material.
+- Doc map for later phases (same docs root): *Action Set Layers* (Phase-4 `remove_layer` gotcha),
+  *Mode Shifting*, *In-Game Actions File* / *Action Manifest* (the non-legacy config world), and
+  *Legacy Mode Bindings* — the desktop-layout vdf we parse IS legacy mode; the audit's rows
+  should eventually be cross-checked against both worlds.
+
+Per the lab spine these doc statements are *naming and mechanism* for behavior already verified
+by trace — any NEW claim sourced here (Start/Release press, interruptable-off, delays) stays a
+hypothesis until a trace fires it.
+
 ## Operational gotchas (Steam lane)
 
 - **xinput keysym aliasing:** F11/F12 print as legacy keysyms **L1/L2** in `xinput test-xi2`
