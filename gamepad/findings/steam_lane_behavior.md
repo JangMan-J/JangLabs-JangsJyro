@@ -30,7 +30,12 @@ these deltas.
    double pair, then the double binding; **Steam suppresses the base entirely** when the second
    press lands inside the Double Tap Time (190 ms here). Steam→JSM conversion of a double-press
    binding is `bounded` at best (extra base-keystroke appears); JSM→Steam loses the
-   first-press echo.
+   first-press echo. **Mechanism (docs, user-confirmed): interruptable activators on the button
+   are *paused* until the double-press time passes** — measured: an outside-window single's
+   F12 emitted at first-down + ~window + 35 ms (C2 probe 2). So the delta is count AND latency:
+   every Steam single on a double-bound button is delayed by up to the Double Tap Time, while
+   JSM's base fires immediately. Decision epoch (down-to-down vs release-to-release) and
+   double-emission timing (at second release vs down+lag) remain the one open probe.
 2. **"Simultaneous press" is not the same primitive.** Steam has no SIMPRESS — only chords owned
    by one button. Consequence: the chord *member's* regular binding **leaks** (TL's Shift was
    held down alongside the chord's Q; the owner's E was suppressed). JSM SIMPRESS suppresses
