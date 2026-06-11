@@ -1,0 +1,9 @@
+# stick up (LY=-32000) => W ; stick left (LX=-32000) => A
+axis LY -32000
+wait 500
+axis LY 0
+wait 400
+axis LX -32000
+wait 500
+axis LX 0
+wait 400

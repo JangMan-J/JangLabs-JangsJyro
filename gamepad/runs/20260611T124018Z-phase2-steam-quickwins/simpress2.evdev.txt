@@ -1,0 +1,54 @@
+# watching 37 device(s):
+#   /dev/input/event0  'Lid Switch'
+#   /dev/input/event1  'Sleep Button'
+#   /dev/input/event2  'Power Button'
+#   /dev/input/event3  'AT Translated Set 2 keyboard'
+#   /dev/input/event4  'Video Bus'
+#   /dev/input/event5  'Video Bus'
+#   /dev/input/event6  'AT AT2040USB Consumer Control'
+#   /dev/input/event7  'AT AT2040USB'
+#   /dev/input/event8  'ASUSTek Computer Inc. N-KEY Device'
+#   /dev/input/event9  'PC Speaker'
+#   /dev/input/event10  'Asus WMI hotkeys'
+#   /dev/input/event11  'ASUF1205:00 2808:0106 Mouse'
+#   /dev/input/event12  'ASUF1205:00 2808:0106 Touchpad'
+#   /dev/input/event13  'HDA NVidia HDMI/DP,pcm=3'
+#   /dev/input/event14  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event15  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event16  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event17  'RustDesk UInput Keyboard'
+#   /dev/input/event18  'mouce-library-fake-mouse'
+#   /dev/input/event19  'HDA NVidia HDMI/DP,pcm=7'
+#   /dev/input/event20  'HDA NVidia HDMI/DP,pcm=8'
+#   /dev/input/event21  'HDA NVidia HDMI/DP,pcm=9'
+#   /dev/input/event22  'HDA Intel PCH Mic'
+#   /dev/input/event23  'HDA Intel PCH Mic'
+#   /dev/input/event24  'HDA Intel PCH Headphone'
+#   /dev/input/event25  'HDA Intel PCH HDMI/DP,pcm=3'
+#   /dev/input/event26  'HDA Intel PCH HDMI/DP,pcm=7'
+#   /dev/input/event27  'HDA Intel PCH HDMI/DP,pcm=8'
+#   /dev/input/event28  'HDA Intel PCH HDMI/DP,pcm=9'
+#   /dev/input/event29  'ydotoold virtual device'
+#   /dev/input/event30  'input-remapper keyboard'
+#   /dev/input/event31  'Razer Basilisk V3 Pro'
+#   /dev/input/event256  'Microsoft X-Box 360 pad'
+#   /dev/input/event257  'Razer Basilisk V3 Pro'
+#   /dev/input/event258  'Razer Basilisk V3 Pro'
+#   /dev/input/event259  'input-remapper Razer Basilisk V3 Pro forwarded'
+#   /dev/input/event260  'Microsoft X-Box 360 pad 0'
+# types=['KEY']  seconds=10.0
+1781187221.855032  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         1
+1781187222.419855  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         0
+1781187222.726141  'Microsoft X-Box 360 pad'          KEY BTN_TL           1
+1781187222.926314  'Microsoft X-Box 360 pad'          KEY BTN_TL           0
+1781187223.626485  'Microsoft X-Box 360 pad'          KEY BTN_TL           1
+1781187223.626497  'Microsoft X-Box 360 pad'          KEY BTN_TR           1
+1781187223.926833  'Microsoft X-Box 360 pad'          KEY BTN_TR           0
+1781187223.926844  'Microsoft X-Box 360 pad'          KEY BTN_TL           0
+1781187224.627091  'Microsoft X-Box 360 pad'          KEY BTN_TL           1
+1781187224.827241  'Microsoft X-Box 360 pad'          KEY BTN_TL           0
+1781187225.405018  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         1
+1781187225.485997  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         0
+1781187228.837847  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         1
+1781187229.605040  'input-remapper Razer Basilisk V3 Pro forwarded' KEY BTN_LEFT         0
+# captured 14 event(s).

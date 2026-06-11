@@ -1,0 +1,128 @@
+{"t": 1781185007.15461, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185007.257625, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185007.275865, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185007.275865, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185007.33262, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185007.337776, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185007.337776, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185007.449789, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185007.449789, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185007.457713, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185007.569761, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185007.636713, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185007.636713, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185007.781881, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185007.781881, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185007.802587, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185007.802587, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185008.047479, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185008.047479, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185008.362944, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185008.362944, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185009.497893, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185009.755296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.789297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.823295, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.857295, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.891297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.926297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.961394, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185009.996296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.029667, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.06529, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.099298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.133641, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.167387, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.201298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.236413, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.271317, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.305957, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.339299, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.373394, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.407297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.441296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.475372, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.509296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.543297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.577567, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.611298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.645295, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.680298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.715295, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.749291, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185010.76164, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185010.956715, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185011.057615, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185011.152674, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185011.403292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185011.437292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185011.463641, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185011.556768, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185011.622609, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185011.717837, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185011.76967, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185011.880677, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185011.922735, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185012.014706, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185012.101752, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185012.293425, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185012.293425, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185012.803773, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185012.803773, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185012.878342, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185012.878342, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185013.065716, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_I", "value": 1}
+{"t": 1781185013.217753, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_N", "value": 1}
+{"t": 1781185013.229621, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_I", "value": 0}
+{"t": 1781185013.292678, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_N", "value": 0}
+{"t": 1781185013.301812, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185013.301812, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185015.115786, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185015.115786, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185015.202613, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185015.202613, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185015.213813, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185015.252433, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185015.252433, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185015.318894, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185015.318894, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185015.467291, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185015.501292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185015.509829, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781185015.509829, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 1}
+{"t": 1781185015.535291, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185015.569298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185015.603297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185015.615781, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_I", "value": 1}
+{"t": 1781185015.740697, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_I", "value": 0}
+{"t": 1781185015.852772, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 0}
+{"t": 1781185015.977795, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 1}
+{"t": 1781185016.235293, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.269307, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.304297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.337782, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.371294, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.405354, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.439432, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.473292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.507456, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.541367, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.57534, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.597201, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781185016.597201, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781185016.60937, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.643292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.677297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.712296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.746075, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.779297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.813296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.848298, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.882292, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.916296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.951296, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185016.986017, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185017.019294, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185017.0533, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185017.088293, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}
+{"t": 1781185017.122297, "dev": "ASUSTek Computer Inc. N-KEY Device", "type": "KEY", "code": "KEY_BACKSPACE", "value": 2}

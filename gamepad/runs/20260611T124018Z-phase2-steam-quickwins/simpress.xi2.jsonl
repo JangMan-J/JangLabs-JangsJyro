@@ -1,0 +1,12 @@
+{"t": 1781187212.522514, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "Shift_L", "flag": "master"}
+{"t": 1781187212.524666, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "Shift_L", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781187212.524713, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "q", "flag": "master"}
+{"t": 1781187212.595665, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "q", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781187212.824711, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "q", "flag": "master"}
+{"t": 1781187212.824787, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "q", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781187212.82482, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "Shift_L", "flag": "master"}
+{"t": 1781187212.989526, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "Shift_L", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781187213.424897, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "Shift_L", "flag": "master"}
+{"t": 1781187213.625023, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "Shift_L", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781187213.625079, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "Shift_L", "flag": "master"}
+{"t": 1781187213.700427, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "Shift_L", "flag": "Xwayland-seat(XTEST/libei/phys)"}

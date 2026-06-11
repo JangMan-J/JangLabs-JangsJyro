@@ -1,0 +1,95 @@
+{"t": 1781185007.155619, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185007.258936, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185007.259091, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185007.333031, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185007.333141, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185007.458455, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185007.45856, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185007.570664, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185007.570771, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185008.153601, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185008.153695, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F3", "flag": "master"}
+{"t": 1781185008.533685, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "F3", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185008.533789, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F4", "flag": "master"}
+{"t": 1781185008.983801, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "F4", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185008.983906, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F4", "flag": "master"}
+{"t": 1781185008.983943, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "F4", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185008.983985, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F3", "flag": "master"}
+{"t": 1781185009.49996, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "F3", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185009.500093, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185010.100131, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.140021, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.180196, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.220366, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.25945, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.299686, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.339729, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.380377, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.420556, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.460565, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.501483, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.540691, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.581412, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.620552, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.661007, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.701266, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.741658, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.762357, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.762441, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185010.957392, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185010.957549, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.058461, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.058544, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.153857, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.153957, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.464061, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.464146, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.557405, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.557535, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.623271, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.623375, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.719373, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.719482, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.770218, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.770263, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.881222, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.881288, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185011.923226, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185011.9233, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185012.015375, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185012.01544, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185012.102227, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185012.102309, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185013.066496, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185013.066571, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "i", "flag": "master"}
+{"t": 1781185013.219049, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "i", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185013.219112, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "n", "flag": "master"}
+{"t": 1781185013.230229, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "n", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185013.230272, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "i", "flag": "master"}
+{"t": 1781185013.293394, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "i", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185013.293446, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "n", "flag": "master"}
+{"t": 1781185015.214838, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "n", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185015.214911, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185015.616832, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185015.616881, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "i", "flag": "master"}
+{"t": 1781185015.741892, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "i", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185015.741968, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "i", "flag": "master"}
+{"t": 1781185015.853492, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "i", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185015.853579, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185015.97851, "event": "KeyRelease", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185015.978717, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "BackSpace", "flag": "master"}
+{"t": 1781185016.579657, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.61994, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.660029, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.700283, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.739599, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.780067, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.820202, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.860497, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.900536, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.940789, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185016.981344, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185017.020701, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185017.061134, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185017.101133, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781185017.127696, "event": "KeyPress", "dev_id": 9, "dev": "\u21b3 xwayland-keyboard:10", "code": "BackSpace", "flag": "Xwayland-seat(XTEST/libei/phys)"}

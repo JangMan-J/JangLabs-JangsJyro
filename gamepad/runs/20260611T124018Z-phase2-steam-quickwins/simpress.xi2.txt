@@ -1,0 +1,14 @@
+# xinput test-xi2 --root  types=['KeyPress', 'KeyRelease', 'RawKeyPress', 'RawKeyRelease']  seconds=10.0
+1781187212.522514  RawKeyPress    id=3   Shift_L      [master] '⎣ Virtual core keyboard'
+1781187212.524666  KeyPress       id=9   Shift_L      [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781187212.524713  RawKeyPress    id=3   q            [master] '⎣ Virtual core keyboard'
+1781187212.595665  KeyPress       id=9   q            [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781187212.824711  RawKeyRelease  id=3   q            [master] '⎣ Virtual core keyboard'
+1781187212.824787  KeyRelease     id=9   q            [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781187212.824820  RawKeyRelease  id=3   Shift_L      [master] '⎣ Virtual core keyboard'
+1781187212.989526  KeyRelease     id=9   Shift_L      [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781187213.424897  RawKeyPress    id=3   Shift_L      [master] '⎣ Virtual core keyboard'
+1781187213.625023  KeyPress       id=9   Shift_L      [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781187213.625079  RawKeyRelease  id=3   Shift_L      [master] '⎣ Virtual core keyboard'
+1781187213.700427  KeyRelease     id=9   Shift_L      [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+# captured 12 event(s).

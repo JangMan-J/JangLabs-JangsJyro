@@ -1,0 +1,5 @@
+# optional: START regular => F5 ; START long(custom time) => F2 (per-binding hold time)
+press START 180
+wait 600
+press START 480
+wait 500

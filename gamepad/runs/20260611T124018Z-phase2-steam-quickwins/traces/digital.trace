@@ -1,0 +1,7 @@
+# SOUTH regular => F9 (binding-persistence check + digital mechanic)
+press SOUTH 120
+wait 500
+press SOUTH 120
+wait 500
+press SOUTH 120
+wait 400

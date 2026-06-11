@@ -1,0 +1,9 @@
+# TL+TR together => Q (not LSHIFT+E); then TL alone => LSHIFT
+down TL
+down TR
+wait 300
+up TR
+up TL
+wait 600
+press TL 200
+wait 400

@@ -1,0 +1,198 @@
+# watching 37 device(s):
+#   /dev/input/event0  'Lid Switch'
+#   /dev/input/event1  'Sleep Button'
+#   /dev/input/event2  'Power Button'
+#   /dev/input/event3  'AT Translated Set 2 keyboard'
+#   /dev/input/event4  'Video Bus'
+#   /dev/input/event5  'Video Bus'
+#   /dev/input/event6  'AT AT2040USB Consumer Control'
+#   /dev/input/event7  'AT AT2040USB'
+#   /dev/input/event8  'ASUSTek Computer Inc. N-KEY Device'
+#   /dev/input/event9  'PC Speaker'
+#   /dev/input/event10  'Asus WMI hotkeys'
+#   /dev/input/event11  'ASUF1205:00 2808:0106 Mouse'
+#   /dev/input/event12  'ASUF1205:00 2808:0106 Touchpad'
+#   /dev/input/event13  'HDA NVidia HDMI/DP,pcm=3'
+#   /dev/input/event14  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event15  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event16  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event17  'RustDesk UInput Keyboard'
+#   /dev/input/event18  'mouce-library-fake-mouse'
+#   /dev/input/event19  'HDA NVidia HDMI/DP,pcm=7'
+#   /dev/input/event20  'HDA NVidia HDMI/DP,pcm=8'
+#   /dev/input/event21  'HDA NVidia HDMI/DP,pcm=9'
+#   /dev/input/event22  'HDA Intel PCH Mic'
+#   /dev/input/event23  'HDA Intel PCH Mic'
+#   /dev/input/event24  'HDA Intel PCH Headphone'
+#   /dev/input/event25  'HDA Intel PCH HDMI/DP,pcm=3'
+#   /dev/input/event26  'HDA Intel PCH HDMI/DP,pcm=7'
+#   /dev/input/event27  'HDA Intel PCH HDMI/DP,pcm=8'
+#   /dev/input/event28  'HDA Intel PCH HDMI/DP,pcm=9'
+#   /dev/input/event29  'ydotoold virtual device'
+#   /dev/input/event30  'input-remapper keyboard'
+#   /dev/input/event31  'Razer Basilisk V3 Pro'
+#   /dev/input/event256  'Microsoft X-Box 360 pad'
+#   /dev/input/event257  'Razer Basilisk V3 Pro'
+#   /dev/input/event258  'Razer Basilisk V3 Pro'
+#   /dev/input/event259  'input-remapper Razer Razer Basilisk V3 Pro forwarded'
+#   /dev/input/event260  'Microsoft X-Box 360 pad 0'
+# types=['KEY']  seconds=10.0
+1781184976.480192  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184976.567406  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781184976.578445  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184976.585416  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184976.613419  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781184976.613419  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781184976.650782  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         1
+1781184976.664432  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781184976.719775  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184976.724404  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            1
+1781184976.764436  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781184976.837401  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            0
+1781184976.843411  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184976.862551  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         0
+1781184976.862551  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781184976.862551  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781184976.891466  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         1
+1781184976.912416  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184976.918537  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184976.920444  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         0
+1781184976.991418  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            1
+1781184977.021324  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184977.082308  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184977.088930  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            0
+1781184977.193334  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184977.203325  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            1
+1781184977.246774  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781184977.320557  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            0
+1781184977.373795  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781184977.386218  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781184977.446503  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781184977.865380  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781184977.946662  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781184977.983674  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            1
+1781184977.999435  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781184978.006853  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781184978.097216  'Microsoft X-Box 360 pad'          KEY BTN_WEST         1
+1781184978.108417  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184978.150861  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            0
+1781184978.157638  'Microsoft X-Box 360 pad'          KEY BTN_WEST         0
+1781184978.192301  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            1
+1781184978.278299  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184978.288344  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184978.305331  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            0
+1781184978.437296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184978.461296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_W            1
+1781184978.547349  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_W            0
+1781184978.630423  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184978.722357  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781184978.763754  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184978.838468  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184978.937399  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184978.943437  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781184978.983448  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184979.053849  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184979.065425  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781184979.134310  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781184979.217392  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781184979.236758  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781184979.268406  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781184979.280917  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         1
+1781184979.294308  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184979.338903  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781184979.338903  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781184979.350305  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781184979.362303  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184979.600464  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         0
+1781184979.683503  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_B            1
+1781184979.812426  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_B            0
+1781184979.882520  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781184979.882520  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781184979.920307  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184980.012359  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184980.026305  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            1
+1781184980.086521  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781184980.177424  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_G            1
+1781184980.202339  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            0
+1781184980.270466  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_G            0
+1781184980.276531  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781184980.284322  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184980.398840  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            1
+1781184980.423503  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184980.514648  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_C            1
+1781184980.563488  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            0
+1781184980.655330  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781184980.705367  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_C            0
+1781184980.729361  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781184980.842397  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781184980.849484  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184980.906447  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+1781184980.950456  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184981.045423  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            1
+1781184981.189517  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            0
+1781184981.190371  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184981.353536  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781184981.372325  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184981.434432  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781184981.452745  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781184981.651900  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781184981.792534  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184981.941439  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184981.969190  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781184981.969190  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781184981.979332  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781184981.989871  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         1
+1781184982.096455  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            1
+1781184982.116481  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781184982.160071  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_LEFT         0
+1781184982.251448  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            0
+1781184982.256608  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184982.321852  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781184982.321852  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781184982.421564  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184982.546407  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184982.655629  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781184982.699474  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184982.718466  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781184982.761552  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781184982.780583  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+1781184982.874592  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781184983.001380  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+1781184983.014481  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781184983.186381  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781184983.239344  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781184983.325795  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781184983.325795  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781184983.331782  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781184983.433811  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781184983.433811  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781184983.722508  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_BACKSPACE    1
+1781184983.789391  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_BACKSPACE    0
+1781184983.883495  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_BACKSPACE    1
+1781184983.957404  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_BACKSPACE    0
+1781184984.071359  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781184984.146360  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781184984.215473  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781184984.256601  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781184984.675905  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781184984.831432  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+1781184984.832357  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781184984.894033  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781184984.894033  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781184984.921467  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781184984.957762  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            1
+1781184985.051359  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781184985.076374  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            0
+1781184985.105542  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781184985.105542  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781184985.120406  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781184985.256427  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781184985.301411  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781184985.380495  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781184985.438509  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781184985.447584  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781184985.543489  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781184986.242398  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781184986.386426  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781184986.394370  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+# captured 158 event(s).

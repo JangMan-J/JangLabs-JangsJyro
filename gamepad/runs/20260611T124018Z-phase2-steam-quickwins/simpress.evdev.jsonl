@@ -1,0 +1,14 @@
+{"t": 1781187212.521873, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_TL", "value": 1}
+{"t": 1781187212.521907, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_TR", "value": 1}
+{"t": 1781187212.822265, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_TR", "value": 0}
+{"t": 1781187212.822275, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_TL", "value": 0}
+{"t": 1781187212.989019, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1781187213.059938, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 0}
+{"t": 1781187213.422511, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_TL", "value": 1}
+{"t": 1781187213.622728, "dev": "Microsoft X-Box 360 pad", "type": "KEY", "code": "BTN_TL", "value": 0}
+{"t": 1781187215.594087, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}
+{"t": 1781187215.594087, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_DOUBLETAP", "value": 0}
+{"t": 1781187215.668119, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOUCH", "value": 0}
+{"t": 1781187215.668119, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 0}
+{"t": 1781187219.897045, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 1}
+{"t": 1781187219.996235, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_LEFT", "value": 0}

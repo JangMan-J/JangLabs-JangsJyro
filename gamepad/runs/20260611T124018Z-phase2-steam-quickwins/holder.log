@@ -1,0 +1,194 @@
+[12:41:59.399Z mono=37869.420] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event256
+[12:41:59.399Z mono=37869.420] WARMUP 0.0s
+[12:41:59.399Z mono=37869.420] CONTROL-FIFO /tmp/synthetic_pad_ctrl — write DSL actions (e.g. 'press SOUTH 120'); 'quit' to stop
+[12:42:09.482Z mono=37879.503] press SOUTH 120.0ms (down)
+[12:42:09.602Z mono=37879.623] press SOUTH (up)
+[12:42:09.602Z mono=37879.623] wait 500.0ms
+[12:42:10.102Z mono=37880.123] press SOUTH 120.0ms (down)
+[12:42:10.222Z mono=37880.244] press SOUTH (up)
+[12:42:10.222Z mono=37880.244] wait 500.0ms
+[12:42:10.723Z mono=37880.744] press SOUTH 120.0ms (down)
+[12:42:10.843Z mono=37880.864] press SOUTH (up)
+[12:42:10.843Z mono=37880.864] wait 400.0ms
+[13:28:40.591Z mono=40670.612] press SOUTH 120.0ms (down)
+[13:28:40.711Z mono=40670.733] press SOUTH (up)
+[13:28:40.712Z mono=40670.733] wait 500.0ms
+[13:28:41.212Z mono=40671.233] press SOUTH 120.0ms (down)
+[13:28:41.333Z mono=40671.354] press SOUTH (up)
+[13:28:41.333Z mono=40671.354] wait 500.0ms
+[13:28:41.833Z mono=40671.854] press SOUTH 120.0ms (down)
+[13:28:41.954Z mono=40671.975] press SOUTH (up)
+[13:28:41.954Z mono=40671.975] wait 400.0ms
+[13:28:50.822Z mono=40680.843] press EAST 80.0ms (down)
+[13:28:50.902Z mono=40680.924] press EAST (up)
+[13:28:50.903Z mono=40680.924] wait 700.0ms
+[13:28:51.603Z mono=40681.624] press EAST 450.0ms (down)
+[13:28:52.053Z mono=40682.075] press EAST (up)
+[13:28:52.054Z mono=40682.075] wait 400.0ms
+[13:29:01.058Z mono=40691.079] press NORTH 60.0ms (down)
+[13:29:01.118Z mono=40691.140] press NORTH (up)
+[13:29:01.119Z mono=40691.140] wait 500.0ms
+[13:29:01.619Z mono=40691.640] press NORTH 60.0ms (down)
+[13:29:01.680Z mono=40691.701] press NORTH (up)
+[13:29:01.680Z mono=40691.702] wait 90.0ms
+[13:29:01.771Z mono=40691.792] press NORTH 60.0ms (down)
+[13:29:01.831Z mono=40691.852] press NORTH (up)
+[13:29:01.831Z mono=40691.852] wait 600.0ms
+[13:29:40.464Z mono=40730.485] press WEST 120.0ms (down)
+[13:29:40.584Z mono=40730.605] press WEST (up)
+[13:29:40.584Z mono=40730.605] wait 600.0ms
+[13:29:41.185Z mono=40731.206] down SELECT
+[13:29:41.185Z mono=40731.206] wait 80.0ms
+[13:29:41.265Z mono=40731.286] press WEST 120.0ms (down)
+[13:29:41.385Z mono=40731.407] press WEST (up)
+[13:29:41.385Z mono=40731.407] wait 80.0ms
+[13:29:41.466Z mono=40731.487] up SELECT
+[13:29:41.466Z mono=40731.487] wait 400.0ms
+[13:29:50.683Z mono=40740.704] down TL
+[13:29:50.683Z mono=40740.704] down TR
+[13:29:50.683Z mono=40740.704] wait 300.0ms
+[13:29:50.983Z mono=40741.004] up TR
+[13:29:50.983Z mono=40741.005] up TL
+[13:29:50.983Z mono=40741.005] wait 600.0ms
+[13:29:51.583Z mono=40741.605] press TL 200.0ms (down)
+[13:29:51.784Z mono=40741.805] press TL (up)
+[13:29:51.784Z mono=40741.805] wait 400.0ms
+[13:30:00.932Z mono=40750.953] press TL 200.0ms (down)
+[13:30:01.132Z mono=40751.153] press TL (up)
+[13:30:01.132Z mono=40751.153] wait 700.0ms
+[13:30:01.832Z mono=40751.854] down TL
+[13:30:01.832Z mono=40751.854] down TR
+[13:30:01.832Z mono=40751.854] wait 300.0ms
+[13:30:02.133Z mono=40752.154] up TR
+[13:30:02.133Z mono=40752.154] up TL
+[13:30:02.133Z mono=40752.154] wait 700.0ms
+[13:30:02.833Z mono=40752.854] press TL 200.0ms (down)
+[13:30:03.033Z mono=40753.054] press TL (up)
+[13:30:03.033Z mono=40753.054] wait 400.0ms
+[13:30:33.223Z mono=40783.244] axis RZ=100
+[13:30:33.223Z mono=40783.244] wait 450.0ms
+[13:30:33.673Z mono=40783.694] axis RZ=255
+[13:30:33.673Z mono=40783.694] wait 450.0ms
+[13:30:34.123Z mono=40784.144] axis RZ=0
+[13:30:34.123Z mono=40784.144] wait 450.0ms
+[13:30:43.476Z mono=40793.497] axis LY=-32000
+[13:30:43.476Z mono=40793.497] wait 500.0ms
+[13:30:43.976Z mono=40793.997] axis LY=0
+[13:30:43.976Z mono=40793.997] wait 400.0ms
+[13:30:44.376Z mono=40794.397] axis LX=-32000
+[13:30:44.376Z mono=40794.397] wait 500.0ms
+[13:30:44.876Z mono=40794.897] axis LX=0
+[13:30:44.876Z mono=40794.897] wait 400.0ms
+[13:30:53.725Z mono=40803.746] press START 180.0ms (down)
+[13:30:53.905Z mono=40803.926] press START (up)
+[13:30:53.905Z mono=40803.926] wait 600.0ms
+[13:30:54.505Z mono=40804.527] press START 480.0ms (down)
+[13:30:54.986Z mono=40805.007] press START (up)
+[13:30:54.986Z mono=40805.007] wait 500.0ms
+[13:33:42.938Z mono=40972.959] press SOUTH 120.0ms (down)
+[13:33:43.058Z mono=40973.080] press SOUTH (up)
+[13:33:43.058Z mono=40973.080] wait 500.0ms
+[13:33:43.559Z mono=40973.580] press SOUTH 120.0ms (down)
+[13:33:43.679Z mono=40973.700] press SOUTH (up)
+[13:33:43.679Z mono=40973.700] wait 500.0ms
+[13:33:44.180Z mono=40974.201] press SOUTH 120.0ms (down)
+[13:33:44.300Z mono=40974.321] press SOUTH (up)
+[13:33:44.300Z mono=40974.321] wait 400.0ms
+[13:34:32.192Z mono=41022.213] press SOUTH 150.0ms (down)
+[13:34:32.342Z mono=41022.363] press SOUTH (up)
+[13:34:34.693Z mono=41024.715] press EAST 150.0ms (down)
+[13:34:34.844Z mono=41024.865] press EAST (up)
+[13:34:37.195Z mono=41027.216] press WEST 150.0ms (down)
+[13:34:37.345Z mono=41027.366] press WEST (up)
+[13:34:39.696Z mono=41029.717] press NORTH 150.0ms (down)
+[13:34:39.846Z mono=41029.868] press NORTH (up)
+[13:34:42.197Z mono=41032.218] press TL 150.0ms (down)
+[13:34:42.347Z mono=41032.369] press TL (up)
+[13:34:44.698Z mono=41034.720] press TR 150.0ms (down)
+[13:34:44.849Z mono=41034.870] press TR (up)
+[13:34:47.200Z mono=41037.221] press SELECT 150.0ms (down)
+[13:34:47.350Z mono=41037.371] press SELECT (up)
+[13:34:49.701Z mono=41039.722] press START 150.0ms (down)
+[13:34:49.851Z mono=41039.872] press START (up)
+[13:34:52.202Z mono=41042.224] axis RZ=255
+[13:34:53.704Z mono=41043.725] axis RZ=0
+[13:34:55.205Z mono=41045.226] axis LY=-32000
+[13:34:56.706Z mono=41046.728] axis LY=0
+[13:36:07.160Z mono=41117.181] press EAST 80.0ms (down)
+[13:36:07.240Z mono=41117.262] press EAST (up)
+[13:36:07.240Z mono=41117.262] wait 700.0ms
+[13:36:07.941Z mono=41117.962] press EAST 450.0ms (down)
+[13:36:08.391Z mono=41118.412] press EAST (up)
+[13:36:08.391Z mono=41118.412] wait 400.0ms
+[13:36:17.386Z mono=41127.407] press NORTH 60.0ms (down)
+[13:36:17.446Z mono=41127.467] press NORTH (up)
+[13:36:17.446Z mono=41127.467] wait 500.0ms
+[13:36:17.946Z mono=41127.967] press NORTH 60.0ms (down)
+[13:36:18.006Z mono=41128.028] press NORTH (up)
+[13:36:18.006Z mono=41128.028] wait 90.0ms
+[13:36:18.097Z mono=41128.118] press NORTH 60.0ms (down)
+[13:36:18.157Z mono=41128.178] press NORTH (up)
+[13:36:18.157Z mono=41128.178] wait 600.0ms
+[13:36:27.611Z mono=41137.632] press WEST 120.0ms (down)
+[13:36:27.731Z mono=41137.752] press WEST (up)
+[13:36:27.731Z mono=41137.752] wait 600.0ms
+[13:36:28.331Z mono=41138.352] down SELECT
+[13:36:28.331Z mono=41138.353] wait 80.0ms
+[13:36:28.412Z mono=41138.433] press WEST 120.0ms (down)
+[13:36:28.532Z mono=41138.553] press WEST (up)
+[13:36:28.532Z mono=41138.553] wait 80.0ms
+[13:36:28.612Z mono=41138.633] up SELECT
+[13:36:28.612Z mono=41138.634] wait 400.0ms
+[13:36:37.834Z mono=41147.855] press START 180.0ms (down)
+[13:36:38.014Z mono=41148.035] press START (up)
+[13:36:38.014Z mono=41148.035] wait 600.0ms
+[13:36:38.614Z mono=41148.636] press START 480.0ms (down)
+[13:36:39.095Z mono=41149.116] press START (up)
+[13:36:39.095Z mono=41149.116] wait 500.0ms
+[13:36:48.081Z mono=41158.102] axis RZ=100
+[13:36:48.081Z mono=41158.102] wait 450.0ms
+[13:36:48.531Z mono=41158.552] axis RZ=255
+[13:36:48.531Z mono=41158.552] wait 450.0ms
+[13:36:48.981Z mono=41159.002] axis RZ=0
+[13:36:48.981Z mono=41159.002] wait 450.0ms
+[14:13:04.517Z mono=43334.538] press SOUTH 120.0ms (down)
+[14:13:04.645Z mono=43334.666] press SOUTH (up)
+[14:13:04.645Z mono=43334.666] wait 500.0ms
+[14:13:05.145Z mono=43335.167] press SOUTH 120.0ms (down)
+[14:13:05.266Z mono=43335.287] press SOUTH (up)
+[14:13:05.266Z mono=43335.287] wait 500.0ms
+[14:13:05.766Z mono=43335.787] press SOUTH 120.0ms (down)
+[14:13:05.886Z mono=43335.907] press SOUTH (up)
+[14:13:05.886Z mono=43335.907] wait 400.0ms
+[14:13:32.521Z mono=43362.543] down TL
+[14:13:32.521Z mono=43362.543] down TR
+[14:13:32.521Z mono=43362.543] wait 300.0ms
+[14:13:32.822Z mono=43362.843] up TR
+[14:13:32.822Z mono=43362.843] up TL
+[14:13:32.822Z mono=43362.843] wait 600.0ms
+[14:13:33.422Z mono=43363.443] press TL 200.0ms (down)
+[14:13:33.622Z mono=43363.643] press TL (up)
+[14:13:33.622Z mono=43363.643] wait 400.0ms
+[14:13:42.726Z mono=43372.747] press TL 200.0ms (down)
+[14:13:42.926Z mono=43372.947] press TL (up)
+[14:13:42.926Z mono=43372.947] wait 700.0ms
+[14:13:43.626Z mono=43373.647] down TL
+[14:13:43.626Z mono=43373.647] down TR
+[14:13:43.626Z mono=43373.647] wait 300.0ms
+[14:13:43.926Z mono=43373.947] up TR
+[14:13:43.926Z mono=43373.948] up TL
+[14:13:43.926Z mono=43373.948] wait 700.0ms
+[14:13:44.626Z mono=43374.648] press TL 200.0ms (down)
+[14:13:44.827Z mono=43374.848] press TL (up)
+[14:13:44.827Z mono=43374.848] wait 400.0ms
+[14:13:53.001Z mono=43383.022] axis LY=-32000
+[14:13:53.001Z mono=43383.022] wait 500.0ms
+[14:13:53.501Z mono=43383.522] axis LY=0
+[14:13:53.501Z mono=43383.522] wait 400.0ms
+[14:13:53.901Z mono=43383.923] axis LX=-32000
+[14:13:53.901Z mono=43383.923] wait 500.0ms
+[14:13:54.401Z mono=43384.423] axis LX=0
+[14:13:54.401Z mono=43384.423] wait 400.0ms
+[14:14:40.454Z mono=43430.475] press START 800.0ms (down)
+[14:14:41.254Z mono=43431.276] press START (up)
+[14:16:44.008Z mono=43554.029] DESTROY pad

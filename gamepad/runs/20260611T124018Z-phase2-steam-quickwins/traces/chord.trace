@@ -1,0 +1,9 @@
+# WEST alone => F6 ; SELECT held + WEST => F8 (chord; SELECT itself unbound)
+press WEST 120
+wait 600
+down SELECT
+wait 80
+press WEST 120
+wait 80
+up SELECT
+wait 400
