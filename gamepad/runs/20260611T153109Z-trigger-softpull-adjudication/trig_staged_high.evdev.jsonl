@@ -1,0 +1,6 @@
+{"t": 1781191989.041971, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_MIDDLE", "value": 1}
+{"t": 1781191991.191062, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_MIDDLE", "value": 0}
+{"t": 1781191994.334317, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_MIDDLE", "value": 1}
+{"t": 1781191995.088126, "dev": "input-remapper Razer Basilisk V3 Pro forwarded", "type": "KEY", "code": "BTN_MIDDLE", "value": 0}
+{"t": 1781191998.211393, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOUCH", "value": 1}
+{"t": 1781191998.211393, "dev": "ASUF1205:00 2808:0106 Touchpad", "type": "KEY", "code": "BTN_TOOL_FINGER", "value": 1}

@@ -1,0 +1,8 @@
+# Slice 3: Instant 0->255 pull, run AFTER slices 1+2 on the same Steam session.
+# Tests whether soft-pull behavior degrades within a session (adaptive hypothesis).
+# C2 anomaly: F3 never fired for either ramp. If it fires here after priming with slices 1+2,
+# the adaptive_threshold re-calibrates across pulls in a session.
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600

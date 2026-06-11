@@ -1,0 +1,10 @@
+# Slice 1: EXACT replay of Phase-2 trigfull trace (gamepad/runs/20260602T145517Z-phase2-jsm-quickwins/traces/trigfull.trace adapted for Steam).
+# Right trigger (RZ): edge=F3 (soft), click=F4 (full). adaptive_threshold=3.
+# Phase-2 steam result claimed: staged pull fired F3 down -> F4 added -> both released.
+# If F3 fires here: C2 anomaly was state-dependent. If not: Phase-2 finding needs revisiting.
+axis RZ 100
+wait 450
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600

@@ -1,0 +1,9 @@
+# Slice 2: Staged pull with RZ=200 as the soft intermediate (higher than RZ=100).
+# Tests whether adaptive_threshold=3 requires a higher value to cross the edge activator.
+# If F3 fires at RZ=200 but not RZ=100: threshold is between 100 and 200.
+axis RZ 200
+wait 450
+axis RZ 255
+wait 450
+axis RZ 0
+wait 600

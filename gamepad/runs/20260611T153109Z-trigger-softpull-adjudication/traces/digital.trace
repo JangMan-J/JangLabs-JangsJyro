@@ -1,0 +1,7 @@
+# CANARY: South (button_a) => F9. Three presses, all must emit.
+press SOUTH 120
+wait 500
+press SOUTH 120
+wait 500
+press SOUTH 120
+wait 400

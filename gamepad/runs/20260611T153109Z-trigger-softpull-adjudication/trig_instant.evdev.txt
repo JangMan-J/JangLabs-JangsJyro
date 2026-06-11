@@ -1,0 +1,316 @@
+# watching 37 device(s):
+#   /dev/input/event0  'Lid Switch'
+#   /dev/input/event1  'Sleep Button'
+#   /dev/input/event2  'Power Button'
+#   /dev/input/event3  'AT Translated Set 2 keyboard'
+#   /dev/input/event4  'Video Bus'
+#   /dev/input/event5  'Video Bus'
+#   /dev/input/event6  'AT AT2040USB Consumer Control'
+#   /dev/input/event7  'AT AT2040USB'
+#   /dev/input/event8  'ASUSTek Computer Inc. N-KEY Device'
+#   /dev/input/event9  'PC Speaker'
+#   /dev/input/event10  'Asus WMI hotkeys'
+#   /dev/input/event11  'ASUF1205:00 2808:0106 Mouse'
+#   /dev/input/event12  'ASUF1205:00 2808:0106 Touchpad'
+#   /dev/input/event13  'HDA NVidia HDMI/DP,pcm=3'
+#   /dev/input/event14  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event15  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event16  'Razer Razer Basilisk V3 Pro'
+#   /dev/input/event17  'RustDesk UInput Keyboard'
+#   /dev/input/event18  'mouce-library-fake-mouse'
+#   /dev/input/event19  'HDA NVidia HDMI/DP,pcm=7'
+#   /dev/input/event20  'HDA NVidia HDMI/DP,pcm=8'
+#   /dev/input/event21  'HDA NVidia HDMI/DP,pcm=9'
+#   /dev/input/event22  'HDA Intel PCH Mic'
+#   /dev/input/event23  'HDA Intel PCH Mic'
+#   /dev/input/event24  'HDA Intel PCH Headphone'
+#   /dev/input/event25  'HDA Intel PCH HDMI/DP,pcm=3'
+#   /dev/input/event26  'HDA Intel PCH HDMI/DP,pcm=7'
+#   /dev/input/event27  'HDA Intel PCH HDMI/DP,pcm=8'
+#   /dev/input/event28  'HDA Intel PCH HDMI/DP,pcm=9'
+#   /dev/input/event29  'ydotoold virtual device'
+#   /dev/input/event30  'input-remapper keyboard'
+#   /dev/input/event31  'Razer Basilisk V3 Pro'
+#   /dev/input/event256  'Microsoft X-Box 360 pad'
+#   /dev/input/event257  'Razer Basilisk V3 Pro'
+#   /dev/input/event258  'Razer Basilisk V3 Pro'
+#   /dev/input/event259  'input-remapper Razer Basilisk V3 Pro forwarded'
+#   /dev/input/event260  'Microsoft X-Box 360 pad 0'
+# types=['KEY']  seconds=14.0
+1781192005.005292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.039295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.057012  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    0
+1781192005.136061  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    1
+1781192005.387297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.421299  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.455303  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.489293  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.523293  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.557380  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.592292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.627291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.661293  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.695295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.729299  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.763291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.797295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.831299  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.865296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.899290  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.933290  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192005.967291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.001291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.035297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.070383  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.104690  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.138389  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.172307  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.207291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.241292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.275297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.309291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.343296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.377291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.411290  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.445297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.479295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.513422  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.547292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.581509  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.616366  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.650417  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.684376  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.718343  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.752413  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.786410  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.820444  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.854308  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.888292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.922386  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.958111  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192006.991610  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.025302  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.059419  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.093441  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.128012  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.161295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.195291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.229296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.263295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.298407  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.332291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.366296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.400293  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.435379  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.470304  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.504396  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.538294  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.573503  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.608364  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.642380  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.676425  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.710297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.744389  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.778296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.812296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.846388  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.880291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.915370  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.950448  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192007.984441  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.018295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.052301  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.086363  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.120296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.154295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.188291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.222295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.256296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.291437  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.325297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.359296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.393298  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.427291  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.461292  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.495659  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.529295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.563400  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.597401  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.631297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.666377  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.700298  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.735311  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.769401  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.803295  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.837297  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    2
+1781192008.838982  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            1
+1781192009.091298  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            2
+1781192009.125296  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            2
+1781192009.138975  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            0
+1781192009.180056  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_LEFTSHIFT    0
+1781192009.260052  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192009.387987  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192009.423039  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781192009.423039  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781192009.425965  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            1
+1781192009.485986  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781192009.485986  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781192009.526415  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781192009.526415  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781192009.587013  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192009.612033  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            0
+1781192009.709982  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192009.733972  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_V            1
+1781192009.838056  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192009.873198  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_V            0
+1781192009.886136  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781192009.886136  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781192009.946023  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192009.952995  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192010.091070  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192010.212998  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192010.356980  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192010.497939  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192010.606059  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192010.669981  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781192010.674975  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192010.729981  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192010.770940  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192010.779115  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781192010.779115  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 1
+1781192010.805984  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_B            1
+1781192010.876948  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            1
+1781192010.891021  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781192010.891021  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_DOUBLETAP 0
+1781192010.910984  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_B            0
+1781192010.988999  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            0
+1781192011.029009  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            1
+1781192011.089054  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781192011.153160  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781192011.184041  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            0
+1781192011.253986  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            1
+1781192011.324038  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192011.358090  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            0
+1781192011.427054  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192011.452071  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192011.565088  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192011.796070  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            1
+1781192011.919068  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            0
+1781192011.991050  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781192012.093957  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            1
+1781192012.154057  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781192012.204079  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            0
+1781192012.332445  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192012.420091  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781192012.491004  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781192012.543962  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781192012.549999  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192012.641279  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781192012.675082  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192012.772441  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        0
+1781192012.772441  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  0
+1781192012.822177  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOUCH        1
+1781192012.822177  'ASUF1205:00 2808:0106 Touchpad'   KEY BTN_TOOL_FINGER  1
+1781192012.890086  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_F            1
+1781192012.931021  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781192013.039026  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192013.047418  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_F            0
+1781192013.241054  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192013.270071  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192013.363021  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192013.511518  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_X            1
+1781192013.645086  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_X            0
+1781192013.678150  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781192013.746092  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192013.818085  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+1781192013.819143  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            1
+1781192013.880073  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192013.936122  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            1
+1781192013.948345  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_R            0
+1781192014.020979  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192014.039101  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            0
+1781192014.124101  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192014.150057  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192014.223118  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_C            1
+1781192014.278095  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192014.285220  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781192014.358089  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_C            0
+1781192014.364133  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192014.365088  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192014.462033  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192014.524041  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192014.536031  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192014.562024  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192014.609984  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            1
+1781192014.654027  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781192014.702996  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192014.745989  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            0
+1781192014.758020  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_K            1
+1781192014.802031  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192014.820036  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192014.885990  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_K            0
+1781192014.923147  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781192015.207143  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781192015.351043  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_W            1
+1781192015.369992  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781192015.464120  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_W            0
+1781192015.521046  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_L            1
+1781192015.584999  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192015.676150  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_L            0
+1781192015.685141  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192015.760764  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            1
+1781192015.870135  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_D            0
+1781192016.010113  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_G            1
+1781192016.056118  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192016.119009  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_G            0
+1781192016.167126  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192016.171203  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192016.295155  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192016.354086  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192016.363130  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_B            1
+1781192016.426437  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192016.460131  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_B            0
+1781192016.552128  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            1
+1781192016.634046  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            1
+1781192016.699092  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_O            0
+1781192016.700110  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781192016.755099  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            0
+1781192016.756006  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192016.772008  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781192016.819123  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            1
+1781192016.902163  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781192016.915064  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192016.965094  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_S            0
+1781192016.985057  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781192017.101127  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192017.153106  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192017.202135  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            1
+1781192017.238095  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192017.250140  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+1781192017.274145  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192017.310022  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            0
+1781192017.374099  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            1
+1781192017.386513  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192017.473030  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192017.496062  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_I            0
+1781192017.541076  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            0
+1781192017.653055  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            1
+1781192017.735033  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            1
+1781192017.780133  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_P            0
+1781192017.846473  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            1
+1781192017.851018  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_U            0
+1781192017.959071  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_T            0
+1781192018.304319  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        1
+1781192018.420086  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_SPACE        0
+1781192018.437162  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            1
+1781192018.531099  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            1
+1781192018.580147  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_M            0
+1781192018.615123  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_E            0
+1781192018.675096  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_C            1
+1781192018.767073  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            1
+1781192018.802157  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_C            0
+1781192018.868173  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_H            0
+1781192018.898197  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            1
+1781192018.982095  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_N            1
+1781192018.988088  'ASUSTek Computer Inc. N-KEY Device' KEY KEY_A            0
+# captured 276 event(s).

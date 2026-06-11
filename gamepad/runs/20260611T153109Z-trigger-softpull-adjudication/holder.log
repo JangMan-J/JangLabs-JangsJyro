@@ -1,0 +1,29 @@
+[15:32:07.714Z mono=48077.735] CREATED pad name='Microsoft X-Box 360 pad' 0x045e:0x028e -> /dev/input/event256
+[15:32:07.714Z mono=48077.735] WARMUP 8.0s
+[15:32:15.714Z mono=48085.735] CONTROL-FIFO /tmp/synthetic_pad_ctrl — write DSL actions (e.g. 'press SOUTH 120'); 'quit' to stop
+[15:32:26.782Z mono=48096.803] press SOUTH 120.0ms (down)
+[15:32:26.902Z mono=48096.924] press SOUTH (up)
+[15:32:26.903Z mono=48096.924] wait 500.0ms
+[15:32:27.403Z mono=48097.424] press SOUTH 120.0ms (down)
+[15:32:27.523Z mono=48097.544] press SOUTH (up)
+[15:32:27.523Z mono=48097.544] wait 500.0ms
+[15:32:28.023Z mono=48098.044] press SOUTH 120.0ms (down)
+[15:32:28.143Z mono=48098.165] press SOUTH (up)
+[15:32:28.143Z mono=48098.165] wait 400.0ms
+[15:32:46.475Z mono=48116.496] axis RZ=100
+[15:32:46.475Z mono=48116.496] wait 450.0ms
+[15:32:46.925Z mono=48116.947] axis RZ=255
+[15:32:46.925Z mono=48116.947] wait 450.0ms
+[15:32:47.376Z mono=48117.397] axis RZ=0
+[15:32:47.376Z mono=48117.397] wait 600.0ms
+[15:33:05.686Z mono=48135.707] axis RZ=200
+[15:33:05.686Z mono=48135.708] wait 450.0ms
+[15:33:06.137Z mono=48136.158] axis RZ=255
+[15:33:06.137Z mono=48136.158] wait 450.0ms
+[15:33:06.587Z mono=48136.608] axis RZ=0
+[15:33:06.587Z mono=48136.608] wait 600.0ms
+[15:33:25.961Z mono=48155.982] axis RZ=255
+[15:33:25.961Z mono=48155.982] wait 450.0ms
+[15:33:26.411Z mono=48156.433] axis RZ=0
+[15:33:26.411Z mono=48156.433] wait 600.0ms
+[15:33:53.571Z mono=48183.592] DESTROY pad

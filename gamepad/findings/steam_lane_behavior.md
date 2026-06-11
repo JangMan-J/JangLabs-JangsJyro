@@ -89,10 +89,19 @@ hypothesis until a trace fires it.
   activator's settings — no behavioral change; the flag belongs on the activator being
   *interrupted*, i.e. Full_Press.) Converter: `interruptable` is load-bearing for tap/hold
   translation and must be read per-activator, never assumed default.
-- **OPEN — trigger soft-pull did not fire in C2** (staged 0→100→255 NOR instant), contradicting
-  the Phase-2 staged result. Suspect `adaptive_threshold 3` state or intermediate value too low.
-  Follow-up queued (replay the exact Phase-2 staged trace on a fresh client + a RZ=200 staged
-  variant). The Phase-2 trigger entry above stands UNCHANGED until adjudicated.
+- **Trigger soft-pull threshold is ADAPTIVE STATE, not a constant** (adjudicated
+  `runs/20260611T153109Z-trigger-softpull-adjudication`): on a fresh client, staged RZ=100
+  does NOT fire the soft binding (F4 only) — yet the *identical* stimulus verifiably fired
+  F3 in Phase 2 (capture on record), after a session of heavy trigger use. Staged RZ=200
+  fires soft+full reliably. One crossing does not recalibrate within-session. Hypothesis
+  (unproven): `adaptive_threshold 3` migrates the soft threshold with usage. Consequences:
+  (1) the Phase-2 staged trigfull entry above is REAL but NOT reproducible from cold —
+  treat the soft threshold value as unstable across sessions; (2) the structural delta
+  stands confirmed on consistent evidence: Steam instant 0→255 fires full-only, JSM fires
+  soft+full — NOT an artifact; (3) Phase-4 adversarial traces use RZ=200 for staged soft
+  pulls; (4) converter: Steam soft-pull translations inherit threshold instability —
+  classify trigger soft-pull mappings no better than `bounded_approximation`, with the
+  adaptive-threshold caveat named in the loss.
 
 ## Operational gotchas (Steam lane)
 
