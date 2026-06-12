@@ -794,6 +794,591 @@ class TestReleasePressIsolatedLayout(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
+# Activator slot-order preservation (prerequisite for permutation layouts)
+# ---------------------------------------------------------------------------
+
+def _activator_slot_order(text: str, button_name: str) -> list:
+    """Return the list of activator_type names in slot order for a given button.
+
+    Searches for the button's activators block in the emitted VDF text by:
+    1. Finding the button_name key
+    2. Extracting the activators sub-block
+    3. Collecting activator_type values in textual order
+
+    Returns a list of activator type strings in their slot order.
+    """
+    import re
+    # Find all activator_type values in the full text under the named button.
+    # Strategy: locate the button block by name, then extract activator_type values.
+    # We use the Pairs tree for this (order-preserving) rather than regex.
+    pairs = _parse(text)
+    root = pairs.get_first("controller_mappings")
+    # Search all groups for the button
+    for k, v in root:
+        if k != "group":
+            continue
+        inputs = v.get_first("inputs")
+        if inputs is None:
+            continue
+        btn = inputs.get_first(button_name)
+        if btn is None:
+            continue
+        activators = btn.get_first("activators")
+        if activators is None:
+            return []
+        # Keys of the activators Pairs are the slot names (e.g. "Start_Press")
+        return [act_key for act_key, _ in activators]
+    return []
+
+
+class TestActivatorSlotOrderPreservation(unittest.TestCase):
+    """Slot order in the emitted VDF text must match the spec order.
+
+    Prerequisite for the permutation layouts: if the parser/emitter does not
+    preserve activator block order, the permutation layouts cannot represent
+    distinct slot orderings — that would be a blocking defect.
+    """
+
+    def test_emit_preserves_activator_slot_order(self):
+        """Activator slots emitted in construction order (R, S, L)."""
+        btn = vg._button_input([
+            ("Release_Press", vg.make_activator("Release_Press", "F1")),
+            ("Start_Press",   vg.make_activator("Start_Press",   "F2")),
+            ("Long_Press",    vg.make_activator("Long_Press",    "F3")),
+        ])
+        text = vg.emit(btn)
+        import re
+        order = re.findall(r'"activator_type"\s+"(\w+)"', text)
+        self.assertEqual(order, ["Release_Press", "Start_Press", "Long_Press"])
+
+    def test_roundtrip_preserves_activator_slot_order(self):
+        """Slot order must survive parse → emit → reparse unchanged."""
+        btn = vg._button_input([
+            ("Release_Press", vg.make_activator("Release_Press", "F1")),
+            ("Start_Press",   vg.make_activator("Start_Press",   "F2")),
+            ("Long_Press",    vg.make_activator("Long_Press",    "F3")),
+        ])
+        text = vg.emit(btn)
+        # Round-trip via tokenize/parse/emit
+        tokens = vg.tokenize(text)
+        pairs, _ = vg.parse(tokens)
+        text2 = vg.emit(pairs)
+        import re
+        order1 = re.findall(r'"activator_type"\s+"(\w+)"', text)
+        order2 = re.findall(r'"activator_type"\s+"(\w+)"', text2)
+        self.assertEqual(order1, order2,
+            f"Slot order changed through round-trip: {order1} → {order2}")
+
+    def test_different_orders_produce_different_text(self):
+        """Two buttons with swapped slot order must differ in the emitted text position."""
+        btn_srl = vg._button_input([
+            ("Start_Press",   vg.make_activator("Start_Press",   "F1")),
+            ("Release_Press", vg.make_activator("Release_Press", "F2")),
+            ("Long_Press",    vg.make_activator("Long_Press",    "F3")),
+        ])
+        btn_rsl = vg._button_input([
+            ("Release_Press", vg.make_activator("Release_Press", "F2")),
+            ("Start_Press",   vg.make_activator("Start_Press",   "F1")),
+            ("Long_Press",    vg.make_activator("Long_Press",    "F3")),
+        ])
+        text_srl = vg.emit(btn_srl)
+        text_rsl = vg.emit(btn_rsl)
+        import re
+        order_srl = re.findall(r'"activator_type"\s+"(\w+)"', text_srl)
+        order_rsl = re.findall(r'"activator_type"\s+"(\w+)"', text_rsl)
+        self.assertNotEqual(order_srl, order_rsl,
+            "Different slot orderings must produce different textual block order")
+        self.assertEqual(order_srl, ["Start_Press", "Release_Press", "Long_Press"])
+        self.assertEqual(order_rsl, ["Release_Press", "Start_Press", "Long_Press"])
+
+
+# ---------------------------------------------------------------------------
+# Layouts 5–10: Activator slot-order permutation layouts
+# ---------------------------------------------------------------------------
+#
+# Context (findings/steam_lane_behavior.md §Order-dependent edge-activator loss):
+# Edge-fired activators (Start_Press, Release_Press) are eaten or fire incorrectly
+# as a function of their SLOT ORDER when a state-bound activator (Long_Press,
+# Double_Press) shares the button.
+#
+# GUI-observed (user, 2026-06-12):
+#   (S, R, L): Start never fires; Release fires early
+#   (R, S, L): all three fire  ← the slot-order fix
+#
+# Lab correlation: our marker button (S, R, F, D) → Start fires / Release eaten.
+#
+# Purpose: systematic order-permutation matrix across {S,R,L}, {S,R,D}, and the
+# 4-activator case to map the eat-pattern precisely.
+#
+# Set A (Long as state-bound): all 6 orderings of {Start, Release, Long}
+#   Layout A1: P1=(S,R,L) P2=(S,L,R) P3=(R,S,L)  + canary
+#   Layout A2: P4=(R,L,S) P5=(L,S,R) P6=(L,R,S)  + canary
+#
+# Set B (Double as state-bound, DTT=190): all 6 orderings of {Start, Release, Double}
+#   Layout B1: P1=(S,R,D) P2=(S,D,R) P3=(R,S,D)  + canary
+#   Layout B2: P4=(R,D,S) P5=(D,S,R) P6=(D,R,S)  + canary
+#
+# Set C (4-activator variants):
+#   Layout C1: PC1=(S,R,F,D)[committed,known-eat-R] PC2=(R,S,F,D)[reverse-edge]
+#   Layout C2: PC3=(F,D,S,R)[Full-first-A]          PC4=(F,S,D,R)[Full-first-B]
+#
+# F-key assignment (F1–F10 only; 3 activators × 3 per permutation button):
+#   Each layout: button_a→F1-F3, button_b→F4-F6, button_x→F7-F9, button_y→F10 canary
+#   Within each button, keys assigned by activator type role:
+#     Set A/B: Start→Fn, Release→Fn+1, Long/Double→Fn+2 (regardless of slot order)
+#     Set C: Start→Fn, Release→Fn+1, Full→Fn+2, Double→Fn+3 (2 buttons per layout)
+#
+# Bug predictions (from finding):
+#   P3=(R,S,L): all fire (GUI-verified)
+#   P1=(S,R,L): Start never fires; Release fires early (GUI-verified)
+#   All others: UNKNOWN — that is the point of this matrix.
+# ---------------------------------------------------------------------------
+
+# Slot-order names for documentation
+_A_PERMS = [
+    ("P1", ("Start_Press", "Release_Press", "Long_Press")),
+    ("P2", ("Start_Press", "Long_Press",    "Release_Press")),
+    ("P3", ("Release_Press", "Start_Press", "Long_Press")),
+    ("P4", ("Release_Press", "Long_Press",  "Start_Press")),
+    ("P5", ("Long_Press",    "Start_Press", "Release_Press")),
+    ("P6", ("Long_Press",    "Release_Press", "Start_Press")),
+]
+
+_B_PERMS = [
+    ("P1", ("Start_Press",  "Release_Press", "Double_Press")),
+    ("P2", ("Start_Press",  "Double_Press",  "Release_Press")),
+    ("P3", ("Release_Press","Start_Press",   "Double_Press")),
+    ("P4", ("Release_Press","Double_Press",  "Start_Press")),
+    ("P5", ("Double_Press", "Start_Press",   "Release_Press")),
+    ("P6", ("Double_Press", "Release_Press", "Start_Press")),
+]
+
+_C_PERMS = [
+    ("PC1", ("Start_Press", "Release_Press", "Full_Press",   "Double_Press")),  # committed, known-eat-R
+    ("PC2", ("Release_Press","Start_Press",  "Full_Press",   "Double_Press")),  # reverse-edge
+    ("PC3", ("Full_Press",   "Double_Press", "Start_Press",  "Release_Press")), # Full-first-A
+    ("PC4", ("Full_Press",   "Start_Press",  "Double_Press", "Release_Press")), # Full-first-B
+]
+
+
+def _check_slot_order_layout(tc, factory_fn, layout_name,
+                              perms_on_buttons,
+                              canary_button=None, dtt=None):
+    """Shared verifier for all slot-order permutation layouts.
+
+    perms_on_buttons: list of (button_name, perm_name, slot_order_tuple, fkey_map)
+      where fkey_map = {activator_type: Fkey_string}
+    canary_button: (button_name, fkey) if present
+    """
+    kwargs = {} if dtt is None else {"double_tap_time": dtt}
+    text = factory_fn(**kwargs)
+
+    # 1. Round-trip
+    reparsed = _parse(text)
+    tc.assertIsNotNone(reparsed.get_first("controller_mappings"),
+        f"{layout_name}: round-trip lost controller_mappings")
+
+    # 2. Slot order assertions
+    for btn_name, perm_name, slot_order, fkey_map in perms_on_buttons:
+        actual_order = _activator_slot_order(text, btn_name)
+        tc.assertEqual(list(slot_order), actual_order,
+            f"{layout_name}/{btn_name} ({perm_name}): "
+            f"expected slot order {list(slot_order)}, got {actual_order}")
+
+    # 3. F-key binding assertions
+    for btn_name, perm_name, slot_order, fkey_map in perms_on_buttons:
+        pairs = _parse(text)
+        root = pairs.get_first("controller_mappings")
+        for k, v in root:
+            if k != "group":
+                continue
+            inputs = v.get_first("inputs")
+            if inputs is None:
+                continue
+            btn = inputs.get_first(btn_name)
+            if btn is None:
+                continue
+            activators = btn.get_first("activators")
+            for act_type, expected_fkey in fkey_map.items():
+                act = activators.get_first(act_type)
+                tc.assertIsNotNone(act,
+                    f"{layout_name}/{btn_name}: activator {act_type} missing")
+                binding = act.get_first("bindings").get_first("binding")
+                tc.assertRegex(binding, rf'\b{expected_fkey}\b',
+                    f"{layout_name}/{btn_name}/{act_type}: "
+                    f"expected {expected_fkey}, got {binding!r}")
+
+    # 4. F-key uniqueness
+    fkeys = [k for k in _binding_keys(text) if k.startswith("F") and k[1:].isdigit()]
+    tc.assertEqual(len(fkeys), len(set(fkeys)),
+        f"{layout_name}: duplicate F-keys {fkeys}")
+
+    # 5. No F11/F12/F13+
+    for k in fkeys:
+        if k in ("F11", "F12"):
+            tc.fail(f"{layout_name}: {k} present (xinput alias)")
+        n = int(k[1:])
+        tc.assertLessEqual(n, 10, f"{layout_name}: {k} is unproven on this stack")
+
+    # 6. Canary
+    if canary_button:
+        btn_name, fkey = canary_button
+        actual_order = _activator_slot_order(text, btn_name)
+        tc.assertGreater(len(actual_order), 0,
+            f"{layout_name}: canary {btn_name} missing")
+
+
+class TestSlotOrderPrerequisite(unittest.TestCase):
+    """Slot order is representable and round-trip-stable (blocking check)."""
+
+    def test_slot_order_preserved_in_full_layout_context(self):
+        """Activator slot order must survive a full layout round-trip (controller_mappings root)."""
+        # Build a minimal layout text with a known slot order
+        btn = vg._button_input([
+            ("Release_Press", vg.make_activator("Release_Press", "F1")),
+            ("Start_Press",   vg.make_activator("Start_Press",   "F2")),
+        ])
+        four_buttons_group = vg._p(
+            ("id", "6"), ("mode", "four_buttons"),
+            ("name", ""), ("description", ""),
+            ("inputs", vg._p(("button_a", btn))),
+        )
+        switches_group = vg._p(
+            ("id", "0"), ("mode", "switches"),
+            ("name", ""), ("description", ""),
+            ("inputs", vg.Pairs()),
+        )
+        cm = vg.Pairs(vg._controller_mappings_header())
+        cm.append(("group", switches_group))
+        cm.append(("group", four_buttons_group))
+        cm.append(vg._preset("0", "Default", vg._p(("0", "switch active"), ("6", "button_diamond active"))))
+        cm.append(("settings", vg.Pairs()))
+        root_pairs = vg._p(("controller_mappings", cm))
+        text = vg.emit(root_pairs)
+
+        # Round-trip
+        tokens = vg.tokenize(text)
+        pairs, _ = vg.parse(tokens)
+        text2 = vg.emit(pairs)
+
+        import re
+        order1 = re.findall(r'"activator_type"\s+"(\w+)"', text)
+        order2 = re.findall(r'"activator_type"\s+"(\w+)"', text2)
+        self.assertEqual(order1, ["Release_Press", "Start_Press"],
+            f"Pre-round-trip order wrong: {order1}")
+        self.assertEqual(order1, order2,
+            f"Slot order changed through full-layout round-trip: {order1} → {order2}")
+
+
+class TestSlotOrderSetA1(unittest.TestCase):
+    """Set A, Layout 1: Long state-bound, permutations P1=(S,R,L), P2=(S,L,R), P3=(R,S,L)."""
+
+    # F-key map: Start→Fn, Release→Fn+1, Long→Fn+2 per button block
+    _PERMS = [
+        ("button_a", "P1", ("Start_Press",   "Release_Press", "Long_Press"),
+         {"Start_Press": "F1", "Release_Press": "F2", "Long_Press": "F3"}),
+        ("button_b", "P2", ("Start_Press",   "Long_Press",    "Release_Press"),
+         {"Start_Press": "F4", "Release_Press": "F5", "Long_Press": "F6"}),
+        ("button_x", "P3", ("Release_Press", "Start_Press",   "Long_Press"),
+         {"Start_Press": "F7", "Release_Press": "F8", "Long_Press": "F9"}),
+    ]
+    _CANARY = ("button_y", "F10")
+
+    def test_all_permutations_and_invariants(self):
+        _check_slot_order_layout(self, vg.make_slot_order_set_a1_layout,
+                                 "slot_order_set_a1",
+                                 self._PERMS, self._CANARY)
+
+    def test_p1_slot_order(self):
+        text = vg.make_slot_order_set_a1_layout()
+        self.assertEqual(_activator_slot_order(text, "button_a"),
+                         ["Start_Press", "Release_Press", "Long_Press"],
+                         "P1=(S,R,L): button_a slot order wrong")
+
+    def test_p2_slot_order(self):
+        text = vg.make_slot_order_set_a1_layout()
+        self.assertEqual(_activator_slot_order(text, "button_b"),
+                         ["Start_Press", "Long_Press", "Release_Press"],
+                         "P2=(S,L,R): button_b slot order wrong")
+
+    def test_p3_slot_order_gui_verified(self):
+        """P3=(R,S,L) is the GUI-verified 'all three fire' ordering."""
+        text = vg.make_slot_order_set_a1_layout()
+        self.assertEqual(_activator_slot_order(text, "button_x"),
+                         ["Release_Press", "Start_Press", "Long_Press"],
+                         "P3=(R,S,L): button_x slot order wrong")
+
+
+class TestSlotOrderSetA2(unittest.TestCase):
+    """Set A, Layout 2: Long state-bound, permutations P4=(R,L,S), P5=(L,S,R), P6=(L,R,S)."""
+
+    _PERMS = [
+        ("button_a", "P4", ("Release_Press", "Long_Press",    "Start_Press"),
+         {"Start_Press": "F1", "Release_Press": "F2", "Long_Press": "F3"}),
+        ("button_b", "P5", ("Long_Press",    "Start_Press",   "Release_Press"),
+         {"Start_Press": "F4", "Release_Press": "F5", "Long_Press": "F6"}),
+        ("button_x", "P6", ("Long_Press",    "Release_Press", "Start_Press"),
+         {"Start_Press": "F7", "Release_Press": "F8", "Long_Press": "F9"}),
+    ]
+    _CANARY = ("button_y", "F10")
+
+    def test_all_permutations_and_invariants(self):
+        _check_slot_order_layout(self, vg.make_slot_order_set_a2_layout,
+                                 "slot_order_set_a2",
+                                 self._PERMS, self._CANARY)
+
+    def test_p4_slot_order(self):
+        text = vg.make_slot_order_set_a2_layout()
+        self.assertEqual(_activator_slot_order(text, "button_a"),
+                         ["Release_Press", "Long_Press", "Start_Press"])
+
+    def test_p5_slot_order(self):
+        text = vg.make_slot_order_set_a2_layout()
+        self.assertEqual(_activator_slot_order(text, "button_b"),
+                         ["Long_Press", "Start_Press", "Release_Press"])
+
+    def test_p6_slot_order(self):
+        text = vg.make_slot_order_set_a2_layout()
+        self.assertEqual(_activator_slot_order(text, "button_x"),
+                         ["Long_Press", "Release_Press", "Start_Press"])
+
+
+class TestSlotOrderSetA_Coverage(unittest.TestCase):
+    """All 6 Long-state-bound permutations appear exactly once across A1+A2."""
+
+    def test_all_six_long_permutations_covered(self):
+        """Every ordering of {Start, Release, Long} appears exactly once across A1 + A2."""
+        import itertools
+        all_expected = set(itertools.permutations(
+            ("Start_Press", "Release_Press", "Long_Press")))
+        seen = set()
+        for factory, buttons in [
+            (vg.make_slot_order_set_a1_layout, ["button_a", "button_b", "button_x"]),
+            (vg.make_slot_order_set_a2_layout, ["button_a", "button_b", "button_x"]),
+        ]:
+            text = factory()
+            for btn in buttons:
+                order = tuple(_activator_slot_order(text, btn))
+                self.assertNotIn(order, seen,
+                    f"Duplicate permutation {order} in layout")
+                seen.add(order)
+        self.assertEqual(seen, all_expected,
+            f"Not all 6 permutations covered.\nMissing: {all_expected - seen}\nExtra: {seen - all_expected}")
+
+
+class TestSlotOrderSetB1(unittest.TestCase):
+    """Set B, Layout 1: Double state-bound (DTT=190), P1=(S,R,D), P2=(S,D,R), P3=(R,S,D)."""
+
+    _PERMS = [
+        ("button_a", "P1", ("Start_Press",   "Release_Press", "Double_Press"),
+         {"Start_Press": "F1", "Release_Press": "F2", "Double_Press": "F3"}),
+        ("button_b", "P2", ("Start_Press",   "Double_Press",  "Release_Press"),
+         {"Start_Press": "F4", "Release_Press": "F5", "Double_Press": "F6"}),
+        ("button_x", "P3", ("Release_Press", "Start_Press",   "Double_Press"),
+         {"Start_Press": "F7", "Release_Press": "F8", "Double_Press": "F9"}),
+    ]
+    _CANARY = ("button_y", "F10")
+
+    def test_all_permutations_and_invariants(self):
+        _check_slot_order_layout(self, vg.make_slot_order_set_b1_layout,
+                                 "slot_order_set_b1",
+                                 self._PERMS, self._CANARY, dtt=190)
+
+    def test_p1_slot_order(self):
+        text = vg.make_slot_order_set_b1_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_a"),
+                         ["Start_Press", "Release_Press", "Double_Press"])
+
+    def test_p3_slot_order(self):
+        text = vg.make_slot_order_set_b1_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_x"),
+                         ["Release_Press", "Start_Press", "Double_Press"])
+
+    def test_dtt_190_on_all_double_press_activators(self):
+        """Every Double_Press activator must have double_tap_time=190."""
+        pairs = _parse(vg.make_slot_order_set_b1_layout(double_tap_time=190))
+        root = pairs.get_first("controller_mappings")
+        for k, v in root:
+            if k != "group":
+                continue
+            inputs = v.get_first("inputs")
+            if inputs is None:
+                continue
+            for btn_name in ("button_a", "button_b", "button_x"):
+                btn = inputs.get_first(btn_name)
+                if btn is None:
+                    continue
+                acts = btn.get_first("activators")
+                dp = acts.get_first("Double_Press")
+                if dp is None:
+                    continue
+                settings = dp.get_first("settings")
+                self.assertIsNotNone(settings,
+                    f"{btn_name} Double_Press missing settings (need double_tap_time)")
+                self.assertEqual(settings.get_first("double_tap_time"), "190")
+
+
+class TestSlotOrderSetB2(unittest.TestCase):
+    """Set B, Layout 2: Double state-bound, P4=(R,D,S), P5=(D,S,R), P6=(D,R,S)."""
+
+    _PERMS = [
+        ("button_a", "P4", ("Release_Press", "Double_Press",  "Start_Press"),
+         {"Start_Press": "F1", "Release_Press": "F2", "Double_Press": "F3"}),
+        ("button_b", "P5", ("Double_Press",  "Start_Press",   "Release_Press"),
+         {"Start_Press": "F4", "Release_Press": "F5", "Double_Press": "F6"}),
+        ("button_x", "P6", ("Double_Press",  "Release_Press", "Start_Press"),
+         {"Start_Press": "F7", "Release_Press": "F8", "Double_Press": "F9"}),
+    ]
+    _CANARY = ("button_y", "F10")
+
+    def test_all_permutations_and_invariants(self):
+        _check_slot_order_layout(self, vg.make_slot_order_set_b2_layout,
+                                 "slot_order_set_b2",
+                                 self._PERMS, self._CANARY, dtt=190)
+
+    def test_p4_slot_order(self):
+        text = vg.make_slot_order_set_b2_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_a"),
+                         ["Release_Press", "Double_Press", "Start_Press"])
+
+    def test_p5_slot_order(self):
+        text = vg.make_slot_order_set_b2_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_b"),
+                         ["Double_Press", "Start_Press", "Release_Press"])
+
+    def test_p6_slot_order(self):
+        text = vg.make_slot_order_set_b2_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_x"),
+                         ["Double_Press", "Release_Press", "Start_Press"])
+
+
+class TestSlotOrderSetB_Coverage(unittest.TestCase):
+    """All 6 Double-state-bound permutations appear exactly once across B1+B2."""
+
+    def test_all_six_double_permutations_covered(self):
+        import itertools
+        all_expected = set(itertools.permutations(
+            ("Start_Press", "Release_Press", "Double_Press")))
+        seen = set()
+        for factory, buttons in [
+            (vg.make_slot_order_set_b1_layout, ["button_a", "button_b", "button_x"]),
+            (vg.make_slot_order_set_b2_layout, ["button_a", "button_b", "button_x"]),
+        ]:
+            text = factory(double_tap_time=190)
+            for btn in buttons:
+                order = tuple(_activator_slot_order(text, btn))
+                self.assertNotIn(order, seen,
+                    f"Duplicate permutation {order}")
+                seen.add(order)
+        self.assertEqual(seen, all_expected,
+            f"Not all 6 Double permutations covered.\n"
+            f"Missing: {all_expected - seen}")
+
+
+class TestSlotOrderSetC1(unittest.TestCase):
+    """Set C, Layout 1: 4-activator variants PC1=(S,R,F,D) [committed] and PC2=(R,S,F,D) [reverse-edge]."""
+
+    _PERMS = [
+        ("button_a", "PC1",
+         ("Start_Press", "Release_Press", "Full_Press", "Double_Press"),
+         {"Start_Press": "F1", "Release_Press": "F2", "Full_Press": "F3", "Double_Press": "F4"}),
+        ("button_b", "PC2",
+         ("Release_Press", "Start_Press", "Full_Press", "Double_Press"),
+         {"Start_Press": "F5", "Release_Press": "F6", "Full_Press": "F7", "Double_Press": "F8"}),
+    ]
+
+    def test_all_permutations_and_invariants(self):
+        _check_slot_order_layout(self, vg.make_slot_order_set_c1_layout,
+                                 "slot_order_set_c1",
+                                 self._PERMS, dtt=190)
+
+    def test_pc1_slot_order_matches_committed_marker(self):
+        """PC1 must match the committed marker_layout.vdf slot order (S,R,F,D)."""
+        text = vg.make_slot_order_set_c1_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_a"),
+                         ["Start_Press", "Release_Press", "Full_Press", "Double_Press"],
+                         "PC1 must match committed marker button order (known: eats Release)")
+
+    def test_pc2_slot_order_reverse_edge(self):
+        """PC2=(R,S,F,D) is the reverse-edge variant."""
+        text = vg.make_slot_order_set_c1_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_b"),
+                         ["Release_Press", "Start_Press", "Full_Press", "Double_Press"])
+
+    def test_dtt_190_on_double_press(self):
+        pairs = _parse(vg.make_slot_order_set_c1_layout(double_tap_time=190))
+        root = pairs.get_first("controller_mappings")
+        for k, v in root:
+            if k != "group":
+                continue
+            inputs = v.get_first("inputs")
+            if inputs is None:
+                continue
+            for btn_name in ("button_a", "button_b"):
+                btn = inputs.get_first(btn_name)
+                if btn is None:
+                    continue
+                dp = btn.get_first("activators").get_first("Double_Press")
+                if dp is None:
+                    continue
+                settings = dp.get_first("settings")
+                self.assertIsNotNone(settings)
+                self.assertEqual(settings.get_first("double_tap_time"), "190")
+
+
+class TestSlotOrderSetC2(unittest.TestCase):
+    """Set C, Layout 2: Full-first variants PC3=(F,D,S,R) and PC4=(F,S,D,R)."""
+
+    _PERMS = [
+        ("button_a", "PC3",
+         ("Full_Press", "Double_Press", "Start_Press", "Release_Press"),
+         {"Start_Press": "F1", "Release_Press": "F2", "Full_Press": "F3", "Double_Press": "F4"}),
+        ("button_b", "PC4",
+         ("Full_Press", "Start_Press", "Double_Press", "Release_Press"),
+         {"Start_Press": "F5", "Release_Press": "F6", "Full_Press": "F7", "Double_Press": "F8"}),
+    ]
+
+    def test_all_permutations_and_invariants(self):
+        _check_slot_order_layout(self, vg.make_slot_order_set_c2_layout,
+                                 "slot_order_set_c2",
+                                 self._PERMS, dtt=190)
+
+    def test_pc3_full_first_slot_order(self):
+        text = vg.make_slot_order_set_c2_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_a"),
+                         ["Full_Press", "Double_Press", "Start_Press", "Release_Press"])
+
+    def test_pc4_full_first_b_slot_order(self):
+        text = vg.make_slot_order_set_c2_layout(double_tap_time=190)
+        self.assertEqual(_activator_slot_order(text, "button_b"),
+                         ["Full_Press", "Start_Press", "Double_Press", "Release_Press"])
+
+
+class TestSlotOrderSetC_Coverage(unittest.TestCase):
+    """All 4 Set-C permutations appear exactly once across C1+C2."""
+
+    def test_all_c_permutations_covered(self):
+        expected = {
+            ("Start_Press",   "Release_Press", "Full_Press",   "Double_Press"),  # PC1
+            ("Release_Press", "Start_Press",   "Full_Press",   "Double_Press"),  # PC2
+            ("Full_Press",    "Double_Press",  "Start_Press",  "Release_Press"), # PC3
+            ("Full_Press",    "Start_Press",   "Double_Press", "Release_Press"), # PC4
+        }
+        seen = set()
+        for factory, buttons in [
+            (vg.make_slot_order_set_c1_layout, ["button_a", "button_b"]),
+            (vg.make_slot_order_set_c2_layout, ["button_a", "button_b"]),
+        ]:
+            text = factory(double_tap_time=190)
+            for btn in buttons:
+                order = tuple(_activator_slot_order(text, btn))
+                self.assertNotIn(order, seen, f"Duplicate C permutation: {order}")
+                seen.add(order)
+        self.assertEqual(seen, expected,
+            f"C permutation coverage mismatch.\nMissing: {expected - seen}")
+
+
+# ---------------------------------------------------------------------------
 # Serializer
 # ---------------------------------------------------------------------------
 

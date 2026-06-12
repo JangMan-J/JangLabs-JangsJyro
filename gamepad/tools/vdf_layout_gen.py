@@ -5,7 +5,7 @@ Builds Phase-4 diagnostic VDF layouts for the mapper-conversion lab.
 Every layout produced here goes through a parse-validate round-trip (parse →
 emit → reparse) before being written to disk — never a raw string blob.
 
-Four public factory functions:
+Ten public factory functions:
   make_marker_layout(double_tap_time=190)
       F1–F9 marker layout: button_y = test button (Start/Release/Full/Double),
       button_a = digital canary (F5), button_b = tap/hold (F6/F7),
@@ -18,6 +18,24 @@ Four public factory functions:
       Timed remove_layer layout: base + action layer, remove on a button.
   make_action_set_swap_layout()
       Two-action-set swap layout, START swaps sets.
+  make_slot_order_set_a1_layout()
+      Slot-order permutation Set A, Layout 1: Long state-bound,
+      P1=(S,R,L), P2=(S,L,R), P3=(R,S,L).  F1–F10.
+  make_slot_order_set_a2_layout()
+      Slot-order permutation Set A, Layout 2: Long state-bound,
+      P4=(R,L,S), P5=(L,S,R), P6=(L,R,S).  F1–F10.
+  make_slot_order_set_b1_layout(double_tap_time=190)
+      Slot-order permutation Set B, Layout 1: Double state-bound,
+      P1=(S,R,D), P2=(S,D,R), P3=(R,S,D).  F1–F10.
+  make_slot_order_set_b2_layout(double_tap_time=190)
+      Slot-order permutation Set B, Layout 2: Double state-bound,
+      P4=(R,D,S), P5=(D,S,R), P6=(D,R,S).  F1–F10.
+  make_slot_order_set_c1_layout(double_tap_time=190)
+      Slot-order permutation Set C, Layout 1: 4-activator,
+      PC1=(S,R,F,D) [committed], PC2=(R,S,F,D) [reverse-edge].  F1–F8.
+  make_slot_order_set_c2_layout(double_tap_time=190)
+      Slot-order permutation Set C, Layout 2: 4-activator Full-first,
+      PC3=(F,D,S,R), PC4=(F,S,D,R).  F1–F8.
 
 All use the same VDF data model (Pairs) and emit() serializer shared with
 vdf/vdf_clean.py's tokenizer/parser (copy-inlined here to avoid a cross-dir
@@ -722,6 +740,325 @@ def make_action_set_swap_layout() -> str:
 
 
 # ---------------------------------------------------------------------------
+# Layouts 5–10: Activator slot-order permutation layouts
+# ---------------------------------------------------------------------------
+#
+# These layouts exist to map the order-dependent edge-activator loss bug:
+# Start_Press / Release_Press can be suppressed as a function of their SLOT
+# ORDER when a state-bound activator (Long_Press or Double_Press) shares the
+# button (finding: findings/steam_lane_behavior.md).
+#
+# GUI-observed (2026-06-12):
+#   (S, R, L): Start never fires; Release fires early
+#   (R, S, L): all three fire  ← the slot-order fix
+#
+# Set A — Long_Press as state-bound; all 6 orderings of {Start, Release, Long}:
+#   A1: P1=(S,R,L), P2=(S,L,R), P3=(R,S,L)
+#   A2: P4=(R,L,S), P5=(L,S,R), P6=(L,R,S)
+#
+# Set B — Double_Press as state-bound (DTT=190); all 6 orderings of {Start, Release, Double}:
+#   B1: P1=(S,R,D), P2=(S,D,R), P3=(R,S,D)
+#   B2: P4=(R,D,S), P5=(D,S,R), P6=(D,R,S)
+#
+# Set C — 4-activator case:
+#   C1: PC1=(S,R,F,D) [committed, known eat-R], PC2=(R,S,F,D) [reverse-edge]
+#   C2: PC3=(F,D,S,R) [Full-first-A],           PC4=(F,S,D,R) [Full-first-B]
+#
+# F-key assignment per button (F1–F10 only):
+#   Sets A/B: Start→Fn, Release→Fn+1, Long/Double→Fn+2 (by type, regardless of slot order)
+#             button_a: F1–F3, button_b: F4–F6, button_x: F7–F9, button_y: F10 canary
+#   Set C: Start→Fn, Release→Fn+1, Full→Fn+2, Double→Fn+3 (2 active buttons per layout)
+#          button_a: F1–F4, button_b: F5–F8
+# ---------------------------------------------------------------------------
+
+
+def _slot_order_canary_button(fkey: str = "F10") -> "Pairs":
+    """Single Full_Press canary button (no competing activators)."""
+    return _button_input([
+        ("Full_Press", make_activator("Full_Press", fkey)),
+    ])
+
+
+def _slot_order_3btn_body(perm_a, perm_b, perm_x,
+                          fmap_a, fmap_b, fmap_x,
+                          canary_fkey: str = "F10",
+                          double_tap_time: Optional[int] = None) -> str:
+    """Build the body for a 3-button slot-order layout (Sets A and B).
+
+    perm_a/b/x: ordered tuples of activator type names for each button.
+    fmap_a/b/x: {activator_type: fkey_string} for each button.
+    Returns the VDF text string.
+    """
+    def _make_btn(perm_order, fmap):
+        acts = []
+        for act_type in perm_order:
+            fkey = fmap[act_type]
+            kwargs: dict = {}
+            if act_type == "Long_Press":
+                pass  # use Steam default long_press_time
+            elif act_type == "Double_Press":
+                if double_tap_time is not None:
+                    kwargs["double_tap_time"] = double_tap_time
+            acts.append((act_type, make_activator(act_type, fkey, **kwargs)))
+        return _button_input(acts)
+
+    btn_a = _make_btn(perm_a, fmap_a)
+    btn_b = _make_btn(perm_b, fmap_b)
+    btn_x = _make_btn(perm_x, fmap_x)
+    btn_y = _slot_order_canary_button(canary_fkey)
+
+    four_buttons_group = _p(
+        ("id", "6"),
+        ("mode", "four_buttons"),
+        ("name", ""),
+        ("description", ""),
+        ("inputs", _p(
+            ("button_a", btn_a),
+            ("button_b", btn_b),
+            ("button_x", btn_x),
+            ("button_y", btn_y),
+        )),
+    )
+    switches_group = _p(
+        ("id", "0"),
+        ("mode", "switches"),
+        ("name", ""),
+        ("description", ""),
+        ("inputs", Pairs()),
+    )
+    gsb = _p(
+        ("0", "switch active"),
+        ("6", "button_diamond active"),
+    )
+    cm = Pairs(_controller_mappings_header())
+    cm.append(("group", switches_group))
+    cm.append(("group", four_buttons_group))
+    cm.append(_preset("0", "Default", gsb))
+    cm.append(("settings", Pairs()))
+    root = _p(("controller_mappings", cm))
+    return emit(root)
+
+
+def _slot_order_4btn_body(perm_a, perm_b,
+                          fmap_a, fmap_b,
+                          double_tap_time: Optional[int] = None) -> str:
+    """Build the body for a 2-button 4-activator slot-order layout (Set C).
+
+    perm_a/b: ordered tuples of 4 activator type names.
+    fmap_a/b: {activator_type: fkey_string}.
+    Returns the VDF text string.
+    """
+    def _make_btn(perm_order, fmap):
+        acts = []
+        for act_type in perm_order:
+            fkey = fmap[act_type]
+            kwargs: dict = {}
+            if act_type == "Double_Press" and double_tap_time is not None:
+                kwargs["double_tap_time"] = double_tap_time
+            acts.append((act_type, make_activator(act_type, fkey, **kwargs)))
+        return _button_input(acts)
+
+    btn_a = _make_btn(perm_a, fmap_a)
+    btn_b = _make_btn(perm_b, fmap_b)
+
+    four_buttons_group = _p(
+        ("id", "6"),
+        ("mode", "four_buttons"),
+        ("name", ""),
+        ("description", ""),
+        ("inputs", _p(
+            ("button_a", btn_a),
+            ("button_b", btn_b),
+        )),
+    )
+    switches_group = _p(
+        ("id", "0"),
+        ("mode", "switches"),
+        ("name", ""),
+        ("description", ""),
+        ("inputs", Pairs()),
+    )
+    gsb = _p(
+        ("0", "switch active"),
+        ("6", "button_diamond active"),
+    )
+    cm = Pairs(_controller_mappings_header())
+    cm.append(("group", switches_group))
+    cm.append(("group", four_buttons_group))
+    cm.append(_preset("0", "Default", gsb))
+    cm.append(("settings", Pairs()))
+    root = _p(("controller_mappings", cm))
+    return emit(root)
+
+
+# ---- Set A (Long state-bound) ----
+
+# F-key maps by role (type → key); consistent across A1 and A2
+_A_FMAP_A = {"Start_Press": "F1", "Release_Press": "F2", "Long_Press": "F3"}
+_A_FMAP_B = {"Start_Press": "F4", "Release_Press": "F5", "Long_Press": "F6"}
+_A_FMAP_X = {"Start_Press": "F7", "Release_Press": "F8", "Long_Press": "F9"}
+
+
+def make_slot_order_set_a1_layout() -> str:
+    """Slot-order permutation layout: Set A, Layout 1 — Long state-bound.
+
+    Three permutations of {Start, Release, Long} × 3 face buttons + F10 canary:
+      button_a: P1 = (Start_Press, Release_Press, Long_Press)
+      button_b: P2 = (Start_Press, Long_Press, Release_Press)
+      button_x: P3 = (Release_Press, Start_Press, Long_Press)  ← GUI-verified: all fire
+      button_y: canary → F10
+
+    Returns the VDF text as a string.
+    """
+    text = _slot_order_3btn_body(
+        perm_a=("Start_Press",   "Release_Press", "Long_Press"),
+        perm_b=("Start_Press",   "Long_Press",    "Release_Press"),
+        perm_x=("Release_Press", "Start_Press",   "Long_Press"),
+        fmap_a=_A_FMAP_A,
+        fmap_b=_A_FMAP_B,
+        fmap_x=_A_FMAP_X,
+    )
+    _validate_roundtrip(text, "make_slot_order_set_a1_layout")
+    assert_all_keys_unique(text, "make_slot_order_set_a1_layout")
+    return text
+
+
+def make_slot_order_set_a2_layout() -> str:
+    """Slot-order permutation layout: Set A, Layout 2 — Long state-bound.
+
+    Three permutations of {Start, Release, Long} × 3 face buttons + F10 canary:
+      button_a: P4 = (Release_Press, Long_Press, Start_Press)
+      button_b: P5 = (Long_Press, Start_Press, Release_Press)
+      button_x: P6 = (Long_Press, Release_Press, Start_Press)
+      button_y: canary → F10
+
+    Returns the VDF text as a string.
+    """
+    text = _slot_order_3btn_body(
+        perm_a=("Release_Press", "Long_Press",    "Start_Press"),
+        perm_b=("Long_Press",    "Start_Press",   "Release_Press"),
+        perm_x=("Long_Press",    "Release_Press", "Start_Press"),
+        fmap_a=_A_FMAP_A,
+        fmap_b=_A_FMAP_B,
+        fmap_x=_A_FMAP_X,
+    )
+    _validate_roundtrip(text, "make_slot_order_set_a2_layout")
+    assert_all_keys_unique(text, "make_slot_order_set_a2_layout")
+    return text
+
+
+# ---- Set B (Double state-bound) ----
+
+_B_FMAP_A = {"Start_Press": "F1", "Release_Press": "F2", "Double_Press": "F3"}
+_B_FMAP_B = {"Start_Press": "F4", "Release_Press": "F5", "Double_Press": "F6"}
+_B_FMAP_X = {"Start_Press": "F7", "Release_Press": "F8", "Double_Press": "F9"}
+
+
+def make_slot_order_set_b1_layout(double_tap_time: int = 190) -> str:
+    """Slot-order permutation layout: Set B, Layout 1 — Double state-bound (DTT=190).
+
+    Three permutations of {Start, Release, Double} × 3 face buttons + F10 canary:
+      button_a: P1 = (Start_Press, Release_Press, Double_Press)
+      button_b: P2 = (Start_Press, Double_Press, Release_Press)
+      button_x: P3 = (Release_Press, Start_Press, Double_Press)
+      button_y: canary → F10
+
+    Returns the VDF text as a string.
+    """
+    text = _slot_order_3btn_body(
+        perm_a=("Start_Press",   "Release_Press", "Double_Press"),
+        perm_b=("Start_Press",   "Double_Press",  "Release_Press"),
+        perm_x=("Release_Press", "Start_Press",   "Double_Press"),
+        fmap_a=_B_FMAP_A,
+        fmap_b=_B_FMAP_B,
+        fmap_x=_B_FMAP_X,
+        double_tap_time=double_tap_time,
+    )
+    _validate_roundtrip(text, "make_slot_order_set_b1_layout")
+    assert_all_keys_unique(text, "make_slot_order_set_b1_layout")
+    return text
+
+
+def make_slot_order_set_b2_layout(double_tap_time: int = 190) -> str:
+    """Slot-order permutation layout: Set B, Layout 2 — Double state-bound (DTT=190).
+
+    Three permutations of {Start, Release, Double} × 3 face buttons + F10 canary:
+      button_a: P4 = (Release_Press, Double_Press, Start_Press)
+      button_b: P5 = (Double_Press, Start_Press, Release_Press)
+      button_x: P6 = (Double_Press, Release_Press, Start_Press)
+      button_y: canary → F10
+
+    Returns the VDF text as a string.
+    """
+    text = _slot_order_3btn_body(
+        perm_a=("Release_Press", "Double_Press",  "Start_Press"),
+        perm_b=("Double_Press",  "Start_Press",   "Release_Press"),
+        perm_x=("Double_Press",  "Release_Press", "Start_Press"),
+        fmap_a=_B_FMAP_A,
+        fmap_b=_B_FMAP_B,
+        fmap_x=_B_FMAP_X,
+        double_tap_time=double_tap_time,
+    )
+    _validate_roundtrip(text, "make_slot_order_set_b2_layout")
+    assert_all_keys_unique(text, "make_slot_order_set_b2_layout")
+    return text
+
+
+# ---- Set C (4-activator permutations) ----
+
+# F-key maps by type role: consistent for both C1 and C2
+# button_a uses F1-F4, button_b uses F5-F8
+_C_FMAP_A = {"Start_Press": "F1", "Release_Press": "F2", "Full_Press": "F3", "Double_Press": "F4"}
+_C_FMAP_B = {"Start_Press": "F5", "Release_Press": "F6", "Full_Press": "F7", "Double_Press": "F8"}
+
+
+def make_slot_order_set_c1_layout(double_tap_time: int = 190) -> str:
+    """Slot-order permutation layout: Set C, Layout 1 — 4-activator variants.
+
+    Two buttons, 4 activators each (Start, Release, Full, Double):
+      button_a: PC1 = (Start_Press, Release_Press, Full_Press, Double_Press)
+                      [committed marker_layout order — known: eats Release_Press]
+      button_b: PC2 = (Release_Press, Start_Press, Full_Press, Double_Press)
+                      [reverse-edge — mirrors GUI-verified all-fire fix for 3-activator case]
+
+    Returns the VDF text as a string.
+    """
+    text = _slot_order_4btn_body(
+        perm_a=("Start_Press",   "Release_Press", "Full_Press", "Double_Press"),
+        perm_b=("Release_Press", "Start_Press",   "Full_Press", "Double_Press"),
+        fmap_a=_C_FMAP_A,
+        fmap_b=_C_FMAP_B,
+        double_tap_time=double_tap_time,
+    )
+    _validate_roundtrip(text, "make_slot_order_set_c1_layout")
+    assert_all_keys_unique(text, "make_slot_order_set_c1_layout")
+    return text
+
+
+def make_slot_order_set_c2_layout(double_tap_time: int = 190) -> str:
+    """Slot-order permutation layout: Set C, Layout 2 — Full-first 4-activator variants.
+
+    Two buttons, 4 activators each (Full, Double leading):
+      button_a: PC3 = (Full_Press, Double_Press, Start_Press, Release_Press)
+                      [Full-first-A — state-bound block at front]
+      button_b: PC4 = (Full_Press, Start_Press, Double_Press, Release_Press)
+                      [Full-first-B — Start sandwiched between Full and Double]
+
+    Returns the VDF text as a string.
+    """
+    text = _slot_order_4btn_body(
+        perm_a=("Full_Press",  "Double_Press", "Start_Press",   "Release_Press"),
+        perm_b=("Full_Press",  "Start_Press",  "Double_Press",  "Release_Press"),
+        fmap_a=_C_FMAP_A,
+        fmap_b=_C_FMAP_B,
+        double_tap_time=double_tap_time,
+    )
+    _validate_roundtrip(text, "make_slot_order_set_c2_layout")
+    assert_all_keys_unique(text, "make_slot_order_set_c2_layout")
+    return text
+
+
+# ---------------------------------------------------------------------------
 # Round-trip guard
 # ---------------------------------------------------------------------------
 
@@ -776,6 +1113,31 @@ def main(argv=None):
         help="Two-action-set swap (Default ↔ SetB)")
     p_as.add_argument("--out", required=True, help="output .vdf path")
 
+    # Slot-order permutation layouts (Set A/B/C)
+    for _name, _help in [
+        ("slot-order-set-a1",
+         "Slot-order Set A Layout 1: Long state-bound, P1=(S,R,L) P2=(S,L,R) P3=(R,S,L)"),
+        ("slot-order-set-a2",
+         "Slot-order Set A Layout 2: Long state-bound, P4=(R,L,S) P5=(L,S,R) P6=(L,R,S)"),
+    ]:
+        sub.add_parser(_name, help=_help).add_argument(
+            "--out", required=True, help="output .vdf path")
+
+    for _name, _help in [
+        ("slot-order-set-b1",
+         "Slot-order Set B Layout 1: Double state-bound DTT=190, P1=(S,R,D) P2=(S,D,R) P3=(R,S,D)"),
+        ("slot-order-set-b2",
+         "Slot-order Set B Layout 2: Double state-bound DTT=190, P4=(R,D,S) P5=(D,S,R) P6=(D,R,S)"),
+        ("slot-order-set-c1",
+         "Slot-order Set C Layout 1: 4-activator, PC1=(S,R,F,D) [committed] PC2=(R,S,F,D) [reverse-edge]"),
+        ("slot-order-set-c2",
+         "Slot-order Set C Layout 2: 4-activator Full-first, PC3=(F,D,S,R) PC4=(F,S,D,R)"),
+    ]:
+        p = sub.add_parser(_name, help=_help)
+        p.add_argument("--dtt", type=int, default=190,
+            help="Double Tap Time in ms (default 190)")
+        p.add_argument("--out", required=True, help="output .vdf path")
+
     args = ap.parse_args(argv)
 
     if args.cmd == "marker":
@@ -790,6 +1152,24 @@ def main(argv=None):
     elif args.cmd == "action-set-swap":
         text = make_action_set_swap_layout()
         _write_validated(text, Path(args.out), "action-set-swap")
+    elif args.cmd == "slot-order-set-a1":
+        text = make_slot_order_set_a1_layout()
+        _write_validated(text, Path(args.out), "slot-order-set-a1")
+    elif args.cmd == "slot-order-set-a2":
+        text = make_slot_order_set_a2_layout()
+        _write_validated(text, Path(args.out), "slot-order-set-a2")
+    elif args.cmd == "slot-order-set-b1":
+        text = make_slot_order_set_b1_layout(args.dtt)
+        _write_validated(text, Path(args.out), "slot-order-set-b1")
+    elif args.cmd == "slot-order-set-b2":
+        text = make_slot_order_set_b2_layout(args.dtt)
+        _write_validated(text, Path(args.out), "slot-order-set-b2")
+    elif args.cmd == "slot-order-set-c1":
+        text = make_slot_order_set_c1_layout(args.dtt)
+        _write_validated(text, Path(args.out), "slot-order-set-c1")
+    elif args.cmd == "slot-order-set-c2":
+        text = make_slot_order_set_c2_layout(args.dtt)
+        _write_validated(text, Path(args.out), "slot-order-set-c2")
 
     return 0
 
