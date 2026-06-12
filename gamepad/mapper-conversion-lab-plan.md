@@ -321,6 +321,12 @@ Declarations the vision requires before analog/gyro acceptance (`design §237–
 
 ## 9. Knowledge base layout (`design §340–367`)
 
+> **Location (lead ruling, 2026-06-12 session 9):** "repo-root" below predates the lab's fold-in
+> to the jangsjyro fork; the fork root is upstream-facing (`../AGENTS.md`). The KB lives at
+> **`gamepad/kb/`** (the lab root). **SEEDED 2026-06-12** from gated findings — see
+> `kb/README.md` (promotion rules + conflict handling) — 35 lab notes, 5 canonical files,
+> 10 equivalence rules (both-halves-verified only, anti-Goodhart D3 honored).
+
 Repo-root `kb/`: `kb/lab-notes/observations.jsonl` (provenance-tagged, mutable, append-by-anyone) and
 `kb/canonical/` (`control-catalog.json`, `mapper-functions.steam.json`, `mapper-functions.jsm.json`,
 `equivalence-rules.jsonl`, `capability-matrix.json`). **Canonical promotion requires real-runtime

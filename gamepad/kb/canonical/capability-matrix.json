@@ -1,0 +1,28 @@
+{
+  "schema_version": "1",
+  "generated": "2026-06-12",
+  "description": "Mechanics x lanes verdict grid. 'status' per lane: trace-pinned / trace-verified / trace-single-pass / hypothesis / untested. 'equivalence' names the canonical rule id in equivalence-rules.jsonl, or null if no rule may exist yet (both halves must be trace-verified first).",
+  "entries": [
+    {"mechanic": "digital-button", "jsm": "trace-verified", "steam": "trace-verified", "equivalence": "eq-digital", "notes": "Exact both lanes."},
+    {"mechanic": "taphold", "jsm": "trace-verified", "steam": "trace-verified", "equivalence": "eq-taphold", "notes": "Same model; boundaries parameterized per lane; per-binding->global is bounded (eq-per-binding-hold-times)."},
+    {"mechanic": "double-press", "jsm": "trace-verified", "steam": "trace-pinned", "equivalence": "eq-double-press", "notes": "Count+latency delta; epoch d2d vs r2d."},
+    {"mechanic": "chord", "jsm": "trace-verified (owner only)", "steam": "trace-verified", "equivalence": "eq-chord", "notes": "JSM member-leak parity untested."},
+    {"mechanic": "simpress", "jsm": "trace-verified (degraded: sticky state)", "steam": "trace-verified (no counterpart primitive)", "equivalence": "eq-simpress", "notes": "JSM-only primitive; JSM bug is JSM-specific."},
+    {"mechanic": "trigger-softfull", "jsm": "trace-verified", "steam": "trace-verified (adaptive threshold caveat)", "equivalence": "eq-trigger-softfull", "notes": "Instant-jump structural delta confirmed."},
+    {"mechanic": "stick-dpad", "jsm": "trace-verified", "steam": "trace-verified", "equivalence": "eq-stick-dpad", "notes": "Exact."},
+    {"mechanic": "stick-analog-output", "jsm": "untested", "steam": "untested", "equivalence": null, "notes": "Steam joystick_move w/ curve exponent vs JSM RIGHT_STICK_MODE — static-audit grade only (audit S.4)."},
+    {"mechanic": "start-press", "jsm": "untested (analogue candidates only)", "steam": "trace-verified (fires always; universality single-pass)", "equivalence": null, "notes": "No A-B trace yet; JSM '!'-style instant candidates."},
+    {"mechanic": "release-press", "jsm": "untested (analogue candidates only)", "steam": "trace-single-pass (suppressed under co-residency; fires alone per oracle GUI)", "equivalence": null, "notes": "Hazard rule eq-hazard-start-release-state-bound applies to co-residency combos."},
+    {"mechanic": "start-release-with-state-bound-coresidency", "jsm": "n/a", "steam": "trace-single-pass (activator loss: Release eaten 16/16; Double killed in Set B)", "equivalence": "eq-hazard-start-release-state-bound", "notes": "Probable Steam bug; state-driver hunt de-scoped (environment-trust doctrine)."},
+    {"mechanic": "action-set-layers (add_layer/remove_layer)", "jsm": "hypothesis (no layer object; modeshift decomposition per audit L.2-L.5)", "steam": "hypothesis (binding string statically verified, never fired live — L2 task queued)", "equivalence": null, "notes": "Crown-jewel Click layer (audit L.3) rides on this; timed choreography has no JSM equivalent."},
+    {"mechanic": "change_preset", "jsm": "n/a", "steam": "hypothesis (verb unverified — L3 falsification probe queued)", "equivalence": null, "notes": ""},
+    {"mechanic": "mode-shift", "jsm": "hypothesis (held-modeshift chord)", "steam": "hypothesis (static-audit L.4)", "equivalence": null, "notes": "Conceptually near-exact per audit; untraced."},
+    {"mechanic": "gyro (all rows)", "jsm": "untested (uhid-gated)", "steam": "untested (uhid-gated)", "equivalence": null, "notes": "Phase 6; needs native-2dc8:6012 uhid spoof (root setup). Audit G.1-G.12 static-audit grade."},
+    {"mechanic": "turbo-toggle-cycle-fire-delays", "jsm": "untested", "steam": "hypothesis (docs: per-activator settings, all off in verified layouts)", "equivalence": null, "notes": "Phase 4+ material."},
+    {"mechanic": "held-output", "jsm": "trace-verified", "steam": "trace-pinned", "equivalence": "eq-held-output", "notes": "Plain key-state hold both lanes."}
+  ],
+  "provenance": {
+    "sources": ["findings/jsm_lane_behavior.md", "findings/steam_lane_behavior.md", "vdf/translation_audit.md", "reference/steamworks-input-docs/"],
+    "last_validated": "2026-06-12"
+  }
+}

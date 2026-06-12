@@ -1,0 +1,74 @@
+{
+  "schema_version": "1",
+  "generated": "2026-06-12",
+  "description": "Verified JSM binding/mechanic semantics (the candidate lane). Pipeline: synthetic uinput pad -> real JSM binary (this fork, branch-a-port, build-linux/, clang + SDL3 3.4.8) -> evdev capture. Only trace-verified entries; hypotheses live in kb/lab-notes/.",
+  "mapper_version": "JoyShockMapper fork branch-a-port (JangLabs-JangsJyro), Linux/clang build",
+  "platform": "CachyOS Linux, headless-capable (no Steam involved)",
+  "device_profile": "synthetic Xbox-360 uinput pad",
+  "entries": [
+    {
+      "id": "jsm-plain-binding",
+      "syntax": "BTN = KEY",
+      "semantics": "Digital button to key, exact press/release count and order, ~2 ms latency at evdev.",
+      "run_ids": ["20260602T144140Z-phase1-jsm-synthetic-spike"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-02"
+    },
+    {
+      "id": "jsm-taphold",
+      "syntax": "BTN = TAP' HOLD_  (tap/hold event modifiers)",
+      "semantics": "Press shorter than HOLD_PRESS_TIME fires tap binding on release; longer fires hold binding AT the threshold and suppresses tap. HOLD_PRESS_TIME is GLOBAL (one value for every binding — no per-binding hold time). Wall-clock boundary = threshold + up to ~1 poll tick (~8-16 ms slack); 150/155 ms still tap at setting 150, hold by 170 ms.",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins", "20260611T150936Z-chunk-c1-jsm-boundary"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "jsm-double-press",
+      "syntax": "BTN = BASE ; BTN,BTN = DOUBLE",
+      "semantics": "First press fires the BASE binding immediately (base echo always present); a second press inside DBL_PRESS_WINDOW fires DOUBLE. Window epoch: first-RELEASE-to-second-DOWN (proven by construction).",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins", "20260611T150936Z-chunk-c1-jsm-boundary"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "jsm-chorded-press",
+      "syntax": "MOD,BTN = CHORD",
+      "semantics": "BTN while MOD held fires CHORD, overriding BTN's base binding; BTN alone fires its base. Member-leak (MOD carrying its own binding during the chord) is UNTESTED — the verifying trace bound MOD=NONE.",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins"],
+      "confidence": "trace-verified (owner semantics only)",
+      "last_validated": "2026-06-02"
+    },
+    {
+      "id": "jsm-simultaneous-press",
+      "syntax": "BTN1+BTN2 = SIM",
+      "semantics": "DEGRADED: chord itself correct (suppresses both members' bindings), BUT persistent sticky state — a lone member press after any chord re-emits SIM instead of the lone binding; 100-1000 ms gaps do not clear it, only JSM restart/reconnect. degraded_approximation for any layout reusing a chord member as a lone button. Root-cause hypothesis (getMatchingSimBtn state-equality) is source-review grade, see lab notes.",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins", "20260611T150936Z-chunk-c1-jsm-boundary"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "jsm-trigger-softfull",
+      "syntax": "ZR = SOFT ; ZRF = FULL ; ZR_MODE = NO_SKIP",
+      "semantics": "Fires off the analog ABS_RZ axis threshold (not a digital latch): soft pull -> SOFT held; full pull adds FULL while keeping SOFT; release drops both. ANY crossing counts — an instant 0->255 single-event jump fires soft+full ~3 ms apart.",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins", "20260611T150936Z-chunk-c1-jsm-boundary"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "jsm-stick-dpad",
+      "syntax": "LEFT_STICK_MODE = NO_MOUSE ; LUP/LDOWN/LLEFT/LRIGHT = keys",
+      "semantics": "Directional key held while the stick is tilted past the inner deadzone — exact stick-to-keys.",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-02"
+    },
+    {
+      "id": "jsm-held-output",
+      "syntax": "(any held binding)",
+      "semantics": "One key-down -> held state -> one key-up; no re-send chatter.",
+      "run_ids": ["20260602T145517Z-phase2-jsm-quickwins"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-12"
+    }
+  ]
+}

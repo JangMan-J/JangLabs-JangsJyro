@@ -1,0 +1,98 @@
+{
+  "schema_version": "1",
+  "generated": "2026-06-12",
+  "description": "Verified Steam Input activator/mechanic semantics (the reference lane). Pipeline: synthetic uinput pad -> real Steam client -> XI2 capture (Raw* events ONLY — key-layer events are flush artifacts). Only trace-verified entries; hypotheses live in kb/lab-notes/.",
+  "mapper_version": "Steam client publicbeta 1781139754, Desktop (legacy-mode) layout",
+  "platform": "CachyOS Linux, Wayland/KDE, XI2 via XWayland",
+  "device_profile": "synthetic Xbox-360 uinput pad",
+  "entries": [
+    {
+      "id": "steam-regular-press",
+      "vdf_key": "Full_Press",
+      "semantics": "The GUI's 'Regular Press' (Full_Press is Valve's vdf serialization key for it — NOT a distinct activator; ground truth: user's GUI-produced autosave, 13 occurrences). Digital button to key: exact press/release pairs, pipeline ~34 ms stimulus-to-raw-emission.",
+      "run_ids": ["20260611T124018Z-phase2-steam-quickwins"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-12"
+    },
+    {
+      "id": "steam-long-press",
+      "vdf_key": "Long_Press",
+      "semantics": "PER-BINDING Long Press Time (450 ms GUI default; custom values honored per-binding in one layout, 603 ms verified). Inclusive and tick-exact at the configured value (430 -> tap, 450/470 -> hold at setting 450). Fires AT threshold; suppresses the Regular binding when interruptable (default).",
+      "run_ids": ["20260611T124018Z-phase2-steam-quickwins", "20260611T151747Z-chunk-c2-steam-boundary"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "steam-double-press",
+      "vdf_key": "Double_Press",
+      "semantics": "Window epoch DOWN-TO-DOWN (Double Tap Time, 190 ms default here). Suppresses the Regular binding entirely and DELAYS every single: suppressed single fires at first-down + DTT exactly (TRACE-PINNED, N=14 over 50-750 ms holds: 192.23 +/- 0.84 ms at DTT=190); double fires immediately on second down (~0 ms added); held-double emits exactly one down at second-down, one up at second-up. Quick-tap suppressed single emits as a ~34 ms raw tap; held past DTT the key mirrors button state. Boundary-EDGE inclusivity unresolved and MOOT (human-food doctrine: ~10-15 ms practical equality).",
+      "run_ids": ["20260611T151747Z-chunk-c2-steam-boundary", "20260612T053331Z-phase4-pin-batch1"],
+      "confidence": "trace-pinned",
+      "last_validated": "2026-06-12"
+    },
+    {
+      "id": "steam-start-press",
+      "vdf_key": "Start_Press",
+      "semantics": "Fires on press-down, instantly deactivates even if held; emits as an instant ~34 ms raw tap. Fired in EVERY tested configuration: batch-1 marker (validated) and all 16 matrix cells regardless of slot position or co-residents (matrix half trace-single-pass).",
+      "run_ids": ["20260612T053331Z-phase4-pin-batch1", "20260612T072850Z-phase4-batch2-matrix"],
+      "confidence": "trace-verified (universality of firing: trace-single-pass)",
+      "last_validated": "2026-06-12"
+    },
+    {
+      "id": "steam-release-press",
+      "vdf_key": "Release_Press",
+      "semantics": "Fires on release — WHEN it fires at all. Bound ALONE it fires correctly (oracle GUI evidence). Under co-residency with state-bound (Long/Double) or Start activators it was SUPPRESSED in all 16 matrix cells at every slot position (trace-single-pass; state-dependent, not slot-order — the GUI order effect did not reproduce; probable Steam Input bug, state-driver hunt de-scoped). Expected emission signature: zero/near-zero-duration combined down/up raw pair (oracle mechanic, untraced).",
+      "run_ids": ["20260612T072850Z-phase4-batch2-matrix"],
+      "confidence": "trace-single-pass (suppression); oracle-attested (fires-alone, signature)",
+      "last_validated": "2026-06-12"
+    },
+    {
+      "id": "steam-chorded-press",
+      "vdf_key": "chorded (Chorded Press)",
+      "semantics": "Owner's regular binding suppressed when the chord fires; the chord MEMBER'S own binding LEAKS (held alongside the chord output) — by-design per partner docs (no member-suppression claim). Settings verified: Require Any, Interruptable on.",
+      "run_ids": ["20260611T124018Z-phase2-steam-quickwins"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "steam-interruptable-flag",
+      "vdf_key": "interruptable (per-activator, default on)",
+      "semantics": "Governs base-binding suppression by Long/Double press. The flag lives on the activator being INTERRUPTED (the Regular/Full_Press), not on the Long/Double activator. With interruptable 0, Regular fires on press-down and is NOT suppressed when Long fires — both keys active together. Load-bearing for tap/hold translation; read per-activator, never assume default.",
+      "run_ids": ["20260611T151747Z-chunk-c2-steam-boundary"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "steam-trigger-softfull",
+      "vdf_key": "trigger edge (soft) + click (full)",
+      "semantics": "Staged pull: soft binding fires at threshold and stays held while full is active (approximates JSM NO_SKIP). Instant 0->255 jump: FULL ONLY, no soft (ramp-dependent). Soft threshold is ADAPTIVE STATE, not a constant (fresh client: staged RZ=100 no soft; RZ=200 reliable; one crossing does not recalibrate within-session; 'adaptive_threshold 3' attribution unproven). Soft-pull translations classify <= bounded_approximation with the instability caveat named.",
+      "run_ids": ["20260611T124018Z-phase2-steam-quickwins", "20260611T153109Z-trigger-softpull-adjudication"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "steam-stick-dpad",
+      "vdf_key": "dpad mode (stick)",
+      "semantics": "Directional key held while past deadzone — matches JSM stick-to-keys semantics.",
+      "run_ids": ["20260611T124018Z-phase2-steam-quickwins"],
+      "confidence": "trace-verified",
+      "last_validated": "2026-06-11"
+    },
+    {
+      "id": "steam-activator-timers-down-anchored",
+      "vdf_key": "(timing model)",
+      "semantics": "Activator timers anchor to DOWN-event timestamps (oracle axiom, trace-pinned batch 1). Held bindings are plain key-state holds — one down, held state, one up; no re-send pump (Turbo, when enabled, is its own explicit activator setting).",
+      "run_ids": ["20260612T053331Z-phase4-pin-batch1"],
+      "confidence": "trace-pinned",
+      "last_validated": "2026-06-12"
+    },
+    {
+      "id": "steam-activator-loss-hazard",
+      "vdf_key": "(co-residency hazard)",
+      "semantics": "HAZARD: mixing Start/Release Press with Long/Double Press on one button causes state-dependent activator loss (Release eaten universally in matrix; Double fully suppressed under Start+Release co-residency, Set B all 6 permutations, even in-window doubles). Probable Steam Input bug; driver is hidden state, not visible slot order. Conversions touching such combos classify <= degraded_approximation; never convert INTO such a combo.",
+      "run_ids": ["20260612T072850Z-phase4-batch2-matrix"],
+      "confidence": "trace-single-pass (doctrine absorbs residual uncertainty)",
+      "last_validated": "2026-06-12"
+    }
+  ]
+}

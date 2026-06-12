@@ -1,0 +1,37 @@
+{
+  "schema_version": "1",
+  "generated": "2026-06-12",
+  "description": "Canonical controller profile v1 (plan section 8) — the device profile the converter targets. Grounded in real hardware + the fork's classification. Behavioral runs to date used a synthetic Xbox-360 uinput pad; this catalog is the declared target for gyro/analog acceptance phases.",
+  "device": {
+    "name": "8BitDo Ultimate 2 Wireless",
+    "vid": "0x2DC8",
+    "pid": "0x6012",
+    "connection": "2.4 GHz dongle, D-Input mode (Home+B at power-on)",
+    "fork_classification": "JS_TYPE_8BITDO_ULTIMATE2_WIRELESS",
+    "firmware_min": "1.03 (34-byte sensor-bearing HID report)",
+    "out_of_scope": ["Bluetooth (gyro disabled, 125 Hz polling cap)"]
+  },
+  "controls": {
+    "digital": ["face buttons (S/E/W/N)", "d-pad (4)", "shoulders (L1/R1)", "stick clicks (L3/R3)", "start", "back", "home", "capture", "rear/aux (4)"],
+    "analog": ["left stick (X/Y)", "right stick (X/Y)", "left trigger (ABS_Z)", "right trigger (ABS_RZ)"],
+    "gyro": {
+      "units": "deg/s",
+      "range_dps": 2000,
+      "scale": "GYRO_SCALE = 2000/32767",
+      "frame": "pitch=-sGyroY, yaw=+sGyroZ, roll=-sGyroX",
+      "delivery_hz_actual": 125,
+      "note": "~125 Hz actual delivery, not the 1000 Hz spec; synthetic frames emit at a declared deterministic rate; tolerances vs real captures assume ~125 Hz"
+    },
+    "accelerometer": {
+      "units": "g",
+      "scale": "ACCEL_SCALE = 1/4096",
+      "frame": "same axis convention as gyro"
+    }
+  },
+  "excluded_v1": ["touchpad", "adaptive-trigger force feedback", "mic-button behavior"],
+  "provenance": {
+    "sources": ["mapper-conversion-lab-plan.md section 8", "findings/gyro_hid.md", "fork source (JoyShockMapper)"],
+    "confidence": "declared-canonical (plan section 8, grounded in real hardware)",
+    "last_validated": "2026-06-12"
+  }
+}
