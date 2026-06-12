@@ -1,0 +1,22 @@
+{"spew": "Loaded Config for Last Resort Path for App ID 769, Controller 0: /home/jangmanj/.local/share/Steam//controller_base/basicui_gamepad.vdf\n", "spew_type": "info"}
+{"spew": "Destroyed virtual controller at slot 0 for controller 0\n", "spew_type": "info"}
+{"spew": "Loaded Config for Local Selection Path for App ID 413080, Controller 0: /home/jangmanj/.local/share/Steam/steamapps/common/Steam Controller Configs/28994968/config/413080/controller_8bitdo.vdf\n", "spew_type": "info"}
+{"spew": "Created virtual controller at slot 0 for controller 0\n", "spew_type": "info"}
+{"spew": "find controller_spew_level", "spew_type": "input"}
+{"spew": "controller_spew_level = \"3\" - \n", "spew_type": "info"}
+{"spew": "controller_spew_level 5", "spew_type": "input"}
+{"spew": "\"controller_spew_level\" = \"5\"\n", "spew_type": "info"}
+{"spew": "find controller_spew_level", "spew_type": "input"}
+{"spew": "controller_spew_level = \"5\" - \n", "spew_type": "info"}
+{"spew": "set_spew_level 5 5", "spew_type": "input"}
+{"spew": "[2026-06-11 22:00:58] SinkAdded: 43\r\n", "spew_type": "info"}
+{"spew": "[2026-06-11 22:00:58] SinkAdded: 1052056\r\n", "spew_type": "info"}
+{"spew": "[2026-06-11 22:01:06] SinkAdded: 43\r\n", "spew_type": "info"}
+{"spew": "[2026-06-11 22:01:06] SinkAdded: 1052056\r\n", "spew_type": "info"}
+{"spew": "set_spew_level 10 10", "spew_type": "input"}
+{"spew": "[2026-06-11 22:01:11] SinkAdded: 43\r\n", "spew_type": "info"}
+{"spew": "[2026-06-11 22:01:11] SinkAdded: 1052056\r\n", "spew_type": "info"}
+{"spew": "Removing HIDAPI device '8Bitdo Ultimate 2 Wireless Controller' VID 0x2dc8, PID 0x6012, bluetooth 0, version 1, serial 592A52264F, interface 0, interface_class 0, interface_subclass 0, interface_protocol 0, usage page 0x0001, usage 0x0005, path = /dev/hidraw6, driver = SDL_JOYSTICK_HIDAPI_8BITDO (ENABLED)\n", "spew_type": "info"}
+{"spew": "[2026-06-11 22:01:15] Custom SDL Mapping: 03000000c82d00001260000001006800,8BitDo Ultimate 2 Wireless Controller for PC,crc:cdb5,platform:Linux,a:b0,b:b1,x:b2,y:b3,dpleft:h0.8,dpright:h0.2,dpup:h0.1,dpdown:h0.4,leftx:a0,lefty:a1,leftstick:b7,rightx:a2,righty:a3,rightstick:b8,leftshoulder:b9,lefttrigger:a4,rightshoulder:b10,righttrigger:a5,back:b4,start:b6,guide:b5,paddle1:b12,paddle2:b11,paddle3:b14,paddle4:b13,steam:2,\r\n", "spew_type": "info"}
+{"spew": "Custom SDL Mapping: 03000000c82d00001260000001006800,8BitDo Ultimate 2 Wireless Controller for PC,crc:cdb5,platform:Linux,a:b0,b:b1,x:b2,y:b3,dpleft:h0.8,dpright:h0.2,dpup:h0.1,dpdown:h0.4,leftx:a0,lefty:a1,leftstick:b7,rightx:a2,righty:a3,rightstick:b8,leftshoulder:b9,lefttrigger:a4,rightshoulder:b10,righttrigger:a5,back:b4,start:b6,guide:b5,paddle1:b12,paddle2:b11,paddle3:b14,paddle4:b13,steam:2,\n", "spew_type": "info"}
+{"spew": "Destroyed virtual controller at slot 0 for controller 0\n", "spew_type": "info"}

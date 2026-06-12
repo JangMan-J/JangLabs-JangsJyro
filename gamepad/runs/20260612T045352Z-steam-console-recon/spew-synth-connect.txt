@@ -1,0 +1,3 @@
+steam-console: cannot reach CEF debugger at http://127.0.0.1:8080/json (<urlopen error [Errno 111] Connection refused>).
+  Is Steam running with remote debugging enabled?
+  Run `steam-console --setup`, then fully restart Steam.

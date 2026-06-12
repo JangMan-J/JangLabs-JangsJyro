@@ -1,0 +1,3 @@
+usage: xi2_capture.py capture [-h] [--device DEVICE] [--types TYPES]
+                              [--seconds SECONDS] [--jsonl JSONL]
+xi2_capture.py capture: error: argument --jsonl: expected one argument

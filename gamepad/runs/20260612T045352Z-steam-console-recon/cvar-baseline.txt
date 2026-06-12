@@ -1,0 +1,10 @@
+find controller_spew_level
+controller_spew_level = "3" - 
+find controller_rate
+controller_rate = "2000" - SteamInput Active Polling interval in microseconds. Default 2000us = 500hz
+find controller_idle_poll_interval
+controller_idle_poll_interval = "50000" - SteamInput Idle Polling interval in microseconds. Default 50,000us = 20hz
+find controller_min_activation_time
+controller_min_activation_time = "0.0333" - 
+find controller_poll_state
+controller_poll_state = "-1" - 

@@ -1,0 +1,3 @@
+nested kwin pid=1805258  X=:1  wayland=wayland-jsmlab
+Steam launching on :1 (log: /tmp/steam-virtual-launch.log; ~30s to settle).
+Canary before trusting anything: digital slice, observer on DISPLAY=:1.

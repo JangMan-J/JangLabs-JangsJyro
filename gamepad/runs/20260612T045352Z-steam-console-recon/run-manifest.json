@@ -1,0 +1,63 @@
+{
+  "schema_version": "1",
+  "run_id": "20260612T045352Z-steam-console-recon",
+  "date": "2026-06-12",
+  "phase": "steam-console-recon",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "publicbeta-1781212412",
+  "lanes": [
+    "steam"
+  ],
+  "slices": [
+    {
+      "slice": "steam-console-cvar-sweep",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "complete-controller.txt",
+      "injector_log": null,
+      "notes": "--complete controller sweep; 77 controller entries in bundled index"
+    },
+    {
+      "slice": "spew-level3-baseline",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "spew-level3-baseline.txt",
+      "injector_log": null,
+      "notes": "0 lines \u2014 spew stream silent at default level 3"
+    },
+    {
+      "slice": "spew-level5-synth-connected",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "spew-level5-synth-connected.txt",
+      "injector_log": null,
+      "notes": "4 lines \u2014 only SinkAdded audio events; no controller input spew"
+    },
+    {
+      "slice": "spew-level10-8bitdo-disconnect",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "spew-level10-idle-20s.txt",
+      "injector_log": null,
+      "notes": "10 lines \u2014 physical 8BitDo disconnect captured: HID remove, SDL mapping, Destroyed virtual controller, PollState 1\u21920, Controller disconnected. CONFIRMED: controller connect/disconnect events DO appear at level 10."
+    },
+    {
+      "slice": "spew-level9-button-presses",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "spew-definitive-level9.txt",
+      "injector_log": null,
+      "notes": "0 lines \u2014 synthetic pad, SI not active. 10 BTN_SOUTH presses injected; no spew. SI must be active for activator-decision spew experiment."
+    },
+    {
+      "slice": "canary-xi2",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "canary-xi2-out.txt",
+      "injector_log": null,
+      "notes": "SILENT \u2014 0 XI2 events for BTN_SOUTH presses. Not transient silence; SI is not active for synthetic pad. SI-enable is a prerequisite for canary."
+    }
+  ],
+  "notes": "steam-console recon: CDP accessible throughout; spew binding confirmed. Key finding: controller_spew_level/set_spew_level does expose controller events at level 10 (connect/disconnect, PollState, HID remove), but NOT per-press activator decisions in any tested configuration. SI was not active for the synthetic pad in this session \u2014 SI requires a one-time GUI 'Enable Steam Input' step that cannot be triggered via VDF edit or steam-console commands. Nested KWin env (:1, wayland-jsmlab) functional; CDP on 8080 confirmed. Canary blocked by SI-not-active, not by transient silence. Phase-4 prerequisite: user enables SI for synthetic pad in nested env GUI before next session."
+}
