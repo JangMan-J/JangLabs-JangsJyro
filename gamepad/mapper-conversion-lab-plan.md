@@ -18,8 +18,21 @@ can't separate them — and extest's relevance is an untested follow-up. Durable
 `findings/steam_input_linux.md` + `findings/jsm_linux_port.md`; runs `20260601T065426Z-phase0-runtime-smoke/`
 and `20260601T070951Z-phase0b-steam-input/`.
 
-**▶ NEXT SESSION — START HERE (updated 2026-06-12, session 6 save-state).** Phases 0–3 COMPLETE
-(Gate A `99e1675`, Gate B `13049e7`); **Phase 4 batch 1 COMPLETE** (`e97e495` + `32789a2`):
+**▶ NEXT SESSION — START HERE (updated 2026-06-12, session 8 save-state).** Phases 0–3 COMPLETE
+(Gate A `99e1675`, Gate B `13049e7`); **Phase 4 batches 1 AND 2a COMPLETE**.
+**Batch 2a (slot-order matrix) RAN in session 7 and was LEAD-GATED in session 8** — run
+`20260612T072850Z-phase4-batch2-matrix/`, 16 cells, 6 permutation layouts, single-pass:
+**Release_Press absent in ALL cells at every slot position (universal, not order-specific — the
+GUI order effect did NOT reproduce); Start always fires; NEW: Double_Press fully suppressed under
+Start+Release co-residency (Set B), so the hazard zone is wider than edge-eating; Full fires
+alongside Start (Set C).** Full table + gate stamp in the run's `result.md`; durable summary in
+`findings/steam_lane_behavior.md` §Order-dependent edge-activator loss. Session 7 died after the
+runner finished but before gate/ingest/commit — session 8 restored the user's 413080 autosave from
+the in-run backup (byte-identical), verified the box clean, gated, ingested, committed.
+**REMAINING batch 2 (task #9 in `~/.claude/tasks/jsmlab/`, ready, needs a FRESH env clearance):**
+L2 remove_layer live verification → L3 change_preset falsification → RZ=200 trigger ramps;
+Release_Press isolated discrimination is now LOW-VALUE (matrix showed universal suppression) —
+run only if the user still wants it. Phase 4 batch 1 detail:
 oracle predictions ALL PINNED at raw layer — singles at first-down+DTT (N=14, 192.23±0.84 ms over
 50–750 ms holds; pipeline 33.84±0.44 ms), double at second-down (~0 ms), held-double clean (no
 DTT-boundary event), Start_Press marker validated (instant ~34 ms raw tap). Full detail:
@@ -39,19 +52,17 @@ hunting; the "controlled sanitary zone" is POSTPONED to later verification phase
 results are themselves the data point — record them with claim strength "single-pass, state not
 controlled" and move on. The converter hazard rule (≤ `degraded_approximation`, never emit
 Start/Release+Long/Double combos) absorbs residual uncertainty regardless of matrix outcome.
-**OPEN — Release_Press anomaly (top of batch 2):** never emits on the four-activator marker button
-(window open AND closed; oracle: ~never suppressed for physical inputs ⇒ encoding suspected; it
-emits a combined same-instant down/up when it works). Discrimination layout READY
-(`reference/phase4-layouts/release_press_isolated.vdf`). **Best evidence may come free: the user
-is GUI-testing in their own Steam session — if they bind a Release Press, the autosave is the
-Valve-serialized ground truth; diff it against our generated block before anything else.**
-**Batch 2 queue (clearance GRANTED 2026-06-12 session 7; matrix primary, L2/L3 piggybacked in
-the same env session):** slot-order matrix SINGLE-PASS (Sets A/B/C, 16 cells, one run per layout
-— observations only, per environment-trust doctrine; per-cell controls fresh-disk-load /
-repeat-after-restart / rebind-without-reorder / cache-cold all DROPPED) → L2 remove_layer binding
-verification (format empirically derived: `controller_action add_layer|remove_layer <numeric
-preset id> 1 0, , `) → L3 change_preset falsification (verb is hypothesis) → RZ=200 trigger ramps
-→ Release_Press isolated discrimination only if the matrix data leaves it unanswered.
+**Release_Press anomaly — LARGELY ANSWERED by the matrix (single-pass caveat):** suppression is
+universal across all slot orders in clean disk-loaded layouts whenever a state-bound or
+Start co-resident is present; not an encoding fault (GUI reproduces), not slot-order. The
+isolated-discrimination layout (`reference/phase4-layouts/release_press_isolated.vdf`) remains
+available but is now low-priority. The free-evidence path stands: **if the user ever binds a
+Release Press in their own GUI session and an autosave flush lands, diff Valve's serialized
+block against our generated one.**
+**Batch 2 queue (remaining = task #9; needs a FRESH clearance — the session-7 grant was consumed):**
+L2 remove_layer binding verification (format empirically derived: `controller_action
+add_layer|remove_layer <numeric preset id> 1 0, , `) → L3 change_preset falsification (verb is
+hypothesis) → RZ=200 trigger ramps → Release_Press isolated discrimination only on user request.
 Then Phase 5 orchestration, Phase 8 KB seeding. Phase 6 (gyro) still gated on root uhid setup.
 Closed negative: dev-console spew never shows activator decisions (see finding gotcha).
 **Execution model (user-directed, unchanged):** Fable = lead only (specs, gates, claim-strength

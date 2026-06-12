@@ -1,0 +1,4 @@
+nested kwin pid=2070698  X=:1  wayland=wayland-jsmlab
+Steam launching on :1 (log: /tmp/steam-virtual-launch.log; ~30s to settle).
+Canary before trusting anything: digital slice, observer on DISPLAY=:1.
+FATAL: no new X display appeared (see /tmp/kwin-jsmlab.log)

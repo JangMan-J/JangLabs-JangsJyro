@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "timestamp": "2026-06-12T07:42:00Z",
+  "timestamp": "2026-06-12T17:30:00Z",
   "phase": "4",
   "phase_name": "gamepad mapper-conversion lab — Phase 4 adversarial/pin traces",
   "phase_dir": "gamepad/ (lab-native plan: gamepad/mapper-conversion-lab-plan.md; no GSD phase scaffolding)",
@@ -13,11 +13,11 @@
     {"id": 2, "name": "Phase 4 assets: marker/layer layouts + pin-trace scripts (4 gate rounds)", "status": "done", "commit": "3491aa6"},
     {"id": 3, "name": "steam-console recon + SI activation repair (single-pad-first)", "status": "done", "commit": "bbde962, 2a5276b"},
     {"id": 4, "name": "Pin batch 1+1b: all oracle predictions pinned; XI2 raw-layer doctrine; normalizer fix", "status": "done", "commit": "32789a2, f5655dd, 4adeedf, e97e495"},
-    {"id": 5, "name": "Heisenbug discovery: state-dependent edge-activator loss; matrix layouts built", "status": "done", "commit": "48e534e, 5b59f35, 433816c, b52b82f"}
+    {"id": 5, "name": "Heisenbug discovery: state-dependent edge-activator loss; matrix layouts built", "status": "done", "commit": "48e534e, 5b59f35, 433816c, b52b82f"},
+    {"id": 6, "name": "Slot-order matrix single-pass run (session 7, runner2) + lead gate/ingest (session 8); state controls dropped per environment-trust doctrine", "status": "done", "commit": "see session-8 ingest commit"}
   ],
   "remaining_tasks": [
-    {"id": 6, "name": "Slot-order/state matrix live runs (+ config-cache-cold cell)", "status": "not_started"},
-    {"id": 7, "name": "L2 remove_layer live verification + L3 change_preset falsification + RZ=200 ramps", "status": "not_started"},
+    {"id": 7, "name": "L2 remove_layer live verification + L3 change_preset falsification + RZ=200 ramps (jsmlab task #9; needs fresh Steam clearance)", "status": "not_started"},
     {"id": 8, "name": "min_activation_time pin; autosave ghost-serialization harvest (when a flush ever lands)", "status": "not_started"},
     {"id": 9, "name": "Phase 5 orchestration; Phase 8 KB seeding; Phase 6 gyro (uhid-gated)", "status": "not_started"}
   ],
@@ -37,6 +37,6 @@
     {"decision": "Task records are single source of spec truth for teammates", "rationale": "stale-spec-over-message failure cost two gate rounds", "phase": "4"}
   ],
   "uncommitted_files": [],
-  "next_action": "Read gamepad/mapper-conversion-lab-plan.md banner; ask user for Steam clearance + batch-2 priority; re-form team jsmlab per plan section 14",
-  "context_notes": "Lab found an undocumented state-dependent activator-loss bug in Steam Input (order falsified, rebinding/ghost-slot state implicated, per-controller config cache prime suspect). Oracle (user) highly engaged - consult before Steam-lane loops. Lead-gate discipline caught real failures every round; keep it. All 18 session commits lead-gated, tree clean at cb96f46."
+  "next_action": "Ask user for a fresh Steam clearance window for batch 2b (jsmlab task #9: L2/L3/ramps); on clearance re-form team jsmlab per plan section 14; task #10 teardown follows",
+  "context_notes": "Matrix verdict (single-pass): Release_Press suppression is UNIVERSAL across slot orders in clean disk-loaded layouts — GUI order effect not reproduced; state remains the driver but the hunt is de-scoped (environment-trust doctrine 71da330). NEW: Double_Press fully suppressed under Start+Release co-residency (Set B). Session 7 died pre-gate; session 8 gated/ingested/committed, restored the 413080 autosave byte-identical, verified box clean. Lead-gate discipline retained."
 }

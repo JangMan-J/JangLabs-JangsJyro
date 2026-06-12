@@ -287,6 +287,27 @@ autorepeat noise; timing not precisely established):
   and cache-cold cells are dropped. Matrix results carry claim strength "single-pass, state not
   controlled". The converter hazard rule above stands regardless of outcome; controlled
   sanitary-zone verification is deferred to later verification phases.
+- **MATRIX RUN COMPLETE (batch 2a, 2026-06-12 session 7, lead-gated session 8; claim strength:
+  single-pass, state not controlled).** Run `20260612T072850Z-phase4-batch2-matrix/` — 6 layouts,
+  16 cells, all {Start,Release}×{Long|Double|Full+Double} slot permutations, clean disk-loaded
+  vdfs, synthetic pad, raw layer only. Results:
+  - **Release_Press: ABSENT in all 16 cells, every slot position (1st through 4th).** Universal
+    suppression in this env — NOT slot-order-specific. The GUI-observed order effect (S,R,L broken
+    vs R,S,L working) did **not reproduce**: both permutations behave identically (Start fires,
+    Release eaten). Consistent with the pure-order falsification above — state, not visible
+    order, drives the GUI flip; clean disk-loaded layouts land in a Release-eating state
+    universally (or the GUI observations rode a state we can't reach by disk-load).
+  - **Start_Press: fires in every cell** regardless of slot or co-residents.
+  - **NEW: Double_Press fully suppressed under Start+Release co-residency (Set B, all 6
+    permutations)** — even on in-window double-taps (d2d≈120 ms < DTT=190 ms). Contrast batch 1
+    marker layout (Full+Double: double PINNED at second-down). The hazard zone is wider than
+    edge-eating: adding Start/Release can kill Double outright. Converter hazard rule already
+    covers it (such combos ≤ `degraded_approximation`, never emitted).
+  - **Full_Press fires alongside Start** (Set C), Release/Double still eaten; no DTT-delayed
+    emission anywhere (no Double window ever opens).
+  - Run hygiene: holder log 0 WARN (every stimulus confirmed injected); autosave == A1 reference
+    at start (md5); original autosave backed up in-run and restored byte-identical at session-8
+    pickup.
 
 ## Operational gotchas (Steam lane)
 

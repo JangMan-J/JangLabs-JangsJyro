@@ -1,0 +1,79 @@
+{
+  "schema_version": "1",
+  "run_id": "20260612T072850Z-phase4-batch2-matrix",
+  "date": "2026-06-12",
+  "phase": "phase4-batch2-matrix",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "publicbeta",
+  "lanes": [
+    "steam"
+  ],
+  "claim_strength": "single-pass, state not controlled (per environment-trust doctrine 2026-06-12)",
+  "slices": [
+    {
+      "slice": "env-spinup",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "steam-env-log.txt",
+      "injector_log": "holder-log.txt",
+      "notes": "Stale FIFO/display from dead session cleaned. Single pad created first (event21, holder PID 2069384). Nested KWin :1 reused (pid 2070698 from A1). PollState 2 verified in controller.txt. Original autosave backup NOT re-overwritten (was already done in dead session). Autosave == slot_order_set_a1.vdf confirmed (md5 match)."
+    },
+    {
+      "slice": "canary-a1-respin",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "canary-a1-respin.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "3x NORTH (button_y→F10) → F10 at RAW layer all 3 reps. Env live."
+    },
+    {
+      "slice": "a1-raw",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "a1-raw.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "Set A layout 1. button_a P1(S,R,L), button_b P2(S,L,R), button_x P3(R,S,L). Quick tap + long hold x3 each. 108 events captured."
+    },
+    {
+      "slice": "a2-raw",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "a2-raw.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "Set A layout 2. button_a P4(R,L,S), button_b P5(L,S,R), button_x P6(L,R,S). Canary + full stimuli. 120 events captured."
+    },
+    {
+      "slice": "b1-raw",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "b1-raw.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "Set B layout 1. button_a P1(S,R,D), button_b P2(S,D,R), button_x P3(R,S,D). DTT=190ms. Quick tap + double-tap d2d~120ms x3 each. 120 events captured."
+    },
+    {
+      "slice": "b2-raw",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "b2-raw.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "Set B layout 2. button_a P4(R,D,S), button_b P5(D,S,R), button_x P6(D,R,S). DTT=190ms. Quick tap + double-tap. 120 events captured."
+    },
+    {
+      "slice": "c1-raw",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "c1-raw.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "Set C layout 1. button_a PC1(S,R,F,D), button_b PC2(R,S,F,D). DTT=190ms. Quick tap + double-tap + hold~400ms x3 each. No button_y canary; liveness confirmed via F1 at start. 200 events captured."
+    },
+    {
+      "slice": "c2-raw",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "c2-raw.jsonl",
+      "injector_log": "holder-log.txt",
+      "notes": "Set C layout 2. button_a PC3(F,D,S,R), button_b PC4(F,S,D,R). DTT=190ms. Quick tap + double-tap + hold~400ms x3 each. 200 events captured."
+    }
+  ]
+}
