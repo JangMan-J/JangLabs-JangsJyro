@@ -317,6 +317,12 @@ autorepeat noise; timing not precisely established):
   Schedule letter slices in hands-off windows; F-key outputs are robust.
 - **Desktop-layout bindings persist across pad re-creation** (no serial on the synthetic pad) —
   one GUI sitting amortizes; only re-verify with the canary.
+- **The autosave does NOT flush on configurator exit (observed 2026-06-12):** a whole GUI
+  session of binding edits (live-effective the entire time) produced ZERO vdf writes anywhere
+  under the config trees for 2+ hours, including after leaving the configurator. The on-disk
+  autosave can be arbitrarily stale while Steam runs; flush trigger unknown (likely client
+  exit). Implication: never read the autosave as current state while Steam is up — and the
+  reverse of the known edit gotcha holds too (disk is stale both directions while running).
 - Desktop layout lives in the autosave
   `Steam Controller Configs/<acct>/config/413080/controller_xbox360.vdf` — human-readable;
   read it to verify what the GUI actually saved (it caught nothing wrong today, and it is the
