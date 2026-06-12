@@ -1,0 +1,121 @@
+# rz200_staged_trigger.txt — RZ=200 staged trigger ramps (soft+full probe, both lanes)
+#
+# LAYOUT: reference/desktop-layout-phase2-reference.vdf (or any layout with
+#   Right Trigger click → F4, edge → F3 on button group id=2)
+# AXES: RZ trigger (ABS_RZ, 0..255)
+# LANE: BOTH (run separately: JSM lane → evdev; Steam lane → xi2 on nested display)
+#
+# VERDICT CHECK (findings/steam_lane_behavior.md §Boundary semantics):
+#   "Staged RZ=200 fires soft+full reliably" (trigger-softpull-adjudication run).
+#   "Instant 0→255 fires full-only on Steam; JSM fires soft+full" — cross-runtime delta.
+#   Phase-4 adversarial material: the structural delta is confirmed; this trace provides
+#   the evidence at the tested RZ=200 setpoint.
+#
+# PROBE DESIGN:
+#   Batch A: STAGED ramp to RZ=200 (step through values to cross threshold reliably)
+#     Expected BOTH lanes: F3 (soft/edge) fires at crossing, then F4 (full/click) follows
+#     Steam: adaptive_threshold=3 + RZ=200 → reliable soft; JSM: axis-threshold crossing
+#   Batch B: STAGED ramp to RZ=255 (full range)
+#     Same expectation; both lanes should see F3 then F4
+#   Batch C: INSTANT jump 0→200 (single axis event)
+#     Steam: UNKNOWN (may skip F3 per the adaptation model; RZ=200 > threshold) — watch
+#     JSM: F3 expected even on instant jump (axis-threshold model)
+#   Batch D: INSTANT jump 0→255
+#     Steam: FULL ONLY (F4 only; F3 skipped — documented cross-runtime delta)
+#     JSM: F3 then F4 within ~3 ms (confirmed in findings)
+#   Batch E: STAGED release (255→0 ramp)
+#     Both lanes: F4 releases, then F3 releases as RZ drops
+#
+#   Between batches: return axis to 0 and wait 600 ms to ensure previous state cleared.
+#
+# COMPARATOR NOTE:
+#   Batch A/B staged: both lanes → F3 appears before F4 → exact for staged path.
+#   Batch C instant 0→200: Steam may or may not fire F3 — record what fires.
+#   Batch D instant 0→255: Steam → F4 only; JSM → F3 + F4 → cross-runtime delta.
+#   The comparator's trigger delta classification (bounded_approximation) should be
+#   reproduced by this trace for batch D.
+#
+# WARMUP: 2 s (allow mapper to settle; Steam lane needs adaptive_threshold calibration
+#   from prior trigger use — if capturing from cold, run Batch A twice for calibration)
+
+# --- Batch A: staged ramp to RZ=200 (soft + full) ---
+# Step up: 0 → 50 → 100 → 150 → 200
+axis RZ 0
+wait 50
+axis RZ 50
+wait 20
+axis RZ 100
+wait 20
+axis RZ 150
+wait 20
+axis RZ 200
+wait 200
+# Hold at RZ=200 briefly, then release
+axis RZ 150
+wait 20
+axis RZ 100
+wait 20
+axis RZ 50
+wait 20
+axis RZ 0
+wait 600
+
+# --- Batch B: staged ramp to RZ=255 (full range) ---
+axis RZ 0
+wait 50
+axis RZ 50
+wait 20
+axis RZ 100
+wait 20
+axis RZ 150
+wait 20
+axis RZ 200
+wait 20
+axis RZ 255
+wait 200
+# Release
+axis RZ 200
+wait 20
+axis RZ 150
+wait 20
+axis RZ 100
+wait 20
+axis RZ 50
+wait 20
+axis RZ 0
+wait 600
+
+# --- Batch C: instant jump 0→200 ---
+# (Steam outcome unknown; JSM expects F3)
+axis RZ 0
+wait 50
+axis RZ 200
+wait 200
+axis RZ 0
+wait 600
+
+# --- Batch D: instant jump 0→255 (the documented cross-runtime delta) ---
+# Steam: F4 only.  JSM: F3 then F4.
+axis RZ 0
+wait 50
+axis RZ 255
+wait 200
+axis RZ 0
+wait 600
+
+# --- Batch E: staged release from 255 (verify release order) ---
+axis RZ 0
+wait 50
+axis RZ 255
+wait 100
+# Staged release: 255 → 200 → 150 → 100 → 50 → 0
+axis RZ 200
+wait 20
+axis RZ 150
+wait 20
+axis RZ 100
+wait 20
+axis RZ 50
+wait 20
+axis RZ 0
+wait 600

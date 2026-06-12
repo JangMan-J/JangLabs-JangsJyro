@@ -1,0 +1,117 @@
+# double_emission_timing.txt — Oracle pin #2: double (F4) fires at second-down, ~zero latency
+#
+# LAYOUT: reference/phase4-layouts/marker_layout.vdf
+# BUTTON: button_y (Start_Press→F1, Release_Press→F2, Full_Press→F3, Double_Press→F4, DTT=190)
+# LANE: Steam (observe via xi2_capture.py on the nested display)
+#
+# VERDICT CHECK (§Oracle model, findings/steam_lane_behavior.md):
+#   Prediction 2: "Double emission at second-down with ~zero added latency."
+#   On a successful double-press (second-down strictly before DTT=190 ms d2d), F4
+#   (Double_Press) must appear within ~1 poll tick (~2 ms) of the second-down event.
+#   No F3 (Regular) should appear before second-down (base suppressed while window open).
+#   F1 (Start_Press) fires at EACH press-down; F2 at each release.
+#
+# PROBE DESIGN:
+#   Six double-press probes with varied d2d intervals, all < DTT=190 ms:
+#     Batch 1: d2d =  60 ms  (fast pair)
+#     Batch 2: d2d = 100 ms
+#     Batch 3: d2d = 140 ms
+#     Batch 4: d2d = 160 ms
+#     Batch 5: d2d = 175 ms  (close to boundary)
+#     Batch 6: d2d = 185 ms  (just inside — expect double)
+#   Each first press: 80 ms hold. Second press: 100 ms hold.
+#   Inter-pair spacing: 1200 ms.
+#
+#   Two boundary / single-path probes:
+#     Batch 7: d2d = 190 ms exactly — SINGLE expected (strictly-before bound per oracle)
+#               F3 fires at first-down + 190 ms; F4 must NOT fire.
+#     Batch 8: d2d = 220 ms — clearly outside; SINGLE path.
+#
+# COMPARATOR NOTE:
+#   Batches 1–6 (doubles): no F3 at first-down; F4 within ~2 ms of second-down.
+#   Batches 7–8 (singles): F3 at first-down + DTT (~190 ms); no F4.
+#
+# WARMUP: 2 s
+
+# --- Batch 1: d2d = 60 ms ---
+# Since d2d(60) < first-hold(80), second-down overlaps the first press.
+# That is fine — Steam tracks d2d from first-down regardless of whether the
+# first is still held at second-down.
+down SOUTH
+wait 60   # first press held 60 ms; second-down at T=60 ms (d2d=60)
+down SOUTH
+wait 80
+up SOUTH
+wait 60
+up SOUTH
+wait 1200
+
+# --- Batch 2: d2d = 100 ms (hold 80 ms, gap 20 ms, then second-down) ---
+down SOUTH
+wait 80
+up SOUTH
+wait 20   # second-down at 80+20 = 100 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200
+
+# --- Batch 3: d2d = 140 ms ---
+down SOUTH
+wait 80
+up SOUTH
+wait 60   # second-down at 140 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200
+
+# --- Batch 4: d2d = 160 ms ---
+down SOUTH
+wait 80
+up SOUTH
+wait 80   # second-down at 160 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200
+
+# --- Batch 5: d2d = 175 ms (close to boundary) ---
+down SOUTH
+wait 80
+up SOUTH
+wait 95   # second-down at 175 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200
+
+# --- Batch 6: d2d = 185 ms (just inside boundary) ---
+down SOUTH
+wait 80
+up SOUTH
+wait 105  # second-down at 185 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200
+
+# --- Batch 7: d2d = 190 ms exactly — SINGLE expected ---
+down SOUTH
+wait 80
+up SOUTH
+wait 110  # second-down at 190 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200
+
+# --- Batch 8: d2d = 220 ms — SINGLE ---
+down SOUTH
+wait 80
+up SOUTH
+wait 140  # second-down at 220 ms d2d
+down SOUTH
+wait 100
+up SOUTH
+wait 1200

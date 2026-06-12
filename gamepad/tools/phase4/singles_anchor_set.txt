@@ -1,0 +1,79 @@
+# singles_anchor_set.txt — Oracle pin #1 extended: singles anchor at first-down + DTT
+#
+# LAYOUT: reference/phase4-layouts/marker_layout.vdf
+# BUTTON: button_y (Start_Press→F1, Release_Press→F2, Full_Press→F3, Double_Press→F4, DTT=190)
+# LANE: Steam (observe via xi2_capture.py on the nested display)
+#
+# VERDICT CHECK (§Oracle model, findings/steam_lane_behavior.md):
+#   Prediction 1 (extended): all single presses on a double-bound button emit the
+#   Regular binding (F3) at first-down + DTT=190 ms, not before, regardless of
+#   release time. This script provides N=8 single-press events across varied hold
+#   times to confirm the anchor statistically and measure actual poll-slack.
+#
+#   Side channels on every press (free observations):
+#     F1 (Start_Press): fires at press-DOWN, ~0 ms latency
+#     F2 (Release_Press): fires at press-UP
+#   These give us 8 Start_Press latency samples and 8 Release_Press timestamps
+#   aligned to the trace stimulus. Pipeline latency (~35 ms) cancels when computing
+#   F3-F1 offset (both in same XI2 stream) — useful for the Start/Release characterization.
+#
+# PROBE DESIGN:
+#   N=8 single presses, varied hold times: 30/80/130/160/220/350/500/750 ms.
+#   All single (no second press within DTT=190 ms).
+#   Expected: every F3 emission at first-down + 190 ± 25 ms.
+#   Hold > DTT cases (220/350/500/750): F3 appears at ~190 ms, held until release.
+#   Inter-press spacing: 1200 ms to guarantee window isolation.
+#
+# COMPARATOR NOTE:
+#   For each press: extract t_down (SOUTH down from injector log) and t_f3 (first
+#   F3 KeyPress from xi2_capture). Expected: t_f3 - t_down in [165, 215] ms.
+#   Also extract t_f1 (F1 KeyPress) and t_f2 (F2 KeyPress); expect
+#   t_f1 - t_down < 10 ms, t_f2 - t_down ≈ hold_ms ± 10 ms.
+
+# --- Press 1: hold 30 ms ---
+down SOUTH
+wait 30
+up SOUTH
+wait 1200
+
+# --- Press 2: hold 80 ms ---
+down SOUTH
+wait 80
+up SOUTH
+wait 1200
+
+# --- Press 3: hold 130 ms ---
+down SOUTH
+wait 130
+up SOUTH
+wait 1200
+
+# --- Press 4: hold 160 ms (below DTT=190) ---
+down SOUTH
+wait 160
+up SOUTH
+wait 1200
+
+# --- Press 5: hold 220 ms (just past DTT=190) ---
+down SOUTH
+wait 220
+up SOUTH
+wait 1200
+
+# --- Press 6: hold 350 ms ---
+down SOUTH
+wait 350
+up SOUTH
+wait 1200
+
+# --- Press 7: hold 500 ms ---
+down SOUTH
+wait 500
+up SOUTH
+wait 1200
+
+# --- Press 8: hold 750 ms ---
+down SOUTH
+wait 750
+up SOUTH
+wait 1200

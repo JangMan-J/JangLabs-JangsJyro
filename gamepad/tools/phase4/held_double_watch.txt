@@ -1,0 +1,81 @@
+# held_double_watch.txt — Oracle pin #3: held-double output shape (window straddling)
+#
+# LAYOUT: reference/phase4-layouts/marker_layout.vdf
+# BUTTON: button_y (Start_Press→F1, Release_Press→F2, Full_Press→F3, Double_Press→F4, DTT=190)
+# LANE: Steam (observe via xi2_capture.py on the nested display)
+#
+# VERDICT CHECK (§Oracle model, findings/steam_lane_behavior.md):
+#   Prediction 3: "Held-double output shape: 'b' down at second down, held until
+#   release — and specifically whether anything at all happens at first-down + DTT
+#   (the retracted repeat-onset claim makes this the interesting boundary to watch)."
+#
+#   The retracted axiom claimed Steam re-sent the action at first-down + DTT even
+#   for a held double. The user's app-plane test refuted it. This trace watches for
+#   any spurious F4 KeyPress event at or near the DTT boundary while the second
+#   press is still held. A single F4 KeyPress at second-down and one KeyRelease
+#   at second-up is the expected (and correct) output.
+#
+#   F1 (Start_Press): fires at each press-down. Watch: does it also fire again at
+#   first-down + DTT? (It should not — Start_Press fires once per press, no re-send.)
+#
+# PROBE DESIGN:
+#   Three held-double probes. In each, d2d = 80 ms, so first-down + DTT = 190 ms
+#   occurs at 190 - 80 = 110 ms after second-down. Second press is held for 400 ms
+#   to ensure the capture window spans the DTT boundary.
+#
+#     Batch 1: d2d = 80 ms, hold 2nd press 400 ms
+#       → DTT boundary at 110 ms after second-down
+#       → check: any F4 event after the initial KeyPress and before KeyRelease?
+#       → expected: NO (held state only)
+#
+#     Batch 2: d2d = 120 ms, hold 2nd press 400 ms
+#       → DTT boundary at 190-120 = 70 ms after second-down
+#
+#     Batch 3: d2d = 160 ms, hold 2nd press 400 ms
+#       → DTT boundary at 190-160 = 30 ms after second-down
+#       → boundary is very close; any re-send would appear here quickly
+#
+#   After each batch: wait 1200 ms to ensure full window reset.
+#
+# COMPARATOR NOTE:
+#   For each batch, acceptable output per activator:
+#     F1 (Start_Press): exactly 2 KeyPress events (one per down), no re-send
+#     F4 (Double_Press): exactly 1 KeyPress (at second-down), 1 KeyRelease (at second-up)
+#     F2 (Release_Press): exactly 2 KeyPress events (one per up)
+#     F3 (Full_Press/Regular): 0 events (window was open, second press fired double)
+#   Any extra F4 KeyPress between second-down and second-up is a violation.
+#
+# WARMUP: 2 s
+
+# --- Batch 1: d2d = 80 ms, hold 2nd press 400 ms ---
+# first-down at T=0; second-down at T=80 ms; DTT boundary at T=190 ms
+down SOUTH
+wait 80    # second-down at 80 ms d2d (first press still held)
+down SOUTH
+wait 400   # hold second press through DTT boundary at T=110 ms post-second-down
+up SOUTH
+wait 80
+up SOUTH   # release first (it's been held under the second all along)
+wait 1200
+
+# --- Batch 2: d2d = 120 ms, hold 2nd press 400 ms ---
+# DTT boundary at 70 ms after second-down
+down SOUTH
+wait 80
+up SOUTH
+wait 40    # second-down at 120 ms d2d
+down SOUTH
+wait 400
+up SOUTH
+wait 1200
+
+# --- Batch 3: d2d = 160 ms, hold 2nd press 400 ms ---
+# DTT boundary at 30 ms after second-down
+down SOUTH
+wait 80
+up SOUTH
+wait 80    # second-down at 160 ms d2d
+down SOUTH
+wait 400
+up SOUTH
+wait 1200

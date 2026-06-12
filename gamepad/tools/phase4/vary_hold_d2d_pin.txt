@@ -1,0 +1,72 @@
+# vary_hold_d2d_pin.txt — Oracle pin #1: Regular (F3) emission anchored at first-down + DTT
+#
+# LAYOUT: reference/phase4-layouts/marker_layout.vdf
+# BUTTON: button_y (Start_Press→F1, Release_Press→F2, Full_Press→F3, Double_Press→F4, DTT=190)
+# LANE: Steam (observe via xi2_capture.py on the nested display)
+#
+# VERDICT CHECK (§Oracle model, findings/steam_lane_behavior.md):
+#   Prediction 1: "Singles emission anchored at first-down + DTT regardless of
+#   hold/release time."
+#   A single press on button_y (no second press within DTT=190 ms) must emit F3
+#   (Regular/Full_Press) at first-down + 190 ms (±poll-slack ~8 ms), NOT at release
+#   time. Varying the hold duration must not shift the F3 emission timestamp relative
+#   to first-down.
+#
+#   Side observations for free (all on the same press):
+#     F1 (Start_Press): expected at press-DOWN with ~0 ms latency
+#     F2 (Release_Press): expected at press-UP
+#   These pin the Start_Press and Release_Press emission timing alongside the Regular pin.
+#   Pipeline latency (~35 ms) cancels when computing F3-F1 offset (both in same XI2 stream).
+#
+# PROBE DESIGN:
+#   Five hold durations, all < DTT=190 ms (window stays open at release):
+#     Batch A: hold 50 ms  → released before DTT; F3 at ~190 ms after down
+#     Batch B: hold 80 ms  → F3 at ~190 ms; F2 at 80 ms; F1 at 0 ms
+#     Batch C: hold 130 ms → F3 at ~190 ms; F2 at 130 ms
+#     Batch D: hold 170 ms → close to DTT; F3 at ~190 ms
+#   Two "hold past DTT" cases:
+#     Batch E: hold 260 ms → past DTT; F3 appears at ~190 ms, held until release
+#     Batch F: hold 500 ms → longer hold; F3 at ~190 ms, held until release
+#
+#   Inter-batch spacing: 1000 ms (> DTT) to ensure each press is independent.
+#   Comparator checks: for each batch, F3 KeyPress timestamp - SOUTH down timestamp
+#   ≈ 190 ± 25 ms (poll-slack tolerance). F1 latency < 10 ms. F2 latency ≈ hold_ms.
+#
+# WARMUP: 2 s (allow Steam Input to settle after pad creation)
+# JSM EQUIVALENT: NOT applicable (JSM fires base immediately on single press; no DTT)
+
+# --- Batch A: hold 50 ms ---
+down SOUTH
+wait 50
+up SOUTH
+wait 1000
+
+# --- Batch B: hold 80 ms ---
+down SOUTH
+wait 80
+up SOUTH
+wait 1000
+
+# --- Batch C: hold 130 ms ---
+down SOUTH
+wait 130
+up SOUTH
+wait 1000
+
+# --- Batch D: hold 170 ms (just before DTT=190) ---
+down SOUTH
+wait 170
+up SOUTH
+wait 1000
+
+# --- Batch E: hold 260 ms (past DTT — F3 appears at ~190 ms, held state) ---
+down SOUTH
+wait 260
+up SOUTH
+wait 1000
+
+# --- Batch F: hold 500 ms (much past DTT) ---
+down SOUTH
+wait 500
+up SOUTH
+wait 1000

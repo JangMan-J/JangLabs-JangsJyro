@@ -1,0 +1,207 @@
+"controller_mappings"
+{
+	"version"		"3"
+	"revision"		"1"
+	"title"		""
+	"description"		"#SettingsController_AutosaveDescription"
+	"creator"		"76561197989260696"
+	"progenitor"		"local://controller_base/empty.vdf"
+	"export_type"		"unknown"
+	"controller_type"		"controller_xbox360"
+	"group"
+	{
+		"id"		"0"
+		"mode"		"switches"
+		"name"		""
+		"description"		""
+		"inputs"
+		{
+			"button_start"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"controller_action change_preset 1 1 0, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+		}
+	}
+	"group"
+	{
+		"id"		"6"
+		"mode"		"four_buttons"
+		"name"		""
+		"description"		""
+		"inputs"
+		{
+			"button_a"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F1, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+			"button_b"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F2, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+		}
+	}
+	"group"
+	{
+		"id"		"1"
+		"mode"		"switches"
+		"name"		""
+		"description"		""
+		"inputs"
+		{
+			"button_start"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"controller_action change_preset 0 1 0, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+		}
+	}
+	"group"
+	{
+		"id"		"7"
+		"mode"		"four_buttons"
+		"name"		""
+		"description"		""
+		"inputs"
+		{
+			"button_a"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F3, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+			"button_b"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F4, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+		}
+	}
+	"preset"
+	{
+		"id"		"0"
+		"name"		"Default"
+		"group_source_bindings"
+		{
+			"0"		"switch active"
+			"6"		"button_diamond active"
+		}
+	}
+	"preset"
+	{
+		"id"		"1"
+		"name"		"SetB"
+		"group_source_bindings"
+		{
+			"1"		"switch active"
+			"7"		"button_diamond active"
+		}
+	}
+	"settings"
+	{
+
+	}
+}

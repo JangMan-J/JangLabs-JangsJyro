@@ -19,6 +19,28 @@ Run from the gamepad subtree root (`gamepad/`).
 
 `test_normalize_capture.py` unit-tests `normalize_capture.py` (stdlib `unittest`, no devices): `python3 -m unittest test_normalize_capture -v`.
 
+| Script | Purpose | Linux deps |
+|--------|---------|------------|
+| `vdf_layout_gen.py` | **Programmatic VDF layout generator** for Phase-4 diagnostic layouts. Builds layouts via a structured data model (Pairs) and validates every output with a parse→emit→reparse round-trip. Key constraint: **F1–F10 only across all layouts** (F13+ unproven on this XI2 stack; F11/F12 alias to L1/L2 keysyms). Three sub-commands: `marker` (button_y = test button with Start_Press/Release_Press/Full_Press/Double_Press → F1–F4, DTT=190 ms; button_a canary F5; button_b tap/hold F6/F7; button_x interruptable=0 probe F8/F9), `remove-layer` (F1 canary, F2 base, F3 layer override; binding strings `controller_action add_layer 1 1 0` / `remove_layer 1 1 0` — EMPIRICALLY VERIFIED format from 130+ real configs; action_layers block with set_layer=1 generated), `action-set-swap` (F1/F2 in Default id=0, F3/F4 in SetB id=1; `controller_action change_preset <id> 1 0` — UNVERIFIED-HIGH-RISK hypothesis, no corpus evidence; L3 not on critical-path traces). Every layout factory enforces key-uniqueness as a generator invariant (`assert_all_keys_unique` raises on collision). Source of truth for `reference/phase4-layouts/*.vdf` — never hand-edit those files without regenerating via this tool. | stdlib only |
+
+`test_vdf_layout_gen.py` unit-tests `vdf_layout_gen.py` (59 tests, stdlib only): `python3 -m unittest test_vdf_layout_gen -v`.
+
+`test_phase4_traces.py` validates all trace DSL files in `tools/phase4/` for syntax, structure, and verdict-check documentation (16 tests, stdlib only): `python3 -m unittest test_phase4_traces -v`.
+
+## Phase-4 trace scripts (`tools/phase4/`)
+
+Replay these with `synthetic_gamepad.py --trace <file>` against the matching layout (see `reference/phase4-layouts/README.md`). Each file has a `# VERDICT CHECK` comment header stating the Oracle-model prediction being pinned and what comparator output to expect.
+
+Layout `marker_layout.vdf` — button_y (THE test button): Start_Press→F1 (at DOWN, in-stream marker), Release_Press→F2 (at UP, in-stream marker), Full_Press→F3 (Regular, delayed to first-down+DTT=190 ms), Double_Press→F4 (at second-down). DTT=190 ms, `interruptable` default. button_a canary F5; button_b tap/hold F6/F7; button_x interruptable=0 probe F8/F9.
+
+| Script | Layout | Lane | Oracle pin |
+|--------|--------|------|-----------|
+| `phase4/vary_hold_d2d_pin.txt` | `marker_layout.vdf` | Steam | Pin #1: F3 (Regular) emission at first-down + DTT=190 ms regardless of hold duration (6 batches); F1/F2 timing side-channel |
+| `phase4/singles_anchor_set.txt` | `marker_layout.vdf` | Steam | Pin #1 extended: N=8 varied holds for poll-slack distribution; F1 (Start) + F2 (Release) samples included |
+| `phase4/double_emission_timing.txt` | `marker_layout.vdf` | Steam | Pin #2: F4 (Double) fires at second-down ~immediately (6 double probes d2d=60–185 ms; 2 boundary singles at 190/220 ms) |
+| `phase4/held_double_watch.txt` | `marker_layout.vdf` | Steam | Pin #3: held-double output shape — watch for spurious F4 at first-down + DTT boundary (retracted re-send clause); 3 probes |
+| `phase4/rz200_staged_trigger.txt` | `desktop-layout-phase2-reference.vdf` | **Both** | Staged vs instant trigger ramp at RZ=200; reproduces Steam-vs-JSM instant-jump delta (batch D); verify soft+full on staged path both lanes |
+
 ## Linux-specific notes
 
 - The kernel's `hid-generic` / `xpad` driver may claim the device before user-space code can open `/dev/hidraw*` — see `../8bitdo-ultimate2-arch-linux-troubleshooting.md`. If `gyro_probe_hid.py` returns "Permission denied" or no device, the udev rule from that doc is likely missing.

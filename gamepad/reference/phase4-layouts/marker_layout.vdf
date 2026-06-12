@@ -1,0 +1,202 @@
+"controller_mappings"
+{
+	"version"		"3"
+	"revision"		"1"
+	"title"		""
+	"description"		"#SettingsController_AutosaveDescription"
+	"creator"		"76561197989260696"
+	"progenitor"		"local://controller_base/empty.vdf"
+	"export_type"		"unknown"
+	"controller_type"		"controller_xbox360"
+	"group"
+	{
+		"id"		"0"
+		"mode"		"switches"
+		"name"		""
+		"description"		""
+		"inputs"
+		{
+
+		}
+	}
+	"group"
+	{
+		"id"		"6"
+		"mode"		"four_buttons"
+		"name"		""
+		"description"		""
+		"inputs"
+		{
+			"button_a"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F5, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+			"button_b"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F6, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+					"Long_Press"
+					{
+						"activator_type"		"Long_Press"
+						"bindings"
+						{
+							"binding"		"key_press F7, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+			"button_x"
+			{
+				"activators"
+				{
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F8, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+						"settings"
+						{
+							"interruptable"		"0"
+						}
+					}
+					"Long_Press"
+					{
+						"activator_type"		"Long_Press"
+						"bindings"
+						{
+							"binding"		"key_press F9, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+			"button_y"
+			{
+				"activators"
+				{
+					"Start_Press"
+					{
+						"activator_type"		"Start_Press"
+						"bindings"
+						{
+							"binding"		"key_press F1, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+					"Release_Press"
+					{
+						"activator_type"		"Release_Press"
+						"bindings"
+						{
+							"binding"		"key_press F2, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+					"Full_Press"
+					{
+						"activator_type"		"Full_Press"
+						"bindings"
+						{
+							"binding"		"key_press F3, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+					}
+					"Double_Press"
+					{
+						"activator_type"		"Double_Press"
+						"bindings"
+						{
+							"binding"		"key_press F4, , "
+						}
+						"disabled_activators"
+						{
+
+						}
+						"settings"
+						{
+							"double_tap_time"		"190"
+						}
+					}
+				}
+				"disabled_activators"
+				{
+
+				}
+			}
+		}
+	}
+	"preset"
+	{
+		"id"		"0"
+		"name"		"Default"
+		"group_source_bindings"
+		{
+			"0"		"switch active"
+			"6"		"button_diamond active"
+		}
+	}
+	"settings"
+	{
+
+	}
+}
