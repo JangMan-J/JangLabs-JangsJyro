@@ -494,3 +494,46 @@ push, never patch JSM semantics (plan §2), never use `claude -p`/SDK.
 - Canonical hardware facts: `findings/gyro_hid.md`.
 - Preserved design: `../docs/superpowers/specs/2026-04-29-gamepad-mapper-conversion-lab-design.md` (this repo).
 - Execution discipline: `~/.claude/skills/tdd/SKILL.md` (`/tdd`).
+
+## 16. Phase 5 execution brief (2026-06-12, session 9)
+
+**Goal (§10 row 5):** repeatable run orchestration — one command takes one trace and emits the
+full Phase-3 artifact set. **Gate 5 (scoped, lead ruling):** one orchestration run emits ALL
+artifact types (run-manifest, stimulus-events, output-events, normalized-stream, delta,
+classification, kb-note draft) and `validate_artifacts.py` passes on the run dir — met with
+**JSM lane live + Steam lane replayed** from an archived raw capture of the same trace
+(Phase-2 corpus has matched pairs). A live-Steam orchestration confirmation is QUEUED for the
+next clearance window; until then the gate stamp says "JSM-live + Steam-replay".
+
+**Deliverable:** `tools/orchestrate_run.py` + `tools/test_orchestrate_run.py` (TDD, stdlib-only,
+conventions of the existing tools; read `tools/README.md` first).
+
+**CLI contract:**
+`orchestrate_run.py --trace <dsl-file> --slug <slug> [--lanes jsm,steam-replay] [--jsm-config <jsm txt>] [--steam-capture <raw xi2 jsonl>] [--steam-manifest-meta <json>] [--out runs/] [--keep-going]`
+
+**Stages (each a testable function):**
+1. **Run dir + manifest** — `runs/<UTC>Z-<slug>/`, run-manifest per schema (lanes, trace path +
+   hash, tool versions, device profile, claim-strength field).
+2. **JSM lane (live, headless)** — spawn `synthetic_gamepad.py --trace`, JSM from
+   `../build-linux/` fed config via `/tmp/jsm_command_fifo`, `evdev_capture.py --grab-name
+   JoyShockMapper`; collect raw capture + injector log; teardown ALWAYS (finally-blocks; kill
+   children; discard output bracketing connect/disconnect — known spurious-trigger anomaly).
+3. **Steam lane (replay)** — ingest `--steam-capture` (archived raw XI2 jsonl) untouched.
+4. **Normalize** — `normalize_capture.py` per lane mode (evdev / xi2; raw-layer-only doctrine
+   is already enforced there — do not re-implement).
+5. **Compare + classify** — `compare_lanes.py` on the two normalized streams → delta +
+   classification artifacts.
+6. **kb-note draft** — emit a schema-valid kb-note (`promoted: false`, `source: "trace"`)
+   summarizing the classification, for lead review (promotion stays a lead gate).
+7. **Validate** — run `validate_artifacts.py` on the run dir; nonzero exit on failure.
+
+**Test rules:** unit tests fake the process seams (pad/JSM/captures) and fixture the
+normalize/compare stages with artifacts from `runs/20260602T145517Z-phase2-jsm-quickwins/` and
+`runs/20260611T124018Z-phase2-steam-quickwins/` (reference by path, do not copy); one
+integration test marked slow/skipped-by-default (needs `/dev/uinput`). The existing 238-test
+suite stays green. NO Steam client interaction of any kind in Phase 5 code or tests
+(steam-replay only); live-Steam orchestration is a later clearance-gated confirmation.
+
+**Roles:** builder (Sonnet) implements per this brief; lead reviews diff, runs the suite, runs
+the one live JSM-lane gate run, stamps Gate 5, commits. Task description (this section) is the
+single source of spec truth; deviations are amendments here, not chat.
