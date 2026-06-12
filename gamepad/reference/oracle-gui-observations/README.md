@@ -23,3 +23,14 @@ Screenshot of the configurator during the order-dependent edge-activator-loss re
   future screenshots accordingly.
 - Also visible: X = Regular(X Button) + Long Press(V Key); Y = Button Chord(N Key) + Regular(0) —
   the user's own side experiments, not part of the repro.
+
+## `20260612-ghost-slot-indices.png`
+
+Second capture, after the user's rebinding experiments. **The bombshell: button B reads
+"Executes 3 Commands" but its command slots are numbered 3, 4, 5** (Long Press→C @3,
+Release Press→B @4, Start Press→A @5). Removing/re-adding commands RETIRES slot indices and
+appends new commands at higher numbers — slot identity is sticky and rebinding-history-dependent.
+Mechanism candidate for the rebind-state confound: the bug-class may key on absolute slot index
+or ghost/retired slots (note every activator block in the vdf schema carries a
+`disabled_activators` sibling — possibly where removed commands live). Also note the visible
+arrangement is a THIRD ordering (Long, Release, Start by slot) vs the two text-reported ones.

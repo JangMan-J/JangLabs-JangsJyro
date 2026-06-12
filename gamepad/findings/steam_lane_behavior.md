@@ -252,6 +252,16 @@ autorepeat noise; timing not precisely established):
   orderings everywhere, and authors never think about them ⇒ the hazard zone is not exotic.
   Bonus acquittal: the user's button A binds Release_Press→F2 ALONE — same activator, same key
   as our marker layout — and it fires.
+- **Ghost slot indices (second screenshot, 2026-06-12): slot numbers are sticky across
+  rebinding.** After the user's reconfiguration experiments, button B shows "Executes 3
+  Commands" with slots numbered **3, 4, 5** — removed commands retire their indices; new ones
+  append. Slot identity is rebinding-history-dependent. **Mechanism candidate:** the bug-class
+  may key on absolute slot index or ghost/retired slots rather than visible order (note the
+  ever-present `disabled_activators` block in the vdf schema as a possible home for retired
+  slots — check the flushed autosave). Matrix implication: our generator writes clean 1..N
+  histories — a GUI-evolved layout with ghosts is a DIFFERENT test article than a disk-written
+  layout with the same visible order; the matrix's rebind-without-reorder control cell covers
+  exactly this axis, and the flushed autosave will show how slots 3/4/5 serialize.
 - **Converter implication (human-food relevant):** button configs mixing Start/Release Press with
   Long/Double Press are a HAZARD ZONE — activator loss that depends on an ordering most authors
   never think about. Conversions touching such combos classify no better than
