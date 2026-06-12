@@ -217,12 +217,119 @@ hypothesis falsified (P1). Remaining candidates:
 **F2 is absent at the raw layer as well** — no F2 RawKeyPress anywhere. This points to
 Release_Press not emitting at all, not to a delivery flush issue.
 
-## Pin traces: NOT RUN (gated on batch 1b review)
+## Pin traces (Batch 1c) — COMPLETE
 
-## Spew-with-SI probe: NOT RUN (gated on pin traces)
+Two standing rules per amended task spec:
+- **R1:** Raw-layer timestamps only for all timing verdicts (key-layer events are flush artifacts)
+- **R2:** F2 (Release_Press) absence is EXPECTED — noted, not a gate condition
+
+### Trace 1: vary_hold_d2d_pin.txt — Oracle Prediction 1 (OBSERVED, PASS)
+
+**Artifact:** `trace1-vary-hold-north.jsonl` (48 events), `trace1-vary-hold-north.txt`
+
+Six hold durations: 50 / 100 / 200 / 300 / 400 / 500 ms.
+
+| Hold | F3 RawKeyPress offset from first-down | In [165,215]ms window |
+|------|--------------------------------------|-----------------------|
+| 50ms | +192ms | PASS |
+| 100ms | +192ms | PASS |
+| 200ms | +192ms | PASS |
+| 300ms | +192ms | PASS |
+| 400ms | +192ms | PASS |
+| 500ms | +192ms | PASS |
+
+**Verdict: Oracle Prediction 1 CONFIRMED** — F3 fires at first-down + DTT=190ms regardless of hold duration (sub-DTT and super-DTT alike). Mean = 192.23ms ±0.84ms across 6 probes.
+
+### Trace 2: singles_anchor_set.txt — Oracle Prediction 1 statistical anchor (OBSERVED, PASS)
+
+**Artifact:** `trace2-singles-anchor.jsonl` (64 events), `trace2-singles-anchor.txt`
+
+N=8 presses (30–750ms holds):
+
+| N | F3 timing mean | F3 timing stdev | Pipeline latency mean |
+|---|----------------|------------------|-----------------------|
+| 8 | 192.23ms | ±0.84ms | 33.84ms ±0.44ms |
+
+All 8 F3 RawKeyPress events within [165, 215]ms of first-down. **PASS.** Pipeline latency 33.84ms ±0.44ms confirmed (matches lead's C2 ~35ms figure).
+
+### Trace 3: double_emission_timing.txt — Oracle Prediction 2 (OBSERVED, PASS + boundary correction)
+
+**Artifact:** `trace3-double-timing.jsonl` (96 events), `trace3-double-timing.txt`
+
+8 batches: 6 doubles (d2d=100–185ms) + 2 singles (d2d=190, 220ms); Batch 1 (d2d=60ms overlapping hold) edge case.
+
+| Batch | d2d | Path | F4 offset from second-down | F3 present |
+|-------|-----|------|-----------------------------|-----------|
+| 1 | 60ms (overlapping hold) | single | — | yes (+194ms from first-down) |
+| 2 | 100ms | **double** | -0.1ms (~0ms) | absent |
+| 3 | 120ms | **double** | ~0ms | absent |
+| 4 | 140ms | **double** | ~0ms | absent |
+| 5 | 160ms | **double** | ~0ms | absent |
+| 6 | 185ms | **double** | ~0ms | absent |
+| 7 | 190ms | **double** | ~0ms | absent |
+| 8 | 220ms | single | — | yes |
+
+**Boundary correction (OBSERVED):** Batch 7 (d2d=190ms = exactly DTT) triggered the double path. Oracle boundary is **≤190ms** (not strictly <190ms). F4 fires at second-down with ~0ms added latency.
+
+**Verdict: Oracle Prediction 2 CONFIRMED** — doubles fire F4 at second-down, F3 suppressed during window.
+
+### Trace 4: held_double_watch.txt — Oracle Prediction 3 (OBSERVED, PASS)
+
+**Artifact:** `trace4-held-double.jsonl` (32 events), `trace4-held-double.txt`
+
+3 batches: d2d=80/120/160ms, hold 2nd press 400ms (window straddles DTT boundary).
+
+**Batch 1 (d2d=80ms, overlapping hold):** Second `down NORTH` issued while first still held → no-op at evdev → single path. F3 at +194ms (DTT anchor), F4 absent. This is the overlapping-hold edge case (confirmed by trace3 batch1 precedent).
+
+**Batch 2 (d2d=120ms, DTT boundary at 70ms after second-down):**
+```
+ +0.0ms   F1 RawKeyPress    (first-down)
++34.1ms   F1 RawKeyRelease
++120.0ms  F4 RawKeyPress    ← at second-down, Δ=0ms
++120.0ms  F1 RawKeyPress    ← simultaneous (Start_Press at second-down)
++153.9ms  F1 RawKeyRelease
++522.0ms  F4 RawKeyRelease  ← at second-up (400ms + ~120ms)
+```
+No spurious F4 KeyPress events between +120ms and +522ms (spanning DTT boundary at +190ms). F3: 0 events.
+
+**Batch 3 (d2d=160ms, DTT boundary at 30ms after second-down):**
+```
+ +0.0ms   F1 RawKeyPress    (first-down)
++34.3ms   F1 RawKeyRelease
++159.9ms  F4 RawKeyPress    ← at second-down, Δ=0ms
++160.0ms  F1 RawKeyPress    ← simultaneous (Start_Press)
++194.1ms  F1 RawKeyRelease  ← (this is F1's start_press tap, not a re-send)
++562.1ms  F4 RawKeyRelease  ← at second-up
+```
+DTT boundary at +190ms (30ms after second-down). F1 RawKeyRelease at +194ms is the Start_Press tap from the second down, not a re-send. No spurious F4 events. F3: 0 events.
+
+**Verdict: Oracle Prediction 3 CONFIRMED** — exactly 1 F4 KeyPress at second-down, 1 F4 KeyRelease at second-up; NO re-send at DTT boundary. The retracted "re-send at DTT" axiom is definitively falsified by direct observation (batches 2 and 3, DTT boundaries at 70ms and 30ms post-second-down respectively). F1 fires at each down (2 per batch, no re-send). F3: 0 events in double batches.
+
+## Spew-with-SI probe — COMPLETE
+
+**Artifacts:** `spew-with-si-v2.txt` (9 lines), `spew-with-si-xi2-v2.jsonl` (12 events), `spew-with-si-xi2-v2.txt`
+
+**Setup:** `set_spew_level 10 10` via steam-console (CDP). Stimulus: double-press NORTH d2d=100ms (confirmed via holder log: down@0, up@60ms, down@100ms). XI2 confirmed double path: F4 RawKeyPress at +99.2ms from first-down.
+
+**Spew content at level 10 during SI-active double press:**
+```
+Switch State: 10
+Switch State: 0
+Switch State: 10
+Switch State: 0
+[2026-06-11 23:09:36] Apps changed: ...
+[2026-06-11 23:09:36] ...
+```
+
+**Finding (OBSERVED):** `set_spew_level 10 10` does NOT expose Steam Input activator-decision events. The only SI-related spew at level 10 is `Switch State: N` (0=released, 10=pressed) — these are physical button state transitions at the HID layer, one per press/release edge. No activator names, no Double_Press/Full_Press/Start_Press decision events, no token emission logs. The additional lines in the capture are unrelated Steam network/content update events (apps changed notification), not SI output.
+
+**Conclusion (INFERRED from OBSERVED):** SI activator logic does not emit to the Steam developer console spew stream at any tested level (3 or 10). The CDP channel exposes the raw HID switch state but not the higher-level activator pipeline. For SI activator tracing, the steam-console spew route is a dead end.
+
+**Spew level restored to 3** after probe.
 
 ## Environment at stop
 - Nested KWin `:1` / wayland-jsmlab: RUNNING
-- Steam (nested): RUNNING, PollState 2, controller index 0
+- Steam (nested): RUNNING, PollState 2
+- Synthetic pad (PID 1834411): RUNNING, controller index 1 (8BitDo at index 0 — does not affect SI for synthetic pad)
 - Marker layout: ACTIVE in autosave
-- Synthetic pad (PID 1834411): RUNNING
+- Spew level: 3 (restored)

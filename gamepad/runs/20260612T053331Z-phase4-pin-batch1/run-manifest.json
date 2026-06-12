@@ -57,7 +57,47 @@
       "steam_capture": "p4c-capture-b.jsonl",
       "injector_log": null,
       "notes": "Capture B received 0 events after capture A (with stuck-F3) was killed. F3 KeyRelease does NOT propagate to other XI2 clients on A death. It is a per-client artifact (tool generates synthetic release on exit), not a server-broadcast event."
+    },
+    {
+      "slice": "trace1-vary-hold",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "trace1-vary-hold-north.jsonl",
+      "injector_log": null,
+      "notes": "Oracle Prediction 1 CONFIRMED (PASS). 6 hold durations (50-500ms). F3 RawKeyPress at first-down+DTT=190ms ±25ms in all 6. Mean=192.23ms ±0.84ms. F2 absent (expected). F3 key-layer deferred to capture exit (expected per XI2 delivery model)."
+    },
+    {
+      "slice": "trace2-singles-anchor",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "trace2-singles-anchor.jsonl",
+      "injector_log": null,
+      "notes": "Oracle Prediction 1 statistical anchor, N=8 (PASS). All 8 F3 RawKeyPress in [165,215]ms. Mean=192.23ms ±0.84ms. Pipeline latency mean=33.84ms ±0.44ms confirmed."
+    },
+    {
+      "slice": "trace3-double-timing",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "trace3-double-timing.jsonl",
+      "injector_log": null,
+      "notes": "Oracle Prediction 2 CONFIRMED (PASS). 8 batches. Doubles (d2d=100-185ms): F4 at second-down ~0ms latency, F3 absent. Singles (d2d=220ms): F3@+DTT, F4 absent. Boundary correction: d2d=190ms (exactly DTT) triggered double path — oracle boundary is <=190ms not <190ms. Batch 1 (d2d=60ms overlapping hold) is edge case: single path expected, oracle not tested."
+    },
+    {
+      "slice": "trace4-held-double",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "trace4-held-double.jsonl",
+      "injector_log": null,
+      "notes": "Oracle Prediction 3 CONFIRMED (PASS). 3 batches (d2d=80/120/160ms, hold 2nd 400ms). Batch 1: overlapping hold edge case, single path. Batches 2-3: exactly 1 F4 RawKeyPress at second-down, 1 F4 RawKeyRelease at second-up; NO spurious F4 at DTT boundary (30ms and 70ms post-second-down watched). F1 fires at each down (2 per batch, no re-send). F3: 0 events. Retracted re-send axiom definitively falsified."
+    },
+    {
+      "slice": "spew-with-si",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "spew-with-si-v2.txt",
+      "injector_log": null,
+      "notes": "set_spew_level 10 10 during SI-active double-press (d2d=100ms, F4 confirmed in XI2). Spew at level 10 yields only Switch State 10/0 (HID-layer button state transitions), not SI activator decisions. No Double_Press/Full_Press/Start_Press event names visible. Spew-via-CDP is a dead end for activator tracing. Level restored to 3."
     }
   ],
-  "notes": "Batch 1 + 1b complete. Layout swap: PollState 2 confirmed, marker layout active. Token verify: F1/F3 correct; F2 absent (real). P1-P4 discrimination: suppressed-while-window-open falsified; XI2 key-hold is per-client flush artifact (server state UP confirmed); F3 KeyRelease at capture exit is a capture-tool artifact not real SI output. F2 absent at raw layer — Release_Press not emitting at all. Oracle prediction 1 first confirmation: F3@first-down+DTT across sub-DTT and super-DTT holds. Pin traces still gated on lead decision re: F2."
+  "notes": "Batch 1+1b+1c complete. All oracle predictions confirmed: Pred 1 (F3@first-down+DTT, N=14 across traces 1+2), Pred 2 (F4@second-down~0ms, boundary <=190ms), Pred 3 (held-double: no re-send at DTT, single F4 press/release). XI2 delivery model confirmed. F2 absent throughout (expected). Spew-with-SI: level 10 exposes HID switch state only, not activator pipeline."
 }

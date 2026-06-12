@@ -1,0 +1,17 @@
+Switch State: 10
+Switch State: 0
+Switch State: 10
+Switch State: 0
+set_spew_level 3 3
+set_spew_level 10 10
+Switch State: 10
+Switch State: 0
+Switch State: 10
+Switch State: 0
+[2026-06-11 23:09:36] Apps changed: 3156770=36519963,1623730=36519900,252950=36519896,2394010=36519895,
+[2026-06-11 23:09:36] Change number 36519850->36520173, apps: 4/227, packages: 0/39
+[2026-06-11 23:09:36] Requesting 4 apps, 0 packages (meta data, 0 prev attempts, expected 0 KB)
+[2026-06-11 23:09:36] UpdatesJob: finished OK, apps updated 0 (0 KB), packages updated 0 (0 KB)
+[2026-06-11 23:09:37] Flushed store 'userlocal' to '/home/jangmanj/.local/share/Steam/userdata/28994968/config/localconfig.vdf'
+set_spew_level 3 3
+steam-console: connection closed: no close frame received or sent
