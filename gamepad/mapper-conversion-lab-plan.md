@@ -31,16 +31,27 @@ human players. Timing equivalence within **~10–15 ms is practical equality**; 
 tolerances and classifications to human discernibility, and spend no traces on sub-perception
 boundary questions (DTT-edge inclusivity is formally UNRESOLVED and ruled MOOT). Epoch differences
 (JSM r2d vs Steam d2d) STAY product-relevant — divergence scales with hold duration.
+**ENVIRONMENT-TRUST DOCTRINE (user ruling 2026-06-12, session 7): Steam Input IS buggy — bugs
+are findings, not puzzles.** Do NOT rabbit-hole on slot-order/state anomalies (the user lost
+hours "cracking cases" that were just bugs). The research environment is **clean enough to
+gather the data**: single-pass runs, no per-cell state-control replication, no config-cache
+hunting; the "controlled sanitary zone" is POSTPONED to later verification phases. Inconsistent
+results are themselves the data point — record them with claim strength "single-pass, state not
+controlled" and move on. The converter hazard rule (≤ `degraded_approximation`, never emit
+Start/Release+Long/Double combos) absorbs residual uncertainty regardless of matrix outcome.
 **OPEN — Release_Press anomaly (top of batch 2):** never emits on the four-activator marker button
 (window open AND closed; oracle: ~never suppressed for physical inputs ⇒ encoding suspected; it
 emits a combined same-instant down/up when it works). Discrimination layout READY
 (`reference/phase4-layouts/release_press_isolated.vdf`). **Best evidence may come free: the user
 is GUI-testing in their own Steam session — if they bind a Release Press, the autosave is the
 Valve-serialized ground truth; diff it against our generated block before anything else.**
-**Batch 2 queue (env down; user owns the Steam client — get scheduling clearance BEFORE any env
-spin-up; one Steam instance per box):** Release_Press discrimination → L2 remove_layer binding
+**Batch 2 queue (clearance GRANTED 2026-06-12 session 7; matrix primary, L2/L3 piggybacked in
+the same env session):** slot-order matrix SINGLE-PASS (Sets A/B/C, 16 cells, one run per layout
+— observations only, per environment-trust doctrine; per-cell controls fresh-disk-load /
+repeat-after-restart / rebind-without-reorder / cache-cold all DROPPED) → L2 remove_layer binding
 verification (format empirically derived: `controller_action add_layer|remove_layer <numeric
-preset id> 1 0, , `) → L3 change_preset falsification (verb is hypothesis) → RZ=200 trigger ramps.
+preset id> 1 0, , `) → L3 change_preset falsification (verb is hypothesis) → RZ=200 trigger ramps
+→ Release_Press isolated discrimination only if the matrix data leaves it unanswered.
 Then Phase 5 orchestration, Phase 8 KB seeding. Phase 6 (gyro) still gated on root uhid setup.
 Closed negative: dev-console spew never shows activator decisions (see finding gotcha).
 **Execution model (user-directed, unchanged):** Fable = lead only (specs, gates, claim-strength

@@ -278,6 +278,15 @@ autorepeat noise; timing not precisely established):
   never think about. Conversions touching such combos classify no better than
   `degraded_approximation` with the hazard named, and converting INTO such a combo should be
   avoided (anti-Goodhart: don't engineer configs that depend on replicating a probable Steam bug).
+- **DE-SCOPED (user ruling 2026-06-12, session 7): characterization stops at data-gathering.**
+  Steam Input is accepted as buggy; the state-driver hunt (ghost slots vs per-controller config
+  cache vs configurator-session state) is NOT a lab objective — the oracle themselves lost hours
+  failing to pin it from the GUI side, and the lab will not repeat that from the synthetic side.
+  The permutation matrix runs ONCE as a single-pass data gather (which orderings eat which edge
+  activators, in whatever state the clean-enough env happens to be in); per-cell state controls
+  and cache-cold cells are dropped. Matrix results carry claim strength "single-pass, state not
+  controlled". The converter hazard rule above stands regardless of outcome; controlled
+  sanitary-zone verification is deferred to later verification phases.
 
 ## Operational gotchas (Steam lane)
 
