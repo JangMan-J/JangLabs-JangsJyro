@@ -87,10 +87,17 @@ hypothesis until a trace fires it.
   (`jsm_lane_behavior.md` boundary section) — comparator must parameterize per lane.
 - **Double Tap Time: epoch is DOWN-TO-DOWN** (oracle-attested 2026-06-11; supersedes the
   d2d-vs-r2r ambiguity). C2 traces consistent: release-to-DOWN ruled out by measurement (190ms
-  d2d ≈ 130ms r2d fired single); 170ms d2d fires double; 190ms d2d at DTT=190 fired single —
-  matching the oracle's **strictly-before-DTT** bound. The queued vary-the-hold discriminating
-  probe is downgraded to a cheap Phase-4 verification trace (pin, don't discover). The epoch
-  differs from JSM's proven release-to-down ⇒ `bounded_approximation` for window translation.
+  d2d ≈ 130ms r2d fired single); 170ms d2d fires double; 190ms d2d at DTT=190 fired single.
+  **Boundary-edge inclusivity is UNRESOLVED and now MOOT.** Conflicting nominal-190 observations
+  exist (C2: single; Phase-4 batch 1 trace3: double) with no injector logs to recover actual
+  achieved d2d — the signature of timing noise straddling the true edge, not semantics.
+  **Product ruling (user, 2026-06-12): the product is "human food" — gamepad schemas for human
+  players, who cannot discern ~180ms from ~210ms. Tolerance doctrine: timing equivalence within
+  ~10–15 ms is practical equality.** Inclusive-vs-exclusive at the edge is a ≤1-poll-tick
+  (~2–4 ms) question, an order below even machine-practical tolerance — spend no further traces
+  on it. The epoch itself (d2d vs JSM's proven release-to-down) DOES remain product-relevant:
+  the divergence scales with hold duration, which is easily human-perceptible ⇒
+  `bounded_approximation` for window translation stands.
 - **`interruptable 0` (vdf, on Full_Press) CONFIRMED at runtime** — Regular fires on
   press-down and is NOT suppressed when Long fires at threshold; both keys active together.
   Upgrades the docs-sourced hypothesis to verified. (First attempt edited the Long_Press
@@ -145,19 +152,21 @@ default interruptible flag):
 
 ★ trace corroboration: C2 probe 2 measured the suppressed single at first-down + window + ~35 ms
 (≈ DTT + transport/poll slack); C2 epoch probes (170 ms d2d → double; 190 ms d2d at DTT=190 →
-single) match down-to-down with a strictly-before bound; release-to-down was already ruled out
-by measurement.
+single) match down-to-down; release-to-down was already ruled out by measurement. (Boundary-edge
+inclusivity later proved conflicting across sessions at nominal 190 and was ruled MOOT under the
+human-tolerance product doctrine — see the boundary bullet above.)
 
-**New sharp predictions for Phase-4 pinning** (each cheap; each becomes a KB rule when it fires):
+**Predictions — ALL PINNED (Phase-4 batch 1, 2026-06-12, commit e97e495; raw-layer analysis):**
 
-1. Singles emission anchored at first-down + DTT regardless of hold/release time (vary the hold).
-2. Double emission at second-down with ~zero added latency (emission-timing trace).
-3. Held-double output shape: 'b' down at second down, held until release — and specifically
-   whether anything at all happens at first-down + DTT (the retracted repeat-onset claim makes
-   this the interesting boundary to watch).
-4. ~~Held-single re-send interval~~ **RESOLVED at the app plane (user's logger test,
-   2026-06-11): held binding = one held key, no re-send chatter.** XI2/evdev confirmation rides
-   along free in any Phase-4 capture (Phase-2/C2 Turbo-off captures already agree).
+1. **CONFIRMED.** Singles anchored at first-down + DTT regardless of hold: N=14 across 50–750 ms
+   holds, F3 raw press at 192.23 ± 0.84 ms from first-down (DTT=190); pipeline 33.84 ± 0.44 ms.
+2. **CONFIRMED.** Double fires at second-down with ~0 ms added latency (5 true doubles,
+   d2d 100–185 ms; Regular suppressed throughout).
+3. **CONFIRMED.** Held-double: exactly one down at second-down, one up at second-up; NOTHING at
+   first-down + DTT even when that boundary fell 30 ms after the second down. The retracted
+   re-send axiom is falsified by direct observation.
+4. **RESOLVED earlier** at the app plane (user's logger test, 2026-06-11): held binding = one
+   held key, no re-send chatter; batch-1 raw captures agree.
 
 **Converter implications:** singles on double-bound buttons inherit a fixed +DTT latency on
 Steam (JSM fires the base immediately — count AND latency delta, classified above); window
@@ -212,6 +221,11 @@ Probes P1–P4 (`runs/20260612T053331Z-phase4-pin-batch1/`) resolved the apparen
 
 - **xinput keysym aliasing:** F11/F12 print as legacy keysyms **L1/L2** in `xinput test-xi2`
   output — fold them in the normalizer before diffing.
+- **Dev-console spew is a dead end for activator tracing (closed 2026-06-12).** With SI active
+  and a confirmed double firing in XI2, `controller_spew_level`/`set_spew_level` at 10 exposes
+  only HID-layer events (`Switch State` transitions, connect/disconnect) — no activator names,
+  no decision events, at any tested level. Don't burn sessions looking; steam-console remains a
+  cvar get/set + HID-event tool.
 - **Transient emission silence exists.** Once, for ~4 min after an autosave (and possibly while
   the layout GUI screen was up), all bindings except two went silent while stimuli were confirmed
   at evdev; it self-recovered. Settings *dialogs* open do not suppress (retested). **Canary rule:

@@ -18,75 +18,47 @@ can't separate them — and extest's relevance is an untested follow-up. Durable
 `findings/steam_input_linux.md` + `findings/jsm_linux_port.md`; runs `20260601T065426Z-phase0-runtime-smoke/`
 and `20260601T070951Z-phase0b-steam-input/`.
 
-**▶ NEXT SESSION — START HERE (updated 2026-06-11, session 5 save-state).** Phases 0–3 **COMPLETE.**
-Phase 3 closed both gates lead-verified (Gate A `99e1675`, Gate B `13049e7`): schemas + validator +
-XI2 normalization with canonical key namespace, comparator v0 reproducing the Phase-2 verdict table
-from raw artifacts (role-aligned via manifest `key_roles`, configured state in `binding_params`).
-Boundary semantics characterized BOTH lanes (runs `…chunk-c1-jsm-boundary`, `…chunk-c2-steam-boundary`,
-`…trigger-softpull-adjudication`; promoted to both lane findings): JSM hold = threshold+poll-slack vs
-Steam inclusive-exact; JSM double-window release-to-down (proven by construction) vs Steam NOT
-release-to-down (d2d vs r2r unresolved — probe designed, ON HOLD); Steam soft-pull threshold is
-adaptive state (RZ=200 for reliable staged probes); interruptable=0 runtime-confirmed; double-press
-pause semantics (singles latency-shift up to DTT).
-**WAIT STATE CLEARED (2026-06-11, session 6): the knowledge dump arrived** — ingested at
-`reference/steam-input-guide/` (Steam Community guide 2804823261, canonical MD + provenance README;
-guide-claim strength, below trace evidence). Consult it (and the user: they are a deep Steam Input
-mechanics oracle, memory `user-steam-input-mechanics-expert`) BEFORE any new Steam-lane probe loops.
-It corroborates double-press pause semantics and gives Double Press emission timing (active at second
-down, held thereafter). **The user then resolved the epoch question directly: DOWN-TO-DOWN**, plus
-the underlying axiom (activator timers anchor to down events, never releases) — full worked model +
-Phase-4 verification pins recorded in `findings/steam_lane_behavior.md` §Oracle model. The ON-HOLD
-d2d/r2r probe is now a cheap verification trace (pin, don't discover). **Same-day correction:** the
-axiom's held-action-re-send clause was RETRACTED by the user after app-plane testing (held binding =
-held key state; prior personal observations captured their own HID input, not Steam/JSM output).
-**Tooling thread (2026-06-11):** grandfather-Claude's pygame inventory tester
-(`~/_project.bak/.research_backup/tools/inventory_input_test.py`) upgraded with an app-plane
-keystroke log (third observation plane: what a game receives); candidate for `tools/` adoption.
-**User vision to honor in Phase 5+ orchestration/viewer work: a side-by-side timeline — HID (or
-emulated-HID) stimulus | captured output — so per-pair latency math is visual.** The lab's A-B
-artifacts already carry both sides with timestamps; PySDL2 + PySDL3 are now installed (SDL3 = ns
-event timestamps + first-class gamepad API) if a live single-window probe is wanted.
-**Execution model (user-directed):** Fable session = lead only (specs, gate verification, claim-
-strength audits, commits); ALL iterative work via Sonnet teammates per plan §14 (team `jsmlab`:
-`builder` = code/TDD, `runner` = serial live-system runs). Teammates were shut down cleanly at
-save-state; re-form via TeamCreate + Agent(model:sonnet) with the §14 role briefs. Lead protocol:
-re-run every gate yourself; audit teammate claim strength (memory
-`method-team-lead-rerun-gates-audit-claim-strength`); live runs strictly serial; ignore stale
-replayed task assignments after resume (verify against git, not mailbox).
-**Environment:** fully torn down (no Steam, no nested KWin, no pad holder). Recreate seat-free lane
-with `tools/steam-virtual-env.sh` (nested KWin + Steam on its own Xwayland; canary slice first —
-finding `steam_lane_behavior.md` has the canary rule + vdf-edit protocol; reference layout:
-`reference/desktop-layout-phase2-reference.vdf`).
-**NEW CAPABILITY (2026-06-11, session 6): `steam-console`** — user-built CDP bridge to the Steam
-client dev console (`~/.local/bin/steam-console`; bundled 557-entry cvar/command index, full doc at
-`~/.local/share/steam-console/index.md`; live use needs `--setup` flag file + Steam restart — note
-the unauthenticated localhost port while enabled). Programmatic get/set of client cvars + the
-console spew stream. Index gems: `controller_rate=2000`µs (500 Hz active poll — feeds the
-comparator poll-slack model), `controller_idle_poll_interval=50000`µs (20 Hz idle),
-`controller_min_activation_time=0.0333`s, `controller_spew_level` (snapshot value 3) — candidate
-NEW observation plane: cranked spew may expose activation decisions (double-tap epoch!) directly.
-A steam-console recon task (live `--complete` sweep + spew-level experiment in the nested env)
-should precede Phase 4 probe loops.
-**Next work, ready to dispatch:** Phase 4 adversarial set — now FULLY autonomous via vdf-programmatic
-binding control (timed `remove_layer`, two-action-set swap, RZ=200 trigger traces, Start/Release-Press
-diagnostic layouts per the user's tip); then Phase 5 orchestration, Phase 8 KB seeding from the
-trace-verified rules. Phase 6 (gyro) still gated on root uhid setup. Prior session-4 state:
-The Steam-lane spike passed (synthetic uinput pad recognized, no uhid needed; output at XI2 only —
-`runs/20260611T114909Z-steam-lane-spike/`), then the full Steam half of Phase 2 ran in one GUI sitting
-(`runs/20260611T124018Z-phase2-steam-quickwins/result.md`): all seven mechanics + per-binding hold-time
-probe captured. **First real cross-runtime deltas are in `findings/steam_lane_behavior.md`** (double-press
-base-suppression differs; Steam chords leak the member binding where JSM SIMPRESS suppresses; no Steam
-counterpart to JSM's sticky-state bug; per-binding vs global hold time proven both sides; trigger soft-pull
-is ramp-dependent on Steam). Desktop-layout bindings persist across pad re-creation; **canary rule:** run
-the `digital` slice first each Steam session (a transient all-silent state exists — see the finding).
-**Next: Phase 3 (artifact schemas; retrofit the three Phase-1/2 run dirs) then Phase 4 (adversarial
-gotcha traces — timed `remove_layer`, action-set swap need new GUI bindings; Local-Space is Phase 6).**
-Still gated on root/user: gyro uhid setup (Phase 6).
-**Seat-free Steam lane (2026-06-11, later):** `tools/steam-virtual-env.sh` runs Steam inside a nested
-headless KWin (own Xwayland); output isolated from the user's seat (12/12 F9 on nested `:1`, 0 on `:0`).
-Steam-lane captures no longer need the user present or hands-off. **Cost calibration:** Phase-3/4
-execution is specced for a cheaper-model session (Sonnet) — design contracts, acceptance tests, and
-turnkey scripts are in place precisely so the expensive model is only needed at design/review gates.
+**▶ NEXT SESSION — START HERE (updated 2026-06-12, session 6 save-state).** Phases 0–3 COMPLETE
+(Gate A `99e1675`, Gate B `13049e7`); **Phase 4 batch 1 COMPLETE** (`e97e495` + `32789a2`):
+oracle predictions ALL PINNED at raw layer — singles at first-down+DTT (N=14, 192.23±0.84 ms over
+50–750 ms holds; pipeline 33.84±0.44 ms), double at second-down (~0 ms), held-double clean (no
+DTT-boundary event), Start_Press marker validated (instant ~34 ms raw tap). Full detail:
+`findings/steam_lane_behavior.md` §Oracle model + §XI2 observation-plane delivery model (RAW-layer
+timestamps ONLY; key-layer events are flush artifacts — normalizer fixed accordingly `f5655dd`,
+zero-duration pairing guarded `4adeedf`).
+**PRODUCT DOCTRINE (user ruling 2026-06-12): the product is "human food"** — gamepad schemas for
+human players. Timing equivalence within **~10–15 ms is practical equality**; calibrate comparator
+tolerances and classifications to human discernibility, and spend no traces on sub-perception
+boundary questions (DTT-edge inclusivity is formally UNRESOLVED and ruled MOOT). Epoch differences
+(JSM r2d vs Steam d2d) STAY product-relevant — divergence scales with hold duration.
+**OPEN — Release_Press anomaly (top of batch 2):** never emits on the four-activator marker button
+(window open AND closed; oracle: ~never suppressed for physical inputs ⇒ encoding suspected; it
+emits a combined same-instant down/up when it works). Discrimination layout READY
+(`reference/phase4-layouts/release_press_isolated.vdf`). **Best evidence may come free: the user
+is GUI-testing in their own Steam session — if they bind a Release Press, the autosave is the
+Valve-serialized ground truth; diff it against our generated block before anything else.**
+**Batch 2 queue (env down; user owns the Steam client — get scheduling clearance BEFORE any env
+spin-up; one Steam instance per box):** Release_Press discrimination → L2 remove_layer binding
+verification (format empirically derived: `controller_action add_layer|remove_layer <numeric
+preset id> 1 0, , `) → L3 change_preset falsification (verb is hypothesis) → RZ=200 trigger ramps.
+Then Phase 5 orchestration, Phase 8 KB seeding. Phase 6 (gyro) still gated on root uhid setup.
+Closed negative: dev-console spew never shows activator decisions (see finding gotcha).
+**Execution model (user-directed, unchanged):** Fable = lead only (specs, gates, claim-strength
+audits, commits); ALL iterative work via Sonnet teammates per §14 — team `jsmlab` (`builder` +
+`runner`) is FORMED and parked idle. Lead protocol: re-run every gate; audit claim strength; task
+descriptions are the single source of truth (amend the task, not just messages — learned the hard
+way this session); live runs strictly serial; runner protocols: stimulus-confirmation discipline
+(short DSL names — `press SOUTH`; check holder log on ANY silence) + single-pad-first SI
+activation + vdf edit only while Steam is down (all in finding §operational gotchas).
+**Environment:** fully torn down; autosave restored to pre-batch backup; CEF debug flag LEFT IN
+PLACE (steam-console works against the user's session). Recreate via `tools/steam-virtual-env.sh`
++ single-pad-first protocol; canary slice first, always.
+**Tooling:** `steam-console` (user-built CDP bridge; cvars: controller_rate=2000µs/500 Hz,
+idle 50000µs, min_activation_time=0.0333 s ≈ the observed ~34 ms quick-tap width — INFERRED).
+Grandfather-Claude's pygame tester upgraded to app-plane keystroke logger (D2D/R2D/R2R columns;
+`pygame.key.stop_text_input()` fix for KDE-Wayland printables). **User vision for Phase 5+
+viewer: side-by-side timeline — HID stimulus | captured output — per-pair latency math visual;
+PySDL3 installed (ns timestamps, gamepad API).**
 Prior session-2 state:
 - **JSM lane fully operational, headless, no physical pad:** `tools/synthetic_gamepad.py` (trace runner,
   `--trace` DSL) → JSM (`build-linux/`, clang + SDL3 3.4.8 via CPM) → `tools/evdev_capture.py --grab-name JoyShockMapper`.
