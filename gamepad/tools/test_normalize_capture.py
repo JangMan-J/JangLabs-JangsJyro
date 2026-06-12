@@ -316,5 +316,132 @@ class TestNormalizeXI2(unittest.TestCase):
         self.assertEqual(n["plane"], "evdev")
 
 
+class TestRawLayerTimestamps(unittest.TestCase):
+    """Raw-layer timestamps must be used for t_down and dur_ms in XI2 normalization.
+
+    Per finding (runs/20260612T053331Z-phase4-pin-batch1/result.md §P2):
+    Key-layer (slave device, KeyPress/KeyRelease) events are flush-on-next-event
+    artifacts — their timestamps reflect queue-flush points, not SI emission points.
+    Raw-layer (master device, RawKeyPress/RawKeyRelease) timestamps are the actual
+    SI emission times and must be the sole timing source.
+
+    Regression fixture derived from p2-120ms-raw-audit.jsonl (canonical divergence capture):
+      RawKeyPress  F1  t=0.000000    (SI emission, physical down)
+      KeyPress     F1  t=0.035091    (key-layer flush, 35ms later)
+      RawKeyRelease F1 t=0.035141    (SI emission, raw tap = pipeline latency ~34ms)
+      KeyRelease   F1  t=0.193158    (key-layer flush, deferred to F3 RawKeyPress moment)
+      RawKeyPress  F3  t=0.193215    (SI emission, DTT=190ms boundary)
+      KeyPress     F3  t=0.227302    (key-layer flush)
+      RawKeyRelease F3 t=0.227345    (SI emission)
+      KeyRelease   F3  t=9.074000    (key-layer flush — capture exit artifact)
+
+    Correct normalizer output (raw-layer wins):
+      F1: t_ms=0.0,   dur_ms=35.1   (RawKeyPress→RawKeyRelease: 35ms raw tap)
+      F3: t_ms=193.2, dur_ms=34.1   (RawKeyPress→RawKeyRelease: 34ms raw tap)
+
+    Key-layer-wins output (wrong):
+      F1: t_ms=35.1,  dur_ms=158.1  (KeyPress→KeyRelease: queue-flush artifact)
+      F3: t_ms=227.3, dur_ms=8846.7 (KeyPress→KeyRelease: capture-exit artifact)
+    """
+
+    # Fixture timestamps scaled to t0=0 (relative); all from p2-120ms-raw-audit.jsonl
+    # Original absolute timestamps: F1 RawKeyPress at 1781242883.777503
+    _T0 = 1781242883.777503
+
+    def _raw_audit_lines(self):
+        """Return jsonl lines matching p2-120ms-raw-audit.jsonl."""
+        rows = [
+            # (t, event, dev_id, dev, code, flag)
+            (self._T0 + 0.000000, "RawKeyPress",    3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            (self._T0 + 0.035091, "KeyPress",        6, _SEAT_DEV,   "F1", _SEAT_FLAG),
+            (self._T0 + 0.035141, "RawKeyRelease",  3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            (self._T0 + 0.193158, "KeyRelease",      6, _SEAT_DEV,   "F1", _SEAT_FLAG),
+            (self._T0 + 0.193215, "RawKeyPress",    3, _MASTER_DEV, "F3", _MASTER_FLAG),
+            (self._T0 + 0.227302, "KeyPress",        6, _SEAT_DEV,   "F3", _SEAT_FLAG),
+            (self._T0 + 0.227345, "RawKeyRelease",  3, _MASTER_DEV, "F3", _MASTER_FLAG),
+            (self._T0 + 9.074000, "KeyRelease",      6, _SEAT_DEV,   "F3", _SEAT_FLAG),
+        ]
+        return xi2_cap(*rows)
+
+    def test_f1_t_ms_uses_raw_timestamp(self):
+        """F1 t_ms must be 0.0 (from RawKeyPress), not 35.1ms (from KeyPress)."""
+        lines = self._raw_audit_lines()
+        n = nc.normalize(lines)
+        events = {ev["name"]: ev for ev in n["events"]}
+        self.assertIn("F1", events, "F1 not found in normalized events")
+        # Raw-layer t_ms: RawKeyPress is t0, so F1 t_ms must be 0.0
+        self.assertAlmostEqual(events["F1"]["t_ms"], 0.0, delta=1.0,
+            msg=f"F1 t_ms={events['F1']['t_ms']:.1f}ms — expected ~0ms (raw) not ~35ms (key-layer)")
+
+    def test_f1_dur_ms_uses_raw_timestamps(self):
+        """F1 dur_ms must be ~35ms (RawKeyPress→RawKeyRelease), not ~158ms (key-layer)."""
+        lines = self._raw_audit_lines()
+        n = nc.normalize(lines)
+        events = {ev["name"]: ev for ev in n["events"]}
+        self.assertIn("F1", events)
+        dur = events["F1"]["dur_ms"]
+        self.assertIsNotNone(dur, "F1 dur_ms is None — raw-layer up event not used")
+        self.assertAlmostEqual(dur, 35.1, delta=5.0,
+            msg=f"F1 dur_ms={dur:.1f}ms — expected ~35ms (raw tap) not ~158ms (key-layer artifact)")
+
+    def test_f3_t_ms_uses_raw_timestamp(self):
+        """F3 t_ms must be ~193ms (from RawKeyPress at DTT), not ~227ms (from KeyPress)."""
+        lines = self._raw_audit_lines()
+        n = nc.normalize(lines)
+        events = {ev["name"]: ev for ev in n["events"]}
+        self.assertIn("F3", events, "F3 not found in normalized events")
+        t = events["F3"]["t_ms"]
+        self.assertAlmostEqual(t, 193.2, delta=5.0,
+            msg=f"F3 t_ms={t:.1f}ms — expected ~193ms (raw DTT emission) not ~227ms (key-layer flush)")
+
+    def test_f3_dur_ms_uses_raw_timestamps(self):
+        """F3 dur_ms must be ~34ms (RawKeyPress→RawKeyRelease), not ~8847ms (capture-exit artifact)."""
+        lines = self._raw_audit_lines()
+        n = nc.normalize(lines)
+        events = {ev["name"]: ev for ev in n["events"]}
+        self.assertIn("F3", events)
+        dur = events["F3"]["dur_ms"]
+        self.assertIsNotNone(dur, "F3 dur_ms is None")
+        self.assertAlmostEqual(dur, 34.1, delta=5.0,
+            msg=f"F3 dur_ms={dur:.1f}ms — expected ~34ms (raw tap) not ~8847ms (capture-exit artifact)")
+
+    def test_raw_preferred_over_key_layer_for_t0(self):
+        """t0_epoch must come from the earliest record — which is a RawKeyPress."""
+        lines = self._raw_audit_lines()
+        n = nc.normalize(lines)
+        # t0_epoch must equal the RawKeyPress timestamp, not the first KeyPress
+        self.assertAlmostEqual(n["t0_epoch"], self._T0, places=3)
+
+    def test_key_layer_only_fallback(self):
+        """When no Raw events present, key-layer events still produce a result."""
+        lines = xi2_cap(
+            (1.0, "KeyPress",   9, _SEAT_DEV, "F9", _SEAT_FLAG),
+            (1.5, "KeyRelease", 9, _SEAT_DEV, "F9", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        self.assertEqual(len(n["events"]), 1)
+        ev = n["events"][0]
+        self.assertEqual(ev["name"], "F9")
+        self.assertAlmostEqual(ev["t_ms"], 0.0, places=1)
+        self.assertAlmostEqual(ev["dur_ms"], 500.0, delta=5.0)
+
+    def test_raw_layer_t_ms_pin_f1_anchor(self):
+        """Pin test: F1 must anchor at t_ms < 5ms (raw layer), not at ~35ms (key layer).
+
+        This is the core oracle-pin consequence: all DTT-delta calculations
+        (F3_t - F1_t ≈ DTT) require F1 to be anchored at physical-down, not at
+        the key-layer flush 35ms later. With key-layer timing, the apparent DTT
+        would be 193ms - 35ms = 158ms (wrong); with raw timing it is 193ms - 0ms
+        = 193ms ≈ DTT=190ms (correct).
+        """
+        lines = self._raw_audit_lines()
+        n = nc.normalize(lines)
+        events = {ev["name"]: ev for ev in n["events"]}
+        self.assertIn("F1", events)
+        self.assertLess(events["F1"]["t_ms"], 5.0,
+            msg="F1 must be anchored at physical-down (~0ms), not at key-layer flush (~35ms). "
+                "DTT calculations require raw-layer timing.")
+
+
 if __name__ == "__main__":
     unittest.main()

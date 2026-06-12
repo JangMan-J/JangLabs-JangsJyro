@@ -602,6 +602,198 @@ class TestKeyUniquenessInvariant(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
+# Layout-4: Release_Press discrimination layout
+# ---------------------------------------------------------------------------
+#
+# Purpose: discriminate between bad-token and activator-interaction hypotheses
+# for Release_Press being absent from the four-activator marker_layout.
+#
+# button_a: Release_Press → F1 ONLY (isolated — if this fires, token is good)
+# button_b: Start_Press → F2 + Release_Press → F3 (Start/Release pair — no Full/Double)
+# button_x: Full_Press → F4 + Release_Press → F5 (suspected blocker pair — Full+Release)
+# button_y: Double_Press (DTT=190) → F6 + Release_Press → F7 (Double+Release pair)
+#
+# Invariants: F1–F10 only, all keys unique, round-trip validated.
+# ---------------------------------------------------------------------------
+
+class TestReleasePressIsolatedLayout(unittest.TestCase):
+    def setUp(self):
+        self.text = vg.make_release_press_isolated_layout()
+        self.pairs = _parse(self.text)
+        root = self.pairs.get_first("controller_mappings")
+        self.groups = {}
+        for k, v in root:
+            if k == "group":
+                mode = v.get_first("mode")
+                self.groups.setdefault(mode, []).append(v)
+
+    def _inputs(self):
+        """Return the inputs Pairs from the four_buttons group."""
+        return self.groups["four_buttons"][0].get_first("inputs")
+
+    # --- button_a: isolated Release_Press → F1 ---
+
+    def test_button_a_has_only_release_press(self):
+        """button_a must have ONLY Release_Press (no Full_Press, Start_Press, Double_Press)."""
+        inp = self._inputs()
+        btn = inp.get_first("button_a")
+        self.assertIsNotNone(btn, "button_a missing")
+        acts = btn.get_first("activators")
+        # Must have Release_Press
+        rp = acts.get_first("Release_Press")
+        self.assertIsNotNone(rp, "button_a Release_Press missing")
+        # Must NOT have any other activator type
+        for act_type in ("Full_Press", "Long_Press", "Double_Press", "Start_Press"):
+            self.assertIsNone(acts.get_first(act_type),
+                f"button_a must have ONLY Release_Press; found extra activator {act_type}")
+
+    def test_button_a_release_press_f1(self):
+        """button_a Release_Press → F1."""
+        inp = self._inputs()
+        btn = inp.get_first("button_a")
+        rp = btn.get_first("activators").get_first("Release_Press")
+        binding = rp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF1\b")
+
+    # --- button_b: Start_Press → F2 + Release_Press → F3 ---
+
+    def test_button_b_has_start_press_and_release_press_only(self):
+        """button_b must have Start_Press and Release_Press, no Full/Long/Double."""
+        inp = self._inputs()
+        btn = inp.get_first("button_b")
+        self.assertIsNotNone(btn, "button_b missing")
+        acts = btn.get_first("activators")
+        self.assertIsNotNone(acts.get_first("Start_Press"),
+            "button_b Start_Press missing")
+        self.assertIsNotNone(acts.get_first("Release_Press"),
+            "button_b Release_Press missing")
+        for act_type in ("Full_Press", "Long_Press", "Double_Press"):
+            self.assertIsNone(acts.get_first(act_type),
+                f"button_b must have only Start/Release_Press; found {act_type}")
+
+    def test_button_b_start_press_f2(self):
+        """button_b Start_Press → F2."""
+        inp = self._inputs()
+        btn = inp.get_first("button_b")
+        sp = btn.get_first("activators").get_first("Start_Press")
+        binding = sp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF2\b")
+
+    def test_button_b_release_press_f3(self):
+        """button_b Release_Press → F3."""
+        inp = self._inputs()
+        btn = inp.get_first("button_b")
+        rp = btn.get_first("activators").get_first("Release_Press")
+        binding = rp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF3\b")
+
+    # --- button_x: Full_Press → F4 + Release_Press → F5 ---
+
+    def test_button_x_has_full_press_and_release_press(self):
+        """button_x must have Full_Press and Release_Press (suspected blocker pair)."""
+        inp = self._inputs()
+        btn = inp.get_first("button_x")
+        self.assertIsNotNone(btn, "button_x missing")
+        acts = btn.get_first("activators")
+        self.assertIsNotNone(acts.get_first("Full_Press"),
+            "button_x Full_Press missing")
+        self.assertIsNotNone(acts.get_first("Release_Press"),
+            "button_x Release_Press missing")
+
+    def test_button_x_full_press_f4(self):
+        """button_x Full_Press → F4."""
+        inp = self._inputs()
+        btn = inp.get_first("button_x")
+        fp = btn.get_first("activators").get_first("Full_Press")
+        binding = fp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF4\b")
+
+    def test_button_x_release_press_f5(self):
+        """button_x Release_Press → F5."""
+        inp = self._inputs()
+        btn = inp.get_first("button_x")
+        rp = btn.get_first("activators").get_first("Release_Press")
+        binding = rp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF5\b")
+
+    # --- button_y: Double_Press (DTT=190) → F6 + Release_Press → F7 ---
+
+    def test_button_y_has_double_press_and_release_press(self):
+        """button_y must have Double_Press and Release_Press."""
+        inp = self._inputs()
+        btn = inp.get_first("button_y")
+        self.assertIsNotNone(btn, "button_y missing")
+        acts = btn.get_first("activators")
+        self.assertIsNotNone(acts.get_first("Double_Press"),
+            "button_y Double_Press missing")
+        self.assertIsNotNone(acts.get_first("Release_Press"),
+            "button_y Release_Press missing")
+
+    def test_button_y_double_press_f6_dtt_190(self):
+        """button_y Double_Press → F6 with double_tap_time=190."""
+        inp = self._inputs()
+        btn = inp.get_first("button_y")
+        dp = btn.get_first("activators").get_first("Double_Press")
+        binding = dp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF6\b")
+        settings = dp.get_first("settings")
+        self.assertIsNotNone(settings, "Double_Press settings missing (need double_tap_time)")
+        self.assertEqual(settings.get_first("double_tap_time"), "190")
+
+    def test_button_y_release_press_f7(self):
+        """button_y Release_Press → F7."""
+        inp = self._inputs()
+        btn = inp.get_first("button_y")
+        rp = btn.get_first("activators").get_first("Release_Press")
+        binding = rp.get_first("bindings").get_first("binding")
+        self.assertRegex(binding, r"\bF7\b")
+
+    # --- Layout-wide invariants ---
+
+    def test_all_keys_unique(self):
+        """Every (button, activator) → unique key. F1–F7 must each appear exactly once."""
+        keys = _binding_keys(self.text)
+        fkeys = [k for k in keys if k.startswith("F") and k[1:].isdigit()]
+        self.assertEqual(len(fkeys), len(set(fkeys)),
+            f"Duplicate F-keys in release_press_isolated layout: {fkeys}")
+
+    def test_no_f11_f12(self):
+        """F11/F12 must not appear — alias to L1/L2 in xinput."""
+        keys = _binding_keys(self.text)
+        bad = [k for k in keys if k in ("F11", "F12")]
+        self.assertEqual(bad, [], f"F11/F12 present in layout: {bad}")
+
+    def test_no_high_fkeys(self):
+        """F13+ must not appear — unproven on this stack."""
+        keys = _binding_keys(self.text)
+        high = [k for k in keys if k.startswith("F") and k[1:].isdigit() and int(k[1:]) >= 13]
+        self.assertEqual(high, [], f"Unexpected high F-keys: {high}")
+
+    def test_round_trip(self):
+        """Layout must survive parse→emit→reparse."""
+        reparsed = _parse(self.text)
+        self.assertIsNotNone(reparsed.get_first("controller_mappings"))
+
+    def test_collision_invariant_wired(self):
+        """Factory must raise ValueError when emit produces a duplicate key."""
+        original = vg.emit
+        try:
+            # Inject a collision using the same helper pattern as Task #2 tests
+            orig_emit = vg.emit
+            def _patched(pairs, indent=0):
+                text = orig_emit(pairs, indent)
+                if indent == 0:
+                    text += '\n"binding"\t\t"key_press F1, , "\n'
+                    text += '\n"binding"\t\t"key_press F1, , "\n'
+                return text
+            vg.emit = _patched
+            with self.assertRaises(ValueError):
+                vg.make_release_press_isolated_layout()
+        finally:
+            vg.emit = original
+
+
+# ---------------------------------------------------------------------------
 # Serializer
 # ---------------------------------------------------------------------------
 

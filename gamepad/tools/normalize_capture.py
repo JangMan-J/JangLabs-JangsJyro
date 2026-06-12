@@ -153,24 +153,37 @@ def _xi2_canon(code: str) -> tuple[str, str]:
 def normalize_xi2(records: list[dict]) -> dict:
     """Normalize an XI2 capture record list into the canonical event stream.
 
-    Dedup: Raw* events from the master/virtual-core device are duplicates of
-    the Device (KeyPress/KeyRelease) events on the xwayland-seat — keep only
-    the Device events.  The 'deduped-raw' note is attached to skipped Raws so
-    they show in n_raw but not events.
+    Timing model (per finding runs/20260612T053331Z-phase4-pin-batch1/result.md §P2):
+    Steam SI via EIS/Xwayland sends raw-layer tap pairs: RawKeyPress immediately
+    followed by RawKeyRelease, fired atomically at the SI emission moment.  The
+    key/slave layer (KeyPress/KeyRelease) is a flush-on-next-event delivery queue
+    whose timestamps reflect queue-flush points, NOT SI emission points.  Raw-layer
+    timestamps are the correct timing reference for all oracle-pin calculations.
+
+    This function uses RawKeyPress timestamps for t_down and RawKeyRelease
+    timestamps for t_up/dur_ms.  Key-layer (Device) events are used only as a
+    fallback when no matching Raw event is present (e.g. captures from non-SI
+    sources that emit only Device events).
+
+    Dedup: Raw* events that have a matching Device event within the dedup window
+    are counted in n_raw but suppressed from the output events — the Raw provides
+    the timing, the Device provides the pairing signal.  Unmatched Raw events
+    (no Device counterpart) are treated as noise and also suppressed.
 
     Keysym fold: L1→F11, L2→F12.
 
-    Press-pairing: KeyPress/ButtonPress open a record; KeyRelease/ButtonRelease
-    close it with dur_ms.  The pairing key is (dev_id, code) to handle
-    multiple XI2 devices in the same stream.
+    Press-pairing: RawKeyPress opens a record (using raw timestamp); RawKeyRelease
+    (or KeyRelease if no Raw available) closes it with dur_ms.  The pairing key is
+    (code,) — Raw events don't carry dev_id, so we pair by code alone at the raw
+    layer, then resolve the press record when the matching Device release arrives.
     """
     if not records:
         return {"schema_version": "1", "plane": "xi2", "n_raw": 0,
                 "t0_epoch": None, "events": [],
                 "summary": {"presses": {}, "rel_totals": {}}}
 
-    # Dedup: for each code, track the Device-event timestamps so we can
-    # identify and skip Raw events within the dedup window.
+    # Dedup pass: identify Raw events that have a corresponding Device event
+    # within the dedup window (they are duplicates of the Device plane).
     device_timestamps: dict[str, list[float]] = {}
     deduped_raw_set: set[int] = set()  # indices into records
     for i, r in enumerate(records):
@@ -193,10 +206,27 @@ def normalize_xi2(records: list[dict]) -> dict:
     t0 = min(r["t"] for r in records)
     ms = lambda t: round((t - t0) * 1000.0, 1)
 
+    # Raw-layer timestamp index: code -> [t, ...] for press and release separately.
+    # Used to override key-layer timestamps with raw-layer emission times.
+    raw_press_times: dict[str, list[float]] = {}   # code -> list of raw-down timestamps
+    raw_release_times: dict[str, list[float]] = {}  # code -> list of raw-up timestamps
+    for i, r in enumerate(records):
+        ev = r.get("event", "")
+        raw_code = r.get("code") or ""
+        code = _XI2_KEYSYM_FOLD.get(raw_code, raw_code)
+        if ev == "RawKeyPress":
+            raw_press_times.setdefault(code, []).append(r["t"])
+        elif ev == "RawKeyRelease":
+            raw_release_times.setdefault(code, []).append(r["t"])
+
     events = []
     open_presses: dict[tuple, tuple] = {}  # (dev_id, code) -> (t_down, name, kind)
     rel_totals: dict[str, float] = {}
     press_counts: dict[str, int] = {}
+
+    # Consume-pointer for raw timestamp queues (FIFO per code).
+    raw_press_idx: dict[str, int] = {}
+    raw_release_idx: dict[str, int] = {}
 
     for i, r in enumerate(records):
         ev = r.get("event", "")
@@ -219,12 +249,28 @@ def normalize_xi2(records: list[dict]) -> dict:
 
         key = (dev_id, code)
         if ev in _XI2_PRESS_EVENTS:
-            open_presses[key] = (r["t"], name, kind)
+            # Use the raw-layer press timestamp if available (FIFO: consume oldest).
+            raw_times = raw_press_times.get(code, [])
+            idx = raw_press_idx.get(code, 0)
+            if idx < len(raw_times):
+                t_down = raw_times[idx]
+                raw_press_idx[code] = idx + 1
+            else:
+                t_down = r["t"]  # fallback: no raw event for this key
+            open_presses[key] = (t_down, name, kind)
         elif ev in _XI2_RELEASE_EVENTS:
             if key in open_presses:
                 td, nm, kd = open_presses.pop(key)
+                # Use the raw-layer release timestamp if available.
+                raw_rel = raw_release_times.get(code, [])
+                ridx = raw_release_idx.get(code, 0)
+                if ridx < len(raw_rel):
+                    t_up = raw_rel[ridx]
+                    raw_release_idx[code] = ridx + 1
+                else:
+                    t_up = r["t"]  # fallback
                 events.append({"kind": kd, "name": nm, "t_ms": ms(td),
-                               "dur_ms": round((r["t"] - td) * 1000.0, 1)})
+                               "dur_ms": round((t_up - td) * 1000.0, 1)})
                 press_counts[nm] = press_counts.get(nm, 0) + 1
             else:
                 events.append({"kind": kind, "name": name, "t_ms": ms(r["t"]),

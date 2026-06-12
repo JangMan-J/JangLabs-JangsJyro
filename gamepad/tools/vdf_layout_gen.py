@@ -5,15 +5,19 @@ Builds Phase-4 diagnostic VDF layouts for the mapper-conversion lab.
 Every layout produced here goes through a parse-validate round-trip (parse →
 emit → reparse) before being written to disk — never a raw string blob.
 
-Three public factory functions:
+Four public factory functions:
   make_marker_layout(double_tap_time=190)
       F1–F9 marker layout: button_y = test button (Start/Release/Full/Double),
       button_a = digital canary (F5), button_b = tap/hold (F6/F7),
       button_x = interruptable=0 probe (F8/F9).  DTT default 190 ms.
+  make_release_press_isolated_layout()
+      Release_Press discrimination layout: four buttons, each pairing
+      Release_Press with a different co-activator to isolate bad-token vs
+      activator-interaction hypotheses.  F1–F7.
   make_remove_layer_layout()
       Timed remove_layer layout: base + action layer, remove on a button.
   make_action_set_swap_layout()
-      Two-action-set swap: SET_A (F13/F14) + SET_B (F15/F16), START swaps.
+      Two-action-set swap layout, START swaps sets.
 
 All use the same VDF data model (Pairs) and emit() serializer shared with
 vdf/vdf_clean.py's tokenizer/parser (copy-inlined here to avoid a cross-dir
@@ -22,6 +26,7 @@ import dependency).
 Usage:
   python3 vdf_layout_gen.py --help
   python3 vdf_layout_gen.py marker --dtt 190 --out reference/phase4-layouts/marker_layout.vdf
+  python3 vdf_layout_gen.py release-press-isolated --out reference/phase4-layouts/release_press_isolated.vdf
   python3 vdf_layout_gen.py remove-layer --out reference/phase4-layouts/remove_layer.vdf
   python3 vdf_layout_gen.py action-set-swap --out reference/phase4-layouts/action_set_swap.vdf
 
@@ -329,6 +334,107 @@ def make_marker_layout(double_tap_time: int = 190) -> str:
     text = emit(root)
     _validate_roundtrip(text, "make_marker_layout")
     assert_all_keys_unique(text, "make_marker_layout")
+    return text
+
+
+# ---------------------------------------------------------------------------
+# Layout-1b: Release_Press discrimination layout
+# ---------------------------------------------------------------------------
+#
+# Purpose: discriminate between bad-token and activator-interaction hypotheses
+# for Release_Press being absent from the four-activator marker_layout.vdf.
+#
+# Per runner batch-1b (2026-06-12), Release_Press emitted nothing on button_y
+# across all probes.  F2 absent at raw layer — not a delivery issue.  Candidates:
+#   (a) bad VDF token — Release_Press unrecognized by Steam
+#   (b) activator interaction — Full_Press or Double_Press suppresses Release_Press
+#
+# This layout places Release_Press in four contexts, one per button, to isolate
+# which pairing (if any) suppresses it:
+#
+# button_a: Release_Press → F1 ONLY (isolated — fires → token is good)
+# button_b: Start_Press → F2 + Release_Press → F3 (Start/Release pair — no Full/Double)
+# button_x: Full_Press → F4 + Release_Press → F5 (suspected blocker: Full+Release)
+# button_y: Double_Press (DTT=190) → F6 + Release_Press → F7 (Double+Release pair)
+#
+# Discrimination logic (runner):
+#   button_a fires F1 → token good; interaction is the cause.
+#   button_a silent   → bad token; all other buttons will also be silent.
+#   (button_a fires F1) AND (button_x silent) → Full_Press is the blocker.
+#   (button_a fires F1) AND (button_y silent) → Double_Press is the blocker.
+#   (button_a fires F1) AND (button_b fires F3) → Start_Press does not block.
+#
+# F1–F10 only; all keys unique; round-trip validated.
+# ---------------------------------------------------------------------------
+
+def make_release_press_isolated_layout() -> str:
+    """Generate the Release_Press discrimination layout.
+
+    Single layout; four buttons, each pairing Release_Press with a different
+    co-activator (or isolation).  F1–F7 used; invariants: unique keys, F1–F10
+    only, round-trip validated.
+
+    Returns the VDF text as a string.
+    """
+    # button_a: Release_Press ONLY → F1 (isolated; no co-activators)
+    btn_a = _button_input([
+        ("Release_Press", make_activator("Release_Press", "F1")),
+    ])
+
+    # button_b: Start_Press → F2, Release_Press → F3 (no Full/Double)
+    btn_b = _button_input([
+        ("Start_Press",   make_activator("Start_Press",   "F2")),
+        ("Release_Press", make_activator("Release_Press", "F3")),
+    ])
+
+    # button_x: Full_Press → F4, Release_Press → F5 (suspected blocker pair)
+    btn_x = _button_input([
+        ("Full_Press",    make_activator("Full_Press",    "F4")),
+        ("Release_Press", make_activator("Release_Press", "F5")),
+    ])
+
+    # button_y: Double_Press (DTT=190) → F6, Release_Press → F7
+    btn_y = _button_input([
+        ("Double_Press",  make_activator("Double_Press",  "F6", double_tap_time=190)),
+        ("Release_Press", make_activator("Release_Press", "F7")),
+    ])
+
+    four_buttons_group = _p(
+        ("id", "6"),
+        ("mode", "four_buttons"),
+        ("name", ""),
+        ("description", ""),
+        ("inputs", _p(
+            ("button_a", btn_a),
+            ("button_b", btn_b),
+            ("button_x", btn_x),
+            ("button_y", btn_y),
+        )),
+    )
+
+    switches_group = _p(
+        ("id", "0"),
+        ("mode", "switches"),
+        ("name", ""),
+        ("description", ""),
+        ("inputs", Pairs()),
+    )
+
+    gsb = _p(
+        ("0", "switch active"),
+        ("6", "button_diamond active"),
+    )
+
+    cm = Pairs(_controller_mappings_header())
+    cm.append(("group", switches_group))
+    cm.append(("group", four_buttons_group))
+    cm.append(_preset("0", "Default", gsb))
+    cm.append(("settings", Pairs()))
+
+    root = _p(("controller_mappings", cm))
+    text = emit(root)
+    _validate_roundtrip(text, "make_release_press_isolated_layout")
+    assert_all_keys_unique(text, "make_release_press_isolated_layout")
     return text
 
 
@@ -658,6 +764,10 @@ def main(argv=None):
         help="Double Tap Time in ms (default 190)")
     p_marker.add_argument("--out", required=True, help="output .vdf path")
 
+    p_rpi = sub.add_parser("release-press-isolated",
+        help="Release_Press discrimination layout (4 buttons × 4 pairing contexts)")
+    p_rpi.add_argument("--out", required=True, help="output .vdf path")
+
     p_rl = sub.add_parser("remove-layer",
         help="Timed remove_layer layout (base + LayerA)")
     p_rl.add_argument("--out", required=True, help="output .vdf path")
@@ -671,6 +781,9 @@ def main(argv=None):
     if args.cmd == "marker":
         text = make_marker_layout(args.dtt)
         _write_validated(text, Path(args.out), "marker")
+    elif args.cmd == "release-press-isolated":
+        text = make_release_press_isolated_layout()
+        _write_validated(text, Path(args.out), "release-press-isolated")
     elif args.cmd == "remove-layer":
         text = make_remove_layer_layout()
         _write_validated(text, Path(args.out), "remove-layer")
