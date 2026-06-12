@@ -252,6 +252,17 @@ autorepeat noise; timing not precisely established):
   orderings everywhere, and authors never think about them ⇒ the hazard zone is not exotic.
   Bonus acquittal: the user's button A binds Release_Press→F2 ALONE — same activator, same key
   as our marker layout — and it fires.
+- **Pure order-dependence FALSIFIED (third screenshot + user report, 2026-06-12):** after more
+  rebinding churn, the SAME visible order that was broken (Start, Release, Long at slots 1/2/3 —
+  numbering reset, ghosts gone) **now fires all three activators** ("now its working...idk").
+  The driver is hidden STATE, not visible order. Candidates: (a) file-level ghost/retired slots;
+  (b) **Steam's per-controller config cache** ("HID: Add to Config Cache - full cache hit" in
+  controller.txt — survives Steam restarts, so it can contaminate even disk-loaded layouts; note
+  our clean disk-loaded marker layout still ate Release after a churn-heavy session); (c)
+  configurator-session state. The oracle cannot identify the driver from the GUI side — this is
+  a state Heisenbug; only controlled state transitions (the matrix protocol, plus possibly
+  cache-cold cells) can pin it. Claim strengths: same-order-now-works OBSERVED; what changed
+  between observations is NOT controlled (GUI action sequence unrecorded).
 - **Ghost slot indices (second screenshot, 2026-06-12): slot numbers are sticky across
   rebinding.** After the user's reconfiguration experiments, button B shows "Executes 3
   Commands" with slots numbered **3, 4, 5** — removed commands retire their indices; new ones

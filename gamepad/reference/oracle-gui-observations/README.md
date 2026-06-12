@@ -24,6 +24,18 @@ Screenshot of the configurator during the order-dependent edge-activator-loss re
 - Also visible: X = Regular(X Button) + Long Press(V Key); Y = Button Chord(N Key) + Regular(0) —
   the user's own side experiments, not part of the repro.
 
+## `20260612-same-order-now-works.png`
+
+Third capture + user report "now its working...idk". Button B: Command 1 *Start Press*→C,
+Command 2 *Release Press*→B, Command 3 *Long Press*→A — **clean 1/2/3 numbering again (ghosts
+gone), and the SAME visible slot order (Start, Release, Long) that was broken in the first
+capture now fires everything.** (Keys reshuffled — irrelevant; the activator order is what
+matters.) Read together with the ghost capture: pure slot-order-dependence is FALSIFIED as the
+sole driver; the behavior tracks hidden state (ghost slots / rebinding history / config-session
+state), and clearing the ghost numbering correlated with the fix. The oracle themselves cannot
+identify the driver from the GUI side — a state Heisenbug, reproducible only under controlled
+state transitions.
+
 ## `20260612-ghost-slot-indices.png`
 
 Second capture, after the user's rebinding experiments. **The bombshell: button B reads
