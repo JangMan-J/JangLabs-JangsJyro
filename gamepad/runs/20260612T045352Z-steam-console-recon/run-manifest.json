@@ -51,13 +51,29 @@
       "notes": "0 lines \u2014 synthetic pad, SI not active. 10 BTN_SOUTH presses injected; no spew. SI must be active for activator-decision spew experiment."
     },
     {
-      "slice": "canary-xi2",
+      "slice": "canary-xi2-silent-wrong-syntax",
       "verdict": null,
       "jsm_capture": null,
       "steam_capture": "canary-xi2-out.txt",
       "injector_log": null,
-      "notes": "SILENT \u2014 0 XI2 events for BTN_SOUTH presses. Not transient silence; SI is not active for synthetic pad. SI-enable is a prerequisite for canary."
+      "notes": "SILENT \u2014 0 XI2 events. Root cause: wrong DSL syntax 'press BTN_SOUTH' (evdev convention) instead of correct 'press SOUTH'. synthetic_gamepad.py logged WARN bad action and injected nothing to evdev. NOT transient emission silence; NOT SI disabled \u2014 stimulus never reached the pad."
+    },
+    {
+      "slice": "si-activation-repair-attempt-a",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": null,
+      "injector_log": null,
+      "notes": "Task #3 Attempt A: kill ghost pads \u2192 Steam down \u2192 single synthetic pad first \u2192 Steam relaunch. PollState 0\u21921\u21922 at 22:20:30 (controller.txt). controller_ui.txt: controller_xbox360.vdf loaded for App 413080. configset_45e-28e-1ba6d98.vdf on disk from session-4 is what allows SI activation without GUI."
+    },
+    {
+      "slice": "canary-xi2-correct",
+      "verdict": "exact",
+      "jsm_capture": "canary-xi2-correct.jsonl",
+      "steam_capture": "canary-xi2-correct.txt",
+      "injector_log": null,
+      "notes": "CANARY PASS \u2014 5\u00d7 'press SOUTH' (correct DSL) \u2192 20 XI2 events: 5 KeyPress + 5 KeyRelease, all F9, device xwayland-keyboard:10 on :1. SI output confirmed at Xwayland seat, not evdev."
     }
   ],
-  "notes": "steam-console recon: CDP accessible throughout; spew binding confirmed. Key finding: controller_spew_level/set_spew_level does expose controller events at level 10 (connect/disconnect, PollState, HID remove), but NOT per-press activator decisions in any tested configuration. SI was not active for the synthetic pad in this session \u2014 SI requires a one-time GUI 'Enable Steam Input' step that cannot be triggered via VDF edit or steam-console commands. Nested KWin env (:1, wayland-jsmlab) functional; CDP on 8080 confirmed. Canary blocked by SI-not-active, not by transient silence. Phase-4 prerequisite: user enables SI for synthetic pad in nested env GUI before next session."
+  "notes": "Task #1 (steam-console recon) + Task #3 (SI-activation repair) complete. Key findings: (1) CDP on 8080 operational; spew level 10 exposes connect/disconnect but not per-press activator decisions. (2) Wrong DSL syntax (BTN_SOUTH vs SOUTH) caused all prior XI2 silence \u2014 unrelated to SI state. (3) SI activation without GUI: ghost cleanup + enumerate-first (single pad before Steam launch) + Steam relaunch \u2192 PollState 2 via pre-existing configset_45e-28e-1ba6d98.vdf. (4) Canary 5/5 F9 at xwayland-keyboard:10. Env running; ready for Phase-4 trace batch on lead approval."
 }

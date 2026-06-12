@@ -173,6 +173,26 @@ model — Turbo, when enabled, is its own explicit activator setting, not a defa
   the layout GUI screen was up), all bindings except two went silent while stimuli were confirmed
   at evdev; it self-recovered. Settings *dialogs* open do not suppress (retested). **Canary rule:
   run the digital slice first in any Steam-lane session; if silent, don't trust ANY absence.**
+- **Stimulus-confirmation discipline (2026-06-12, the BTN_SOUTH session).** The
+  `synthetic_gamepad.py` control-FIFO DSL takes SHORT button names (`press SOUTH`);
+  `press BTN_SOUTH` logs `WARN bad action` in the holder log and injects NOTHING. An entire
+  session of "silent canary" was stimulus-never-injected, misread first as transient silence and
+  then as SI-disabled. **Amended canary rule: on ANY output silence, FIRST check the holder log
+  for WARN lines / confirm the stimulus at evdev — only a confirmed-injected, output-silent
+  canary says anything about the Steam lane.** (The historical ~4-min transient-silence
+  observation above had evdev-confirmed stimuli and stands.) Corollary: the recon-run claim
+  "button presses produce no spew" is INVALIDATED — no presses ever reached the pad; spew during
+  real presses is untested in both SI states.
+- **SI activation for the synthetic pad is identity + enumeration-order keyed — no GUI needed
+  once the identity is known (runner-verified 2026-06-12).** With
+  `configset_45e-28e-1ba6d98[g].vdf` present on disk (written when SI was GUI-enabled in a past
+  session), a fresh synthetic pad reaches PollState 0→1→2 (active+emitting) on Steam launch —
+  PROVIDED it is the only pad and enumerates at controller index 0. Stale holder processes leave
+  ghost pads that push the new pad to a higher index and break the configset lookup → SI stays
+  off and the situation masquerades as "needs the GUI step". **Env spin-up protocol: kill stale
+  holders, create the single synthetic pad BEFORE launching Steam, then verify PollState 2 in
+  controller.txt.** (Index-0 + configset-present → PollState 2 is observed; the exact lookup
+  mechanism is inferred.)
 - **Captures see the whole seat.** Physical typing/touchpad lands in the same XI2 stream; letter
   outputs (WASD/E/Q) are indistinguishable from typing except by stimulus-timestamp correlation.
   Schedule letter slices in hands-off windows; F-key outputs are robust.
