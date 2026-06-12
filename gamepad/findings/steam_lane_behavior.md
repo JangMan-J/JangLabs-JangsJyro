@@ -120,9 +120,17 @@ already trace-corroborated, the rest get pinned by Phase-4 verification traces b
 seeding (anti-Goodhart D3: the KB seeds only from trace-verified rules).
 
 **The axiom:** Steam Input rarely, if ever, applies timers to key-UP events when calculating
-activators. Activator timers anchor to DOWN-event timestamps; while a button is held down, the
-active action is re-sent continuously at some interval much smaller than the activator windows.
-(Release Press is up-*triggered* by definition; the axiom is about where *timers* anchor.)
+activators. Activator timers anchor to DOWN-event timestamps. (Release Press is up-*triggered*
+by definition; the axiom is about where *timers* anchor.)
+**RETRACTED (user, same day, after app-plane logger testing):** the original axiom's second
+clause — "while held, the action is re-sent continuously at some interval" — was an
+application-layer artifact of the user's earlier personal testing: the bound action's *state* is
+simply held. App-plane observation (keystroke logger, 2026-06-11): a held Steam binding is one
+key-down → held state → key-up at release; no re-send chatter, no inherent repeat. (Game/OS-side
+autorepeat of a held key is a separate downstream phenomenon.) Down-anchored *timers* stand.
+Caveat on the user's prior personal observations generally: they captured their OWN (HID) input,
+not Steam/JSM's secondary output — claims about output-plane behavior from that testing carry
+lower weight than claims about activator decision logic.
 
 **Worked double-press semantics** (Regular = 'a', Double = 'b', DTT = 250 ms, Regular has the
 default interruptible flag):
@@ -130,9 +138,9 @@ default interruptible flag):
 | Stimulus | Behavior (oracle) |
 |----------|-------------------|
 | Quick single press (released < DTT) | 'a' fires at **first-down + DTT exactly** — not before, not at release ★ |
-| Single press, held | 'a' at first-down + DTT, then re-sent at intervals ≪ DTT until release |
+| Single press, held | 'a' goes down at first-down + DTT, then is **held as state** until release (re-send clause retracted) |
 | Second down strictly before first-down + DTT | 'b' fires **immediately on the second down** ★ (epoch d2d) |
-| Second press held | 'b' begins repeat-firing at **first-down + DTT** — anchored to the FIRST down, not the second |
+| Second press held | 'b' down at the second down; held as state until release. The original "repeat-firing from first-down + DTT" claim is retracted with the pump — whether ANY output transition occurs at first-down + DTT is now a Phase-4 trace target |
 | Any time after 'a' has fired | 'b' can no longer fire (window closed; interruptible default) |
 
 ★ trace corroboration: C2 probe 2 measured the suppressed single at first-down + window + ~35 ms
@@ -144,16 +152,18 @@ by measurement.
 
 1. Singles emission anchored at first-down + DTT regardless of hold/release time (vary the hold).
 2. Double emission at second-down with ~zero added latency (emission-timing trace).
-3. Held-double repeat onset at **first-down + DTT** — the non-obvious anchor (not second-down + X).
-4. Held-single re-send interval ≪ DTT — characterize it; OPEN observation-plane question: does
-   the re-send pump manifest at XI2/kbd output as discrete down/up chatter, or as one held key
-   (pump internal)? Phase-2/C2 captures with Turbo off suggest held-key at the output plane —
-   don't conflate the internal firing model with the output plane when designing the trace.
+3. Held-double output shape: 'b' down at second down, held until release — and specifically
+   whether anything at all happens at first-down + DTT (the retracted repeat-onset claim makes
+   this the interesting boundary to watch).
+4. ~~Held-single re-send interval~~ **RESOLVED at the app plane (user's logger test,
+   2026-06-11): held binding = one held key, no re-send chatter.** XI2/evdev confirmation rides
+   along free in any Phase-4 capture (Phase-2/C2 Turbo-off captures already agree).
 
 **Converter implications:** singles on double-bound buttons inherit a fixed +DTT latency on
 Steam (JSM fires the base immediately — count AND latency delta, classified above); window
 translation JSM↔Steam stays `bounded_approximation` (release-to-down vs down-to-down epochs);
-repeat-onset anchoring is load-bearing for any turbo/held-output equivalence rule.
+held-output equivalence is plain key-state hold on both lanes (no Steam-side repeat pump to
+model — Turbo, when enabled, is its own explicit activator setting, not a default behavior).
 
 ## Operational gotchas (Steam lane)
 

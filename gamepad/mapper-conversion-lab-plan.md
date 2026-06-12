@@ -34,10 +34,18 @@ guide-claim strength, below trace evidence). Consult it (and the user: they are 
 mechanics oracle, memory `user-steam-input-mechanics-expert`) BEFORE any new Steam-lane probe loops.
 It corroborates double-press pause semantics and gives Double Press emission timing (active at second
 down, held thereafter). **The user then resolved the epoch question directly: DOWN-TO-DOWN**, plus
-the underlying axiom (activator timers anchor to down events, never releases; held actions re-send
-at intervals ≪ the windows) — full worked model + Phase-4 verification pins recorded in
-`findings/steam_lane_behavior.md` §Oracle model. The ON-HOLD d2d/r2r probe is now a cheap
-verification trace (pin, don't discover).
+the underlying axiom (activator timers anchor to down events, never releases) — full worked model +
+Phase-4 verification pins recorded in `findings/steam_lane_behavior.md` §Oracle model. The ON-HOLD
+d2d/r2r probe is now a cheap verification trace (pin, don't discover). **Same-day correction:** the
+axiom's held-action-re-send clause was RETRACTED by the user after app-plane testing (held binding =
+held key state; prior personal observations captured their own HID input, not Steam/JSM output).
+**Tooling thread (2026-06-11):** grandfather-Claude's pygame inventory tester
+(`~/_project.bak/.research_backup/tools/inventory_input_test.py`) upgraded with an app-plane
+keystroke log (third observation plane: what a game receives); candidate for `tools/` adoption.
+**User vision to honor in Phase 5+ orchestration/viewer work: a side-by-side timeline — HID (or
+emulated-HID) stimulus | captured output — so per-pair latency math is visual.** The lab's A-B
+artifacts already carry both sides with timestamps; PySDL2 + PySDL3 are now installed (SDL3 = ns
+event timestamps + first-class gamepad API) if a live single-window probe is wanted.
 **Execution model (user-directed):** Fable session = lead only (specs, gate verification, claim-
 strength audits, commits); ALL iterative work via Sonnet teammates per plan §14 (team `jsmlab`:
 `builder` = code/TDD, `runner` = serial live-system runs). Teammates were shut down cleanly at
