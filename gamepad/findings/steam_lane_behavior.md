@@ -303,8 +303,16 @@ autorepeat noise; timing not precisely established):
     marker layout (Full+Double: double PINNED at second-down). The hazard zone is wider than
     edge-eating: adding Start/Release can kill Double outright. Converter hazard rule already
     covers it (such combos ≤ `degraded_approximation`, never emitted).
-  - **Full_Press fires alongside Start** (Set C), Release/Double still eaten; no DTT-delayed
-    emission anywhere (no Double window ever opens).
+  - Set C: Start and the Regular press both fire; Release/Double still eaten; no DTT-delayed
+    emission anywhere (no Double window ever opens). Regular firing on a tap is EXPECTED, not a
+    finding — the Set-C observation is only the Release/Double suppression. **Terminology (oracle
+    correction, 2026-06-12): `Full_Press` is NOT a distinct activator type — it is Valve's vdf
+    serialization key for the GUI's "Regular Press"** (ground truth: the user's GUI-produced
+    autosave serializes every plain binding as `"Full_Press"`, 13 occurrences; the GUI activator
+    list is Regular/Start/Release/Long/Double/Chorded, and "Full" appears in the GUI only as the
+    trigger full-pull INPUT, not an activator). Run artifacts keep the vdf key name; prose should
+    say Regular. Set C is therefore the same activator class as the batch-1 marker layout
+    ({Start, Release, Regular, Double}), consistent with its Release-eaten result.
   - Run hygiene: holder log 0 WARN (every stimulus confirmed injected); autosave == A1 reference
     at start (md5); original autosave backed up in-run and restored byte-identical at session-8
     pickup.

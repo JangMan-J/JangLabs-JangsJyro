@@ -24,8 +24,9 @@ and `20260601T070951Z-phase0b-steam-input/`.
 `20260612T072850Z-phase4-batch2-matrix/`, 16 cells, 6 permutation layouts, single-pass:
 **Release_Press absent in ALL cells at every slot position (universal, not order-specific — the
 GUI order effect did NOT reproduce); Start always fires; NEW: Double_Press fully suppressed under
-Start+Release co-residency (Set B), so the hazard zone is wider than edge-eating; Full fires
-alongside Start (Set C).** Full table + gate stamp in the run's `result.md`; durable summary in
+Start+Release co-residency (Set B), so the hazard zone is wider than edge-eating; Set C's
+Regular press fires as expected (`Full_Press` is just the vdf key for GUI "Regular Press" —
+oracle terminology correction, not a distinct activator).** Full table + gate stamp in the run's `result.md`; durable summary in
 `findings/steam_lane_behavior.md` §Order-dependent edge-activator loss. Session 7 died after the
 runner finished but before gate/ingest/commit — session 8 restored the user's 413080 autosave from
 the in-run backup (byte-identical), verified the box clean, gated, ingested, committed.
