@@ -1,0 +1,8 @@
+# xinput test-xi2 --root  types=['ButtonPress', 'ButtonRelease', 'KeyPress', 'KeyRelease', 'RawButtonPress', 'RawButtonRelease', 'RawKeyPress', 'RawKeyRelease']  seconds=60.0
+1781243041.249976  RawKeyPress    id=3   F1           [master] '⎣ Virtual core keyboard'
+1781243041.283967  KeyPress       id=6   F1           [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781243041.284035  RawKeyRelease  id=3   F1           [master] '⎣ Virtual core keyboard'
+1781243041.442609  KeyRelease     id=6   F1           [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781243041.442671  RawKeyPress    id=3   F3           [master] '⎣ Virtual core keyboard'
+1781243041.476220  KeyPress       id=6   F3           [Xwayland-seat(XTEST/libei/phys)] '↳ xwayland-keyboard:10'
+1781243041.476277  RawKeyRelease  id=3   F3           [master] '⎣ Virtual core keyboard'

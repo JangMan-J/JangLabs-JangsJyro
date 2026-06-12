@@ -1,0 +1,4 @@
+{"t": 1781243018.699419, "event": "RawKeyPress", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F5", "flag": "master"}
+{"t": 1781243018.819377, "event": "KeyPress", "dev_id": 6, "dev": "\u21b3 xwayland-keyboard:10", "code": "F5", "flag": "Xwayland-seat(XTEST/libei/phys)"}
+{"t": 1781243018.819447, "event": "RawKeyRelease", "dev_id": 3, "dev": "\u23a3 Virtual core keyboard", "code": "F5", "flag": "master"}
+{"t": 1781243023.242807, "event": "KeyRelease", "dev_id": 6, "dev": "\u21b3 xwayland-keyboard:10", "code": "F5", "flag": "Xwayland-seat(XTEST/libei/phys)"}

@@ -1,0 +1,60 @@
+  path: sdl://2
+  serial_number:  - 0
+[2026-06-11 22:34:05]   Manufacturer: 
+[2026-06-11 22:34:05]   Product:      Xbox 360 Controller
+[2026-06-11 22:34:05]   Release:      114
+[2026-06-11 22:34:05]   Interface:    -1
+
+[2026-06-11 22:34:05] !! Steam controller device opened for index 0.
+[2026-06-11 22:34:05] Steam Controller reserving XInput slot 0
+[2026-06-11 22:34:05] SDL Mapping for 45e/28e: 030081b85e0400008e02000014010000,Xbox 360 Controller,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,platform:Linux,
+[2026-06-11 22:34:06] Controller PollState Changed from 0 to 1
+[2026-06-11 22:34:06] Add to Config Cache Request 0 769
+[2026-06-11 22:34:06] Controller 0 mapping uses xinput : false
+[2026-06-11 22:34:06] Add to Config Cache Request 4294967295 769
+[2026-06-11 22:34:06] Add to Config Cache Request 0 769
+[2026-06-11 22:34:06] Controller 0 mapping uses xinput : false
+[2026-06-11 22:34:06] Add to Config Cache Request 0 769
+[2026-06-11 22:34:06] Controller 0 mapping uses xinput : false
+[2026-06-11 22:34:06] Controller 0 mapping uses xinput : false
+[2026-06-11 22:34:06] Queueing activation for controller: 0 app: 769
+[2026-06-11 22:34:06] HID: Add to Config Cache - modify disconnected mapping in-place 4294967295 769
+[2026-06-11 22:34:06] HID: Add to Config Cache - full cache hit 0 769
+[2026-06-11 22:34:06] HID: Add to Config Cache - full cache hit 0 769
+[2026-06-11 22:34:06] Controller PollState Changed from 1 to 2
+[2026-06-11 22:34:06] BYieldingQueryAccountsRegisteredToController
+[2026-06-11 22:34:06] Opted-in Controller Mask for AppId 0: 1006
+[2026-06-11 22:34:06] BYieldingQueryAccountsRegisteredToController - server unavailable checking local cache for stored values
+[2026-06-11 22:34:07] BYieldingMarkControllerConfigsInUse
+[2026-06-11 22:34:07] Opted-in Controller Mask for AppId 0: 1006
+[2026-06-11 22:34:07] SDL Mapping for 45e/28e: 030081b85e0400008e02000014010000,Xbox 360 Controller,a:b0,b:b1,x:b2,y:b3,back:b6,guide:b8,start:b7,leftstick:b9,rightstick:b10,leftshoulder:b4,rightshoulder:b5,dpup:h0.1,dpdown:h0.4,dpleft:h0.8,dpright:h0.2,leftx:a0,lefty:a1,rightx:a3,righty:a4,lefttrigger:a2,righttrigger:a5,platform:Linux,
+[2026-06-11 22:34:07] Controller has an Invalid or missing unit serial number, setting to '45e-28e-1ba6d98'
+[2026-06-11 22:34:07] ConfigSet - found config set file on-disk: /home/jangmanj/.local/share/Steam/steamapps/common/Steam Controller Configs/28994968/config/configset_45e-28e-1ba6d98.vdf
+[2026-06-11 22:34:07] ConfigSet - found config set file on-disk: /home/jangmanj/.local/share/Steam/steamapps/common/Steam Controller Configs/28994968/config/configset_controller_xbox360.vdf
+[2026-06-11 22:34:07] Set Account Config Sets 0 0 0
+[2026-06-11 22:34:07] Set Account Config Sets 0 0 0
+[2026-06-11 22:34:07] Set Account Config Sets 0 0 0
+[2026-06-11 22:34:07] CClientJobFetchPersonalizationFileID - AutoCloud
+[2026-06-11 22:34:07] Add to Config Cache Request 0 769
+[2026-06-11 22:34:07] HID: Add to Config Cache - full cache hit 0 769
+[2026-06-11 22:34:07] Add to Config Cache Request 4294967295 769
+[2026-06-11 22:34:07] HID: Add to Config Cache - modify disconnected mapping in-place 4294967295 769
+[2026-06-11 22:34:07] Add to Config Cache Request 0 769
+[2026-06-11 22:34:07] HID: Add to Config Cache - full cache hit 0 769
+[2026-06-11 22:34:07] Add to Config Cache Request 0 769
+[2026-06-11 22:34:07] Queueing activation for controller: 0 app: 769
+[2026-06-11 22:34:07] Opted-in Controller Mask for AppId 413080: 1006
+[2026-06-11 22:34:07] HID: Add to Config Cache - full cache hit 0 769
+[2026-06-11 22:34:07] Add to Config Cache Request 0 413080
+[2026-06-11 22:34:07] Queueing activation for controller: 0 app: 413080
+[2026-06-11 22:34:07] Add to Config Cache Request 0 413080
+[2026-06-11 22:34:07] Queueing activation for controller: 0 app: 413080
+[2026-06-11 22:34:07] Add to Config Cache Request 0 413080
+[2026-06-11 22:34:07] Queueing activation for controller: 0 app: 413080
+[2026-06-11 22:34:07] HID: Add to Config Cache - full cache hit 0 413080
+[2026-06-11 22:34:07] HID: Add to Config Cache - full cache hit 0 413080
+[2026-06-11 22:34:07] Add to Config Cache Request 0 413080
+[2026-06-11 22:34:07] Queueing activation for controller: 0 app: 413080
+[2026-06-11 22:34:07] HID: Add to Config Cache - full cache hit 0 413080
+[2026-06-11 22:34:07] BYieldingQueryAccountsRegisteredToController
+[2026-06-11 22:34:07] BYieldingQueryAccountsRegisteredToController - server unavailable checking local cache for stored values

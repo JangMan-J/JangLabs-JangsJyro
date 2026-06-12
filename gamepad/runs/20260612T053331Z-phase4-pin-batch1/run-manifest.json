@@ -1,0 +1,63 @@
+{
+  "schema_version": "1",
+  "run_id": "20260612T053331Z-phase4-pin-batch1",
+  "date": "2026-06-12",
+  "phase": "phase4-pin-batch1",
+  "host": "CachyOS/Wayland/KDE/NVIDIA",
+  "jsm_commit": null,
+  "steam_client": "publicbeta-1781212412",
+  "lanes": [
+    "steam"
+  ],
+  "slices": [
+    {
+      "slice": "layout-swap-pollstate2",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "controller-txt-at-stop.txt",
+      "injector_log": null,
+      "notes": "Layout swap complete per VDF protocol: backup → Steam down → copy marker_layout.vdf over autosave → single-pad-first → Steam relaunch. PollState 2 at 22:34:06, index 0. controller_xbox360.vdf (=marker_layout) loaded for App 413080 ×4."
+    },
+    {
+      "slice": "token-verify-probe",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "token-verify-xi2.jsonl",
+      "injector_log": "holder-log-at-stop.txt",
+      "notes": "GATE STOP. SOUTH→F5 ✓, EAST→F6 ✓, WEST→F8 ✓, NORTH→F1 ✓, NORTH→F3@+192ms ✓. F2 (Release_Press) ABSENT across 3 probes (30s/8s/15s captures). Stimulus confirmed — holder log shows 'press NORTH 120.0ms (down)/(up)', no WARN. F3 stuck held until xi2_capture terminates (anomalous). Pin traces not run."
+    },
+    {
+      "slice": "p1-400ms-hold",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "p1-400ms-hold.jsonl",
+      "injector_log": "holder-log-at-stop.txt",
+      "notes": "F2 ABSENT even at 400ms hold (DTT window closed 210ms before up). Suppressed-while-window-open hypothesis FALSIFIED. F3 KeyPress deferred to physical-up moment (+402ms) — flushed by the up event. F3 KeyRelease deferred to capture exit. Oracle prediction 1 extended: F3 fires at +192ms regardless of hold duration."
+    },
+    {
+      "slice": "p2-120ms-raw-audit",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "p2-120ms-raw-audit.jsonl",
+      "injector_log": null,
+      "notes": "Raw vs key layer audit. Raw layer: tap pairs (RawKeyPress+RawKeyRelease atomic) at emission moment. Key layer: each event deferred to next raw event; final key event deferred to client exit. Pipeline latency: 34ms. Raw layer is ground truth for timing; key layer is flush-on-next-event delivery artifact."
+    },
+    {
+      "slice": "p3-server-state",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "p3-server-state.jsonl",
+      "injector_log": null,
+      "notes": "xinput query-state device 6 (xwayland-keyboard:10) while F3 KeyRelease pending: all key[0..247]=up. Server holds NO key state during stuck-F3 window. Stuck hold is entirely per-client delivery queue artifact, not server state."
+    },
+    {
+      "slice": "p4-client-lifecycle",
+      "verdict": null,
+      "jsm_capture": null,
+      "steam_capture": "p4c-capture-b.jsonl",
+      "injector_log": null,
+      "notes": "Capture B received 0 events after capture A (with stuck-F3) was killed. F3 KeyRelease does NOT propagate to other XI2 clients on A death. It is a per-client artifact (tool generates synthetic release on exit), not a server-broadcast event."
+    }
+  ],
+  "notes": "Batch 1 + 1b complete. Layout swap: PollState 2 confirmed, marker layout active. Token verify: F1/F3 correct; F2 absent (real). P1-P4 discrimination: suppressed-while-window-open falsified; XI2 key-hold is per-client flush artifact (server state UP confirmed); F3 KeyRelease at capture exit is a capture-tool artifact not real SI output. F2 absent at raw layer — Release_Press not emitting at all. Oracle prediction 1 first confirmation: F3@first-down+DTT across sub-DTT and super-DTT holds. Pin traces still gated on lead decision re: F2."
+}

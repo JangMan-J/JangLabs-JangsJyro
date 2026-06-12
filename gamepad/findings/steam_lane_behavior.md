@@ -165,6 +165,33 @@ translation JSM↔Steam stays `bounded_approximation` (release-to-down vs down-t
 held-output equivalence is plain key-state hold on both lanes (no Steam-side repeat pump to
 model — Turbo, when enabled, is its own explicit activator setting, not a default behavior).
 
+## XI2 observation-plane delivery model (batch 1b, 2026-06-12 — runner-verified, lead-gated)
+
+Probes P1–P4 (`runs/20260612T053331Z-phase4-pin-batch1/`) resolved the apparent "stuck key" and
+"deferred release" anomalies into a delivery model:
+
+- **Steam Input emits at the XI2 RAW layer; raw timestamps are authoritative.** Raw press/release
+  pairs land at the true emission moments (pipeline latency ~34 ms from stimulus, consistent
+  across all probes and matching C2's ~35 ms).
+- **Key-layer (device) events are flush-on-next-raw-event queue artifacts.** Each key-layer event
+  is delivered only when the NEXT raw event arrives; the final pending release has no successor
+  and is synthesized by `xinput test-xi2` itself at client exit (P4: a second overlapping capture
+  sees nothing when the first dies). Server key state stays UP throughout (P3: `xinput
+  query-state` all-up during a "stuck" window).
+- **RULE: all timing analysis and comparator input MUST use Raw* events only.** Key-layer
+  timestamps (and hold-durations derived from them) are delivery noise. Presence-based prior
+  verdicts are unaffected; an audit of `normalize_capture.py` event-class precedence is queued to
+  confirm no committed verdict ever keyed on key-layer release timing.
+- **Suppressed-single output shape (oracle model confirmed at raw layer):** quick tap (release
+  < DTT) → the Regular key fires at first-down+DTT as a **~34 ms raw tap** (duration plausibly
+  `controller_min_activation_time` = 0.0333 s — INFERRED association, unpinned); held past DTT →
+  Regular fires at first-down+DTT and the raw key **mirrors the button state** (release at
+  physical up). Oracle prediction 1 confirmed at 120 ms AND 400 ms holds.
+- **Release_Press does not emit at all on the four-activator marker button** — absent at the raw
+  layer with the double-window open (release at 120 ms) AND closed (release at 400 ms);
+  suppressed-while-window-open is FALSIFIED. Live candidates: bad vdf token vs Steam-internal
+  activator interaction (e.g. Full_Press involvement) — isolated-variant discrimination queued.
+
 ## Operational gotchas (Steam lane)
 
 - **xinput keysym aliasing:** F11/F12 print as legacy keysyms **L1/L2** in `xinput test-xi2`
