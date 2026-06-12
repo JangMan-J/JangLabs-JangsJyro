@@ -33,7 +33,11 @@ pause semantics (singles latency-shift up to DTT).
 guide-claim strength, below trace evidence). Consult it (and the user: they are a deep Steam Input
 mechanics oracle, memory `user-steam-input-mechanics-expert`) BEFORE any new Steam-lane probe loops.
 It corroborates double-press pause semantics and gives Double Press emission timing (active at second
-down, held thereafter); still open for the user: the double-tap window's epoch endpoints (d2d vs r2r).
+down, held thereafter). **The user then resolved the epoch question directly: DOWN-TO-DOWN**, plus
+the underlying axiom (activator timers anchor to down events, never releases; held actions re-send
+at intervals ≪ the windows) — full worked model + Phase-4 verification pins recorded in
+`findings/steam_lane_behavior.md` §Oracle model. The ON-HOLD d2d/r2r probe is now a cheap
+verification trace (pin, don't discover).
 **Execution model (user-directed):** Fable session = lead only (specs, gate verification, claim-
 strength audits, commits); ALL iterative work via Sonnet teammates per plan §14 (team `jsmlab`:
 `builder` = code/TDD, `runner` = serial live-system runs). Teammates were shut down cleanly at

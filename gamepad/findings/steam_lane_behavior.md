@@ -34,8 +34,10 @@ these deltas.
    are *paused* until the double-press time passes** — measured: an outside-window single's
    F12 emitted at first-down + ~window + 35 ms (C2 probe 2). So the delta is count AND latency:
    every Steam single on a double-bound button is delayed by up to the Double Tap Time, while
-   JSM's base fires immediately. Decision epoch (down-to-down vs release-to-release) and
-   double-emission timing (at second release vs down+lag) remain the one open probe.
+   JSM's base fires immediately. Decision epoch and emission timing RESOLVED (oracle-attested
+   2026-06-11, trace-consistent): the window is **down-to-down** from the first down; the double
+   fires **immediately on the second down**; the suppressed single fires at **first-down + DTT
+   exactly**. Full model + remaining verification pins: §*Oracle model* below.
 2. **"Simultaneous press" is not the same primitive.** Steam has no SIMPRESS — only chords owned
    by one button. Consequence: the chord *member's* regular binding **leaks** (TL's Shift was
    held down alongside the chord's Q; the owner's E was suppressed). JSM SIMPRESS suppresses
@@ -83,11 +85,12 @@ hypothesis until a trace fires it.
 - **Long Press Time is inclusive and tick-exact at the configured value:** 430ms → tap (F10);
   450ms and 470ms → hold (F11) at Long Press Time 450. Contrast JSM: exclusive + poll slack
   (`jsm_lane_behavior.md` boundary section) — comparator must parameterize per lane.
-- **Double Tap Time: release-to-DOWN referencing is ruled out** (190ms d2d ≈ 130ms r2d, well
-  inside the 190ms window, fired single); 170ms d2d fires. Down-to-down and release-to-release
-  are both still consistent (C2's probes used equal hold times) — vary-the-hold discriminating
-  probe queued. Either way the epoch differs from JSM's proven release-to-down ⇒
-  `bounded_approximation` for window translation.
+- **Double Tap Time: epoch is DOWN-TO-DOWN** (oracle-attested 2026-06-11; supersedes the
+  d2d-vs-r2r ambiguity). C2 traces consistent: release-to-DOWN ruled out by measurement (190ms
+  d2d ≈ 130ms r2d fired single); 170ms d2d fires double; 190ms d2d at DTT=190 fired single —
+  matching the oracle's **strictly-before-DTT** bound. The queued vary-the-hold discriminating
+  probe is downgraded to a cheap Phase-4 verification trace (pin, don't discover). The epoch
+  differs from JSM's proven release-to-down ⇒ `bounded_approximation` for window translation.
 - **`interruptable 0` (vdf, on Full_Press) CONFIRMED at runtime** — Regular fires on
   press-down and is NOT suppressed when Long fires at threshold; both keys active together.
   Upgrades the docs-sourced hypothesis to verified. (First attempt edited the Long_Press
@@ -107,6 +110,50 @@ hypothesis until a trace fires it.
   pulls; (4) converter: Steam soft-pull translations inherit threshold instability —
   classify trigger soft-pull mappings no better than `bounded_approximation`, with the
   adaptive-threshold caveat named in the loss.
+
+## Oracle model — down-anchored activator timing (user-attested 2026-06-11, session 6)
+
+The user (deep Steam Input mechanics oracle, memory `user-steam-input-mechanics-expert`)
+resolved the open double-press questions and supplied the underlying timing axiom. Claim
+strength: **oracle-attested** — highest-prior hypothesis class in this lab; the ★ claims are
+already trace-corroborated, the rest get pinned by Phase-4 verification traces before KB
+seeding (anti-Goodhart D3: the KB seeds only from trace-verified rules).
+
+**The axiom:** Steam Input rarely, if ever, applies timers to key-UP events when calculating
+activators. Activator timers anchor to DOWN-event timestamps; while a button is held down, the
+active action is re-sent continuously at some interval much smaller than the activator windows.
+(Release Press is up-*triggered* by definition; the axiom is about where *timers* anchor.)
+
+**Worked double-press semantics** (Regular = 'a', Double = 'b', DTT = 250 ms, Regular has the
+default interruptible flag):
+
+| Stimulus | Behavior (oracle) |
+|----------|-------------------|
+| Quick single press (released < DTT) | 'a' fires at **first-down + DTT exactly** — not before, not at release ★ |
+| Single press, held | 'a' at first-down + DTT, then re-sent at intervals ≪ DTT until release |
+| Second down strictly before first-down + DTT | 'b' fires **immediately on the second down** ★ (epoch d2d) |
+| Second press held | 'b' begins repeat-firing at **first-down + DTT** — anchored to the FIRST down, not the second |
+| Any time after 'a' has fired | 'b' can no longer fire (window closed; interruptible default) |
+
+★ trace corroboration: C2 probe 2 measured the suppressed single at first-down + window + ~35 ms
+(≈ DTT + transport/poll slack); C2 epoch probes (170 ms d2d → double; 190 ms d2d at DTT=190 →
+single) match down-to-down with a strictly-before bound; release-to-down was already ruled out
+by measurement.
+
+**New sharp predictions for Phase-4 pinning** (each cheap; each becomes a KB rule when it fires):
+
+1. Singles emission anchored at first-down + DTT regardless of hold/release time (vary the hold).
+2. Double emission at second-down with ~zero added latency (emission-timing trace).
+3. Held-double repeat onset at **first-down + DTT** — the non-obvious anchor (not second-down + X).
+4. Held-single re-send interval ≪ DTT — characterize it; OPEN observation-plane question: does
+   the re-send pump manifest at XI2/kbd output as discrete down/up chatter, or as one held key
+   (pump internal)? Phase-2/C2 captures with Turbo off suggest held-key at the output plane —
+   don't conflate the internal firing model with the output plane when designing the trace.
+
+**Converter implications:** singles on double-bound buttons inherit a fixed +DTT latency on
+Steam (JSM fires the base immediately — count AND latency delta, classified above); window
+translation JSM↔Steam stays `bounded_approximation` (release-to-down vs down-to-down epochs);
+repeat-onset anchoring is load-bearing for any turbo/held-output equivalence rule.
 
 ## Operational gotchas (Steam lane)
 
