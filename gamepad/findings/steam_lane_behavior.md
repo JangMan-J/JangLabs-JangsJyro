@@ -189,8 +189,16 @@ Probes P1–P4 (`runs/20260612T053331Z-phase4-pin-batch1/`) resolved the apparen
   physical up). Oracle prediction 1 confirmed at 120 ms AND 400 ms holds.
 - **Release_Press does not emit at all on the four-activator marker button** — absent at the raw
   layer with the double-window open (release at 120 ms) AND closed (release at 400 ms);
-  suppressed-while-window-open is FALSIFIED. Live candidates: bad vdf token vs Steam-internal
-  activator interaction (e.g. Full_Press involvement) — isolated-variant discrimination queued.
+  suppressed-while-window-open is FALSIFIED. **Oracle rule (user-attested 2026-06-12): Release
+  Press is almost never suppressed as long as it is associated with what Steam perceives as an
+  actual PHYSICAL input (vs an additional command from another input).** The marker button's
+  press is the same physical press that fired Start_Press, and all interruptible flags were
+  default ⇒ under the oracle rule F2 should have fired ⇒ hypothesis weight shifts to **our vdf
+  encoding/structure** (the token spelling `Release_Press` is unverified against any
+  Valve-written file: the only on-box instance is our own generated layout, and Steam never
+  rewrites the autosave, so no serializer ground truth exists). Isolated-variant discrimination
+  queued; under the oracle rule it predicts isolated-Release_Press FIRES if our encoding is
+  right, and stays silent if the encoding is the fault.
 
 ## Operational gotchas (Steam lane)
 
