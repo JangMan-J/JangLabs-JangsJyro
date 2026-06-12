@@ -45,6 +45,16 @@ replayed task assignments after resume (verify against git, not mailbox).
 with `tools/steam-virtual-env.sh` (nested KWin + Steam on its own Xwayland; canary slice first —
 finding `steam_lane_behavior.md` has the canary rule + vdf-edit protocol; reference layout:
 `reference/desktop-layout-phase2-reference.vdf`).
+**NEW CAPABILITY (2026-06-11, session 6): `steam-console`** — user-built CDP bridge to the Steam
+client dev console (`~/.local/bin/steam-console`; bundled 557-entry cvar/command index, full doc at
+`~/.local/share/steam-console/index.md`; live use needs `--setup` flag file + Steam restart — note
+the unauthenticated localhost port while enabled). Programmatic get/set of client cvars + the
+console spew stream. Index gems: `controller_rate=2000`µs (500 Hz active poll — feeds the
+comparator poll-slack model), `controller_idle_poll_interval=50000`µs (20 Hz idle),
+`controller_min_activation_time=0.0333`s, `controller_spew_level` (snapshot value 3) — candidate
+NEW observation plane: cranked spew may expose activation decisions (double-tap epoch!) directly.
+A steam-console recon task (live `--complete` sweep + spew-level experiment in the nested env)
+should precede Phase 4 probe loops.
 **Next work, ready to dispatch:** Phase 4 adversarial set — now FULLY autonomous via vdf-programmatic
 binding control (timed `remove_layer`, two-action-set swap, RZ=200 trigger traces, Start/Release-Press
 diagnostic layouts per the user's tip); then Phase 5 orchestration, Phase 8 KB seeding from the

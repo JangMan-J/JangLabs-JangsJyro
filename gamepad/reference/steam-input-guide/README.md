@@ -23,6 +23,7 @@ Steam-lane probe loops, per the wait-state protocol.
 |------|------|
 | `steam-deck-controller-guide-2804823261.md` | **Canonical text** — read this one |
 | `steam-deck-controller-guide-2804823261.html` | Raw saved-page snapshot the MD was converted from (no images) |
+| `steam-deck-controller-guide-2804823261.rendered.html` | User's clean single-file HTML render of the same content (for human reading; was `~/Documents/steam_input_guide.html`) |
 | `convert_guide_html_to_md.py` | The HTML→MD converter, for provenance / re-conversion |
 
 ## Why it matters to the lab
