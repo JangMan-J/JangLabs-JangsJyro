@@ -236,9 +236,22 @@ autorepeat noise; timing not precisely established):
   victim. **The encoding-fault hypothesis is DISFAVORED: Valve's own GUI bindings reproduce the
   inconsistency.** The user's verdict: "might be a bug" — the oracle cannot explain it from
   mechanics, which is itself signal.
-- Claim strength: oracle-observed, GUI/app plane, one swap tested. Systematic characterization
-  queued: **order-permutation matrix** of {Start, Release} × {Long | Double | Full+Double} slot
-  orders, synthetic + raw-layer, to map the eat-pattern precisely.
+- Claim strength: oracle-observed, GUI/app plane, one swap tested. **CONFOUND (user-flagged
+  2026-06-12): slot order is confounded with rebinding-state** — the swap test changed the order
+  AND had just rebound the button; the behavior flip could follow either (cf. the soft-pull
+  adaptive-state precedent and the transient-silence gotcha: Steam config state is not
+  side-effect-free). Open question: does the eat-pattern persist after reconfiguring bindings,
+  across configurator enter/exit, and across Steam restarts? Systematic characterization queued:
+  **order-permutation matrix** of {Start, Release} × {Long | Double | Full+Double} slot orders,
+  synthetic + raw-layer, with controls per cell — fresh disk-load (standard vdf protocol),
+  repeat-after-restart, and rebind-without-reorder — to separate order-dependence from
+  state-dependence.
+- **The GUI slot model (screenshot evidence: `reference/oracle-gui-observations/`):** multiple
+  activators render as numbered **"Command 1..N"** slots — order is explicit, ordinal, and
+  user-visible, created implicitly by binding order. Real-world configs therefore CARRY these
+  orderings everywhere, and authors never think about them ⇒ the hazard zone is not exotic.
+  Bonus acquittal: the user's button A binds Release_Press→F2 ALONE — same activator, same key
+  as our marker layout — and it fires.
 - **Converter implication (human-food relevant):** button configs mixing Start/Release Press with
   Long/Double Press are a HAZARD ZONE — activator loss that depends on an ordering most authors
   never think about. Conversions touching such combos classify no better than
