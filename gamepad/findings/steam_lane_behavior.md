@@ -199,6 +199,14 @@ Probes P1–P4 (`runs/20260612T053331Z-phase4-pin-batch1/`) resolved the apparen
   rewrites the autosave, so no serializer ground truth exists). Isolated-variant discrimination
   queued; under the oracle rule it predicts isolated-Release_Press FIRES if our encoding is
   right, and stays silent if the encoding is the fault.
+  **Oracle mechanic (user-attested 2026-06-12): Release_Press has the shortest command emit time
+  of all activators — it fires a single COMBINED down/up at the same instant, because unlike most
+  activators it is not queued to any button state, merely edge-FIRED by one.** Observational
+  consequences: (a) the expected signature is a **zero/near-zero-duration raw pair** at
+  physical-release + pipeline; (b) the capture → normalizer path must pair identical-timestamp
+  raw events (dur_ms ≈ 0) without classing them as noise or unmatched — UNTESTED for this case,
+  verification queued before the discrimination pass; (c) a zero-width pulse is also the best
+  possible release-side timestamp marker — better than a held key — if it emits at all.
 
 ## Operational gotchas (Steam lane)
 
