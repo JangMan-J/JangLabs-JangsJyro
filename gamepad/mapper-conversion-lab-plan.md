@@ -28,9 +28,12 @@ Steam inclusive-exact; JSM double-window release-to-down (proven by construction
 release-to-down (d2d vs r2r unresolved — probe designed, ON HOLD); Steam soft-pull threshold is
 adaptive state (RZ=200 for reliable staged probes); interruptable=0 runtime-confirmed; double-press
 pause semantics (singles latency-shift up to DTT).
-**WAIT STATE: the user is preparing a Steam Input mechanics knowledge dump** — consult it (and them:
-they are a deep Steam Input mechanics oracle, memory `user-steam-input-mechanics-expert`) BEFORE any
-new Steam-lane probe loops. Open question for them: double-tap decision epoch + emission timing.
+**WAIT STATE CLEARED (2026-06-11, session 6): the knowledge dump arrived** — ingested at
+`reference/steam-input-guide/` (Steam Community guide 2804823261, canonical MD + provenance README;
+guide-claim strength, below trace evidence). Consult it (and the user: they are a deep Steam Input
+mechanics oracle, memory `user-steam-input-mechanics-expert`) BEFORE any new Steam-lane probe loops.
+It corroborates double-press pause semantics and gives Double Press emission timing (active at second
+down, held thereafter); still open for the user: the double-tap window's epoch endpoints (d2d vs r2r).
 **Execution model (user-directed):** Fable session = lead only (specs, gate verification, claim-
 strength audits, commits); ALL iterative work via Sonnet teammates per plan §14 (team `jsmlab`:
 `builder` = code/TDD, `runner` = serial live-system runs). Teammates were shut down cleanly at
