@@ -443,5 +443,216 @@ class TestRawLayerTimestamps(unittest.TestCase):
                 "DTT calculations require raw-layer timing.")
 
 
+class TestZeroDurationRawPair(unittest.TestCase):
+    """Zero/near-zero-duration raw pairs must be preserved, not noise-classified.
+
+    Oracle mechanic (findings/steam_lane_behavior.md §Release_Press):
+    Release_Press fires a single COMBINED down/up at the same instant — its
+    expected raw signature is RawKeyPress + RawKeyRelease with identical or
+    sub-millisecond-separated timestamps.  The normalizer must:
+
+      (a) NOT drop them via the dedup window (the Device events arrive much later
+          or may never arrive).
+      (b) NOT classify the unmatched Raw events as noise.
+      (c) Produce exactly one press record with dur_ms == 0 (or ≈0 for sub-ms).
+      (d) Still handle the normal case (with Device events) — dur_ms stays
+          raw-accurate (≈0), not stretched to the Device-layer gap.
+
+    The primary failure mode (pre-fix): both Raw events hit the final
+    `if ev in _XI2_RAW_EVENTS: continue` guard and are silently dropped when
+    no Device counterpart has been seen — producing a false "absent" verdict.
+
+    Test (e) covers multiple Release_Press pulses in sequence: each must be
+    counted as a separate press.
+    """
+
+    def _zero_dur_lines(self, t_raw, t_key_press=None, t_key_release=None,
+                        code="F1", raw_sep=0.0):
+        """Build xi2_cap lines for a zero/near-zero-duration raw pair.
+
+        raw_sep: seconds between RawKeyPress and RawKeyRelease (0 = identical).
+        t_key_press / t_key_release: Device events, omit to test raw-only path.
+        """
+        rows = [
+            (t_raw,           "RawKeyPress",   3, _MASTER_DEV, code, _MASTER_FLAG),
+            (t_raw + raw_sep, "RawKeyRelease", 3, _MASTER_DEV, code, _MASTER_FLAG),
+        ]
+        if t_key_press is not None:
+            rows.append((t_key_press,   "KeyPress",   9, _SEAT_DEV, code, _SEAT_FLAG))
+        if t_key_release is not None:
+            rows.append((t_key_release, "KeyRelease", 9, _SEAT_DEV, code, _SEAT_FLAG))
+        # Sort by timestamp (xi2_cap helper doesn't sort)
+        rows.sort(key=lambda r: r[0])
+        return xi2_cap(*rows)
+
+    # ------------------------------------------------------------------
+    # (a) Identical timestamps, Device events arrive 35ms later
+    # ------------------------------------------------------------------
+
+    def test_identical_ts_with_device_events_produces_one_press(self):
+        """RawKeyPress+RawKeyRelease at t=0, Device events at 35ms → one press event."""
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0,
+                                     t_key_press=1.035, t_key_release=1.070)
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1,
+            f"Expected 1 F1 press, got {len(events)}: {events}")
+
+    def test_identical_ts_with_device_events_dur_ms_zero(self):
+        """Zero-duration raw pair with Device events: dur_ms must be 0ms (raw-layer)."""
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0,
+                                     t_key_press=1.035, t_key_release=1.070)
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1)
+        self.assertIsNotNone(events[0].get("dur_ms"),
+            "dur_ms must not be None — raw release timestamp must close the pair")
+        self.assertAlmostEqual(events[0]["dur_ms"], 0.0, delta=1.0,
+            msg=f"dur_ms={events[0]['dur_ms']}ms — expected ~0ms for zero-duration raw pair, "
+                f"not the Device-layer gap (~35ms)")
+
+    # ------------------------------------------------------------------
+    # (b) Sub-ms separation (0.3ms), Device events arrive later
+    # ------------------------------------------------------------------
+
+    def test_subms_sep_with_device_events_produces_one_press(self):
+        """RawKeyPress at t=0, RawKeyRelease at t=0.3ms, Device events at 35ms → one press."""
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0003,
+                                     t_key_press=1.035, t_key_release=1.070)
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1,
+            f"Expected 1 F1 press, got {len(events)}: {events}")
+
+    def test_subms_sep_dur_ms_near_zero(self):
+        """0.3ms raw separation → dur_ms ≈ 0.3ms (raw-accurate), not Device-layer gap."""
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0003,
+                                     t_key_press=1.035, t_key_release=1.070)
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1)
+        self.assertIsNotNone(events[0].get("dur_ms"))
+        self.assertAlmostEqual(events[0]["dur_ms"], 0.3, delta=0.5,
+            msg=f"dur_ms={events[0]['dur_ms']}ms — expected ~0.3ms for sub-ms raw pair")
+
+    # ------------------------------------------------------------------
+    # (c) Zero-duration raw pair with NO Device counterpart at all
+    #     (the primary Release_Press failure mode)
+    # ------------------------------------------------------------------
+
+    def test_zero_dur_raw_only_no_device_produces_one_press(self):
+        """RawKeyPress+RawKeyRelease at same instant, no Device events → must emit one press.
+
+        This is the primary failure mode: without a Device counterpart, the
+        normalizer previously classified the Raw events as noise and dropped them.
+        A Release_Press that emits a combined down/up but whose Device flush never
+        arrives (or arrives outside the capture window) must still be counted.
+        """
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0)  # no Device events
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1,
+            f"Expected 1 F1 press from raw-only zero-dur pair, got {len(events)} — "
+            f"zero-duration raw pairs must not be noise-classified")
+
+    def test_zero_dur_raw_only_dur_ms_is_zero(self):
+        """Raw-only zero-duration pair: dur_ms must be 0.0, not None."""
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0)
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1)
+        self.assertIsNotNone(events[0].get("dur_ms"),
+            "dur_ms must not be None for a raw-only paired event")
+        self.assertAlmostEqual(events[0]["dur_ms"], 0.0, delta=0.5)
+
+    def test_zero_dur_raw_only_t_ms_is_correct(self):
+        """Raw-only zero-duration pair: t_ms must be anchored at RawKeyPress timestamp."""
+        # two events at t=1.0 (raw) and t=2.0 (the zero-dur pair for a different key),
+        # so t0=1.0 and F2 t_ms should be 1000ms
+        rows = [
+            (1.0, "RawKeyPress",   3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            (1.0, "RawKeyRelease", 3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            (2.0, "RawKeyPress",   3, _MASTER_DEV, "F2", _MASTER_FLAG),
+            (2.0, "RawKeyRelease", 3, _MASTER_DEV, "F2", _MASTER_FLAG),
+            # Device events for F1 only (to provide a stable t0 anchor)
+            (1.035, "KeyPress",   9, _SEAT_DEV, "F1", _SEAT_FLAG),
+            (1.070, "KeyRelease", 9, _SEAT_DEV, "F1", _SEAT_FLAG),
+        ]
+        rows.sort(key=lambda r: r[0])
+        lines = xi2_cap(*rows)
+        n = nc.normalize(lines)
+        f2_events = [e for e in n["events"] if e["name"] == "F2"]
+        self.assertEqual(len(f2_events), 1,
+            "F2 raw-only zero-dur pair must produce one event")
+        self.assertAlmostEqual(f2_events[0]["t_ms"], 1000.0, delta=5.0,
+            msg=f"F2 t_ms={f2_events[0]['t_ms']:.1f}ms — expected ~1000ms from t0")
+
+    def test_subms_raw_only_produces_one_press(self):
+        """RawKeyPress+RawKeyRelease 0.3ms apart, no Device events → one press."""
+        lines = self._zero_dur_lines(t_raw=1.0, raw_sep=0.0003)
+        n = nc.normalize(lines)
+        events = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(events), 1,
+            f"Expected 1 F1 from raw-only sub-ms pair, got {len(events)}")
+
+    # ------------------------------------------------------------------
+    # (d) Dedup window: Device event within 5ms of zero-dur raw pair
+    #     Raw is in dedup set; Device event provides the pairing signal.
+    #     Only one press emitted; no double-counting.
+    # ------------------------------------------------------------------
+
+    def test_zero_dur_raw_within_dedup_window_not_double_counted(self):
+        """If Device event is within 5ms of zero-dur raw, exactly one press emitted."""
+        # RawKeyPress at t=1.000, RawKeyRelease at t=1.000 (identical)
+        # KeyPress at t=1.002 (2ms later, within 5ms dedup window)
+        # KeyRelease at t=1.003
+        lines = xi2_cap(
+            (1.000, "RawKeyPress",   3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            (1.000, "RawKeyRelease", 3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            (1.002, "KeyPress",      9, _SEAT_DEV,   "F1", _SEAT_FLAG),
+            (1.003, "KeyRelease",    9, _SEAT_DEV,   "F1", _SEAT_FLAG),
+        )
+        n = nc.normalize(lines)
+        f1 = [e for e in n["events"] if e["name"] == "F1"]
+        self.assertEqual(len(f1), 1,
+            f"Expected exactly 1 F1 event (no double-count), got {len(f1)}: {f1}")
+
+    # ------------------------------------------------------------------
+    # (e) Multiple Release_Press pulses in sequence — each must be counted
+    # ------------------------------------------------------------------
+
+    def test_multiple_zero_dur_raw_pairs_all_counted(self):
+        """Three Release_Press-style raw pairs in sequence → three press events."""
+        rows = []
+        for i in range(3):
+            t = 1.0 + i * 0.5  # t=1.0, 1.5, 2.0
+            rows += [
+                (t,     "RawKeyPress",   3, _MASTER_DEV, "F1", _MASTER_FLAG),
+                (t,     "RawKeyRelease", 3, _MASTER_DEV, "F1", _MASTER_FLAG),
+                (t+0.035, "KeyPress",   9, _SEAT_DEV,   "F1", _SEAT_FLAG),
+                (t+0.070, "KeyRelease", 9, _SEAT_DEV,   "F1", _SEAT_FLAG),
+            ]
+        rows.sort(key=lambda r: r[0])
+        lines = xi2_cap(*rows)
+        n = nc.normalize(lines)
+        self.assertEqual(n["summary"]["presses"].get("F1", 0), 3,
+            f"Expected 3 F1 presses, got {n['summary']['presses']}")
+
+    def test_multiple_zero_dur_raw_only_all_counted(self):
+        """Three raw-only Release_Press pulses (no Device events) → three press events."""
+        rows = []
+        for i in range(3):
+            t = 1.0 + i * 0.5
+            rows += [
+                (t, "RawKeyPress",   3, _MASTER_DEV, "F1", _MASTER_FLAG),
+                (t, "RawKeyRelease", 3, _MASTER_DEV, "F1", _MASTER_FLAG),
+            ]
+        rows.sort(key=lambda r: r[0])
+        lines = xi2_cap(*rows)
+        n = nc.normalize(lines)
+        self.assertEqual(n["summary"]["presses"].get("F1", 0), 3,
+            f"Expected 3 F1 presses from raw-only pairs, got {n['summary']['presses']}")
+
+
 if __name__ == "__main__":
     unittest.main()

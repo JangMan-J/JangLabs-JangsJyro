@@ -281,6 +281,30 @@ def normalize_xi2(records: list[dict]) -> dict:
                        "dur_ms": None, "note": "still-held-at-end"})
         press_counts[nm] = press_counts.get(nm, 0) + 1
 
+    # Emit raw-only press pairs that were never claimed by a Device event.
+    # This handles Release_Press's combined-instant emission: Steam emits a
+    # RawKeyPress + RawKeyRelease atomically with no Device counterpart (or
+    # one that arrives outside the capture window).  Without this step, such
+    # events would be silently dropped as "unmatched raw noise" above.
+    for code, press_list in raw_press_times.items():
+        consumed_press = raw_press_idx.get(code, 0)
+        consumed_rel = raw_release_idx.get(code, 0)
+        rel_list = raw_release_times.get(code, [])
+        _, name = _xi2_canon(code)
+        for j in range(consumed_press, len(press_list)):
+            td = press_list[j]
+            rel_j = consumed_rel + (j - consumed_press)
+            if rel_j < len(rel_list):
+                t_up = rel_list[rel_j]
+                dur = round((t_up - td) * 1000.0, 1)
+                events.append({"kind": "key", "name": name, "t_ms": ms(td),
+                               "dur_ms": dur})
+            else:
+                # Press with no matching raw release — still-held at end
+                events.append({"kind": "key", "name": name, "t_ms": ms(td),
+                               "dur_ms": None, "note": "still-held-at-end"})
+            press_counts[name] = press_counts.get(name, 0) + 1
+
     events.sort(key=lambda x: x["t_ms"])
     return {
         "schema_version": "1",
