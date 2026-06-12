@@ -217,6 +217,34 @@ Probes P1–P4 (`runs/20260612T053331Z-phase4-pin-batch1/`) resolved the apparen
   verification queued before the discrimination pass; (c) a zero-width pulse is also the best
   possible release-side timestamp marker — better than a held key — if it emits at all.
 
+## Order-dependent edge-activator loss under state-bound co-residency (oracle GUI observation, 2026-06-12)
+
+The user reproduced the Release_Press anomaly **with GUI-native bindings in their own Steam
+session** — and generalized it. Observed (app plane, text-field letters; held-key repeats are OS
+autorepeat noise; timing not precisely established):
+
+- Start_Press alone, Release_Press alone, and Start+Release+Regular on one button: **all fire
+  correctly.** The activators themselves are healthy.
+- Add a **state-bound** activator (oracle taxonomy: Long_Press and Double_Press — the two that
+  delay other activators on the same binding) and the **edge-fired** pair (Start/Release) becomes
+  inconsistent **as a function of activator slot order**:
+  - `StartP→A, ReleaseP→B, LongP→C` (press-hold): output `B C C C…` — **Start never fires**, and
+    Release fires EARLY (near down, before any physical release, per the reported sequence).
+  - Slots swapped (`ReleaseP→A, StartP→B, LongP→C`): output `B A C C…` — **all three fire.**
+- Lab correlation: our generated four-activator marker button (order Start, Release, Full,
+  Double) showed Start fires / **Release never** — same bug-class, different slot order, different
+  victim. **The encoding-fault hypothesis is DISFAVORED: Valve's own GUI bindings reproduce the
+  inconsistency.** The user's verdict: "might be a bug" — the oracle cannot explain it from
+  mechanics, which is itself signal.
+- Claim strength: oracle-observed, GUI/app plane, one swap tested. Systematic characterization
+  queued: **order-permutation matrix** of {Start, Release} × {Long | Double | Full+Double} slot
+  orders, synthetic + raw-layer, to map the eat-pattern precisely.
+- **Converter implication (human-food relevant):** button configs mixing Start/Release Press with
+  Long/Double Press are a HAZARD ZONE — activator loss that depends on an ordering most authors
+  never think about. Conversions touching such combos classify no better than
+  `degraded_approximation` with the hazard named, and converting INTO such a combo should be
+  avoided (anti-Goodhart: don't engineer configs that depend on replicating a probable Steam bug).
+
 ## Operational gotchas (Steam lane)
 
 - **xinput keysym aliasing:** F11/F12 print as legacy keysyms **L1/L2** in `xinput test-xi2`
