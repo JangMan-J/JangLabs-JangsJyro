@@ -44,13 +44,13 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 PROJECT_ROOT=$DIR/../
 
-pushd &>/dev/null
+pushd . &>/dev/null || exit 1
 
-cd "$DIR"/../dist/linux
+cd "$DIR"/../dist/linux || exit 1
 
 rm -rf release
 
-mkdir release && cd release
+mkdir release && cd release || exit 1
 
 cp -f ../PKGBUILD.in PKGBUILD
 cp -f ../joyshockmapper.dsc.in joyshockmapper.dsc
@@ -61,12 +61,12 @@ sed -i 's/@VERSION@/'$VERSION'/g' joyshockmapper.dsc
 sed -i 's/@RELEASE@/'$RELEASE'/g' PKGBUILD
 sed -i 's/@RELEASE@/'$RELEASE'/g' joyshockmapper.dsc
 
-mkdir build && cd build
+mkdir build && cd build || exit 1
 cmake "$PROJECT_ROOT"
 
-cd ..
+cd .. || exit 1
 
-mkdir src && cd src
+mkdir src && cd src || exit 1
 
 cp -arf "$PROJECT_ROOT"/cmake .
 mkdir -p dist/linux
@@ -91,7 +91,7 @@ SHA256=$(sha256sum $TARBALL | cut -f1 -d' ')
 SIZE=$(du --bytes $TARBALL | cut -f1)
 
 mv joyshockmapper_$VERSION-$RELEASE.tar.gz ../
-cd ../
+cd ../ || exit 1
 
 rm -rf src
 rm -rf build
@@ -111,6 +111,6 @@ sed -i 's/@TARBALL@/'$TARBALL'/g' joyshockmapper.dsc
 sed -i 's/@SIZE@/'$SIZE'/g' PKGBUILD
 sed -i 's/@SIZE@/'$SIZE'/g' joyshockmapper.dsc
 
-popd &>/dev/null
+popd &>/dev/null || exit 1
 
 exit 0
